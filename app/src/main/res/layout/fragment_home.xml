@@ -8,6 +8,18 @@
     tools:context=".HomeFragment">
 
 
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/welcome_string"
+        android:textSize="44sp"
+        app:layout_constraintEnd_toStartOf="@id/profileImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ImageButton
         android:id="@+id/profileImageButton"
         android:layout_width="75dp"
@@ -19,19 +31,8 @@
         android:adjustViewBounds="true"
         app:layout_constraintStart_toEndOf="@id/welcomeText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        />
 
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Welcome, User"
-        android:textSize="44sp"
-        app:layout_constraintEnd_toStartOf="@id/profileImageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,37 +47,35 @@ public class MainActivity extends AppCompatActivity {
             navController = navHostFragment.getNavController();
             appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 //            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
+
         } else {
             // Handle the error case where the NavHostFragment is not found
             throw new IllegalStateException("NavHostFragment not found");
         }
 
-
-        // show home fragment by default
-        navController.navigate(R.id.homeFragment);
-
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.home) {
                 navController.navigate(R.id.homeFragment);
+                return true;
             }
             else if (id == R.id.restaurants) {
                 navController.navigate(R.id.restaurantsFragment);
+                return true;
             }
             else if (id == R.id.discover) {
                 navController.navigate(R.id.discoverFragment);
+                return true;
             }
             else if (id == R.id.favourites) {
                 navController.navigate(R.id.favoruitesFragment);
+                return true;
             }
-
             return false;
         });
 
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

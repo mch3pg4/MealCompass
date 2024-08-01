@@ -17,7 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:adjustViewBounds="true"
@@ -35,17 +35,78 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profileRecyclerView"
+        <TextView
+            android:id="@+id/profileSettingsText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:text="@string/profile_settings"
+            app:layout_constraintTop_toBottomOf="@id/profileText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="5dp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/profileSettingsText" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profileSettingsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profileText"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@id/profileSettingsText"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/profile_list_item"/>
+
+        <TextView
+            android:id="@+id/appSettingsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_settings"
+            app:layout_constraintTop_toBottomOf="@id/profileSettingsRecyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="5dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/appSettingsText" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appSettingsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appSettingsText"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/profile_list_item"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/copyright_text"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@color/white"
+            />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

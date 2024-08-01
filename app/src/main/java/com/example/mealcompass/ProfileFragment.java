@@ -37,19 +37,29 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        RecyclerView recyclerView = view.findViewById(R.id.profileRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView profileSettingsRecyclerView = view.findViewById(R.id.profileSettingsRecyclerView);
+        profileSettingsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<ProfileItem> profileItems = new ArrayList<>();
-        profileItems.add(new ProfileItem(R.drawable.baseline_account_circle_24, "Edit Profile"));
-        profileItems.add(new ProfileItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
-        profileItems.add(new ProfileItem(R.drawable.baseline_comment_24, "Contact Helpdesk"));
-        profileItems.add(new ProfileItem(R.drawable.baseline_dark_mode_24, "Dark Mode"));
-        profileItems.add(new ProfileItem(R.drawable.baseline_format_align_justify_24, "Terms & Conditions"));
-        profileItems.add(new ProfileItem(R.drawable.applogo, "About MealCompass"));
+        List<ProfileSettingsItem> profileItems = new ArrayList<>();
+        profileItems.add(new ProfileSettingsItem(R.drawable.baseline_account_circle_24, "Edit Profile"));
+        profileItems.add(new ProfileSettingsItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
 
-        ProfileAdapter profileAdapter = new ProfileAdapter(profileItems);
-        recyclerView.setAdapter(profileAdapter);
+        ProfileSettingsAdapter profileAdapter = new ProfileSettingsAdapter(profileItems);
+        profileSettingsRecyclerView.setAdapter(profileAdapter);
+
+        RecyclerView appSettingsRecyclerView = view.findViewById(R.id.appSettingsRecyclerView);
+        appSettingsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<AppSettingsItem> appItems = new ArrayList<>();
+        appItems.add(new AppSettingsItem(R.drawable.baseline_comment_24, "Contact Helpdesk"));
+        appItems.add(new AppSettingsItem(R.drawable.baseline_dark_mode_24, "Dark Mode"));
+        appItems.add(new AppSettingsItem(R.drawable.baseline_format_align_justify_24, "Terms & Conditions"));
+        appItems.add(new AppSettingsItem(R.drawable.appicon, "About MealCompass"));
+
+        AppSettingsAdapter appAdapter = new AppSettingsAdapter(appItems);
+        appSettingsRecyclerView.setAdapter(appAdapter);
+
+
 
 
     }

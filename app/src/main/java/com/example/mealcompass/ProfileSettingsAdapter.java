@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
+public class ProfileSettingsAdapter extends RecyclerView.Adapter<ProfileSettingsAdapter.ViewHolder> {
 
-    private final List<ProfileItem> mProfileItems;
+    private final List<ProfileSettingsItem> mProfileItems;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public ImageView icon;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -26,7 +27,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
     }
 
-    public ProfileAdapter(List<ProfileItem> profileItems) {
+    public ProfileSettingsAdapter(List<ProfileSettingsItem> profileItems) {
         this.mProfileItems = profileItems;
     }
     @NonNull
@@ -38,9 +39,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ProfileItem profileItem = mProfileItems.get(position);
-        holder.title.setText(profileItem.getTitle());
-        holder.icon.setImageResource(profileItem.getIcon());
+        ProfileSettingsItem profileSettingsItem = mProfileItems.get(position);
+        holder.title.setText(profileSettingsItem.getTitle());
+        holder.icon.setImageResource(profileSettingsItem.getIcon());
     }
 
     @Override

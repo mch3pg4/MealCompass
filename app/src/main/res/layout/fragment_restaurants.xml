@@ -1,14 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RestaurantsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/searchTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/search_string"
+        android:textSize="44sp"
+        app:layout_constraintEnd_toStartOf="@id/profileImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/profileImageButton"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:contentDescription="@string/profile_image"
+        android:background="@drawable/roundbutton"
+        android:src="@drawable/baseline_account_circle_24"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toEndOf="@id/searchTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.search.SearchBar
+        android:id="@+id/restaurantsSearchBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Restaurants Fragment" />
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:hint="@string/restaurant_search_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImageButton" />
+
+    <LinearLayout
+        android:id="@+id/restaurantsFilterGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantsSearchBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="3dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/filter"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/restaurantsFilterGroup"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:singleSelection="true"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restaurantsSearchBar"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all"
+                android:id="@+id/allButton"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+                android:id="@+id/priceButton"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/open"
+                android:id="@+id/openButton"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more"
+                android:id="@+id/ratingButton"
+                />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/restaurantsViewGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/restaurantsFilterGroupLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/view_as"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="3dp"/>
+
+
+<com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/restaurantsViewGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/restaurantsFilterGroup"
+            app:layout_constraintTop_toBottomOf="@id/restaurantsSearchBar"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/listButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/baseline_splitscreen_24"
+                android:text="@string/list"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/gridButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/baseline_grid_view_24"
+                android:text="@string/grid"/>
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/restaurantsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restaurantsViewGroupLayout"
+        tools:listitem="@layout/restaurant_card"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

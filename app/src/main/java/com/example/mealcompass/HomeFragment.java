@@ -40,9 +40,7 @@ public class HomeFragment extends Fragment {
 
 
         binding.profileImageButton.setOnClickListener(
-                v -> {
-                    NavHostFragment.findNavController(HomeFragment.this)
-                            .navigate(R.id.action_homeFragment_to_profileFragment);
-                });
+                v -> NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_homeFragment_to_profileFragment));
     }
 }
