@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/homeLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +15,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/welcome_string"
-        android:textSize="44sp"
+        android:layout_marginStart="3dp"
+        android:gravity="center_vertical"
+        android:textSize="32sp"
         app:layout_constraintEnd_toStartOf="@id/profileImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,8 +25,8 @@
 
     <ImageButton
         android:id="@+id/profileImageButton"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:contentDescription="@string/profile_image"
         android:background="@drawable/roundbutton"
         android:src="@drawable/baseline_account_circle_24"
@@ -32,6 +35,192 @@
         app:layout_constraintStart_toEndOf="@id/welcomeText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeTitleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/profileImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="3dp"
+        >
+
+    <TextView
+        android:id="@+id/homeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/restaurants_for_you"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="30sp"
+        />
+
+    <ImageView
+        android:id="@+id/searchButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/search_string"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/baseline_search_24"
+        android:adjustViewBounds="true"
+        android:padding="6dp"
+        />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/homeFilterGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/homeTitleLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+    <TextView
+        android:id="@+id/filterTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="3dp"
+        android:text="@string/filter"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/filterGroup"
+        app:layout_constraintTop_toBottomOf="@id/homeTitleLayout" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/filterGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        android:defaultFocusHighlightEnabled="true"
+        app:layout_constraintStart_toEndOf="@id/filterTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeTitleLayout"
+
+
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/allButton"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="@string/all"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/distanceButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:text="@string/distance" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/priceButton"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:text="@string/price"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ratingFilterButton"
+            android:layout_width="89dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ratingFilter"
+            style="?attr/materialButtonOutlinedStyle"
+
+            />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/homeFilterGroupLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeButtonGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/homeRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/previousButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/rate_recommendation"
+            app:icon="@drawable/baseline_stars_24"
+            style="?attr/materialButtonOutlinedStyle"
+            android:padding="6dp"
+            android:layout_marginStart="10dp"
+
+
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/refreshResultsButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/baseline_refresh_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="6dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/refresh_results"
+            style="?attr/materialButtonOutlinedStyle"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/historyOfRestaurantsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/historyofrestaurants"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeButtonGroupLayout"
+        android:layout_marginBottom="5dp"
+        android:padding="6dp"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_bold"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/historyOfRestaurantsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/historyOfRestaurantsTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        />
+
+
 
 
 

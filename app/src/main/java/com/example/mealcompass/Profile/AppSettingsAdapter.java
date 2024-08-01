@@ -1,4 +1,4 @@
-package com.example.mealcompass;
+package com.example.mealcompass.Profile;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mealcompass.R;
 
 import java.util.List;
 

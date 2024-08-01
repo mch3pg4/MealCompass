@@ -1,4 +1,4 @@
-package com.example.mealcompass;
+package com.example.mealcompass.Restaurants;
 
 public class RestaurantItem {
     private final int restaurantImage;

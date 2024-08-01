@@ -1,4 +1,4 @@
-package com.example.mealcompass;
+package com.example.mealcompass.Restaurants;
 
 import android.os.Bundle;
 
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mealcompass.R;
 import com.example.mealcompass.databinding.FragmentRestaurantsBinding;
 
 import java.util.ArrayList;

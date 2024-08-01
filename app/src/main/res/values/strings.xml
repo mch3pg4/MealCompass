@@ -75,4 +75,18 @@
     <string name="restaurant_price">Price:</string>
     <string name="open_or_close">OPEN</string>
     <string name="favorite_restaurant">Favorite Restaurant</string>
+    <string name="discover_text">Discover frequently updated articles on healthy eating habits.</string>
+    <string name="authorName">Author</string>
+    <string name="timePosted">35 mins ago</string>
+    <string name="discover_image">Discover Article Image</string>
+    <string name="discover_article_title">Discover Article Title</string>
+    <string name="discover_article_content">Discover Article Content</string>
+    <string name="read_more">Read more...</string>
+    <string name="restaurants_for_you">Restaurants For You</string>
+    <string name="ratingFilter">Rating</string>
+    <string name="distance">Distance</string>
+    <string name="rate_recommendation">Rate\n recommendation</string>
+    <string name="refresh_results">Refresh results</string>
+    <string name="historyofrestaurants">History of recommended restaurants</string>
+    <string name="search_favourites_hint">Search for your favourite restaurant...</string>
 </resources>

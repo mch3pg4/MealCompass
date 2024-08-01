@@ -1,10 +1,10 @@
-package com.example.mealcompass;
+package com.example.mealcompass.Profile;
 
-public class AppSettingsItem {
+public class ProfileSettingsItem {
     private final int iconResId;
     private final String title;
 
-    public AppSettingsItem(int iconResId, String title) {
+    public ProfileSettingsItem(int iconResId, String title) {
         this.iconResId = iconResId;
         this.title = title;
     }
@@ -17,3 +17,5 @@ public class AppSettingsItem {
         return title;
     }
 }
+
+

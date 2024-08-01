@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.mealcompass.ProfileFragment"
+        android:name="com.example.mealcompass.Profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.example.mealcompass.DiscoverFragment"
+        android:name="com.example.mealcompass.Discover.DiscoverFragment"
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/restaurantsFragment"
-        android:name="com.example.mealcompass.RestaurantsFragment"
+        android:name="com.example.mealcompass.Restaurants.RestaurantsFragment"
         android:label="fragment_restaurants"
         tools:layout="@layout/fragment_restaurants" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoruitesFragment"
-        android:name="com.example.mealcompass.FavoruitesFragment"
+        android:name="com.example.mealcompass.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" >
         <action

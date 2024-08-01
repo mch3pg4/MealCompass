@@ -3,12 +3,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavoruitesFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FavouritesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/favouritesTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/favourites"
+        android:layout_marginStart="3dp"
+        android:gravity="center_vertical"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toStartOf="@id/profileImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/profileImageButton"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:contentDescription="@string/profile_image"
+        android:background="@drawable/roundbutton"
+        android:src="@drawable/baseline_account_circle_24"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toEndOf="@id/favouritesTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.search.SearchBar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Favourites Fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="5dp"
+        android:hint="@string/search_favourites_hint"
+        android:id="@+id/favouritesSearchBar"/>
+
+    <RelativeLayout
+        android:id="@+id/viewAsButtonGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/favouritesSearchBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+            android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:id="@+id/viewAsButtonGroup"
+        app:singleSelection="true"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewAsList"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/baseline_splitscreen_24"
+            android:text="@string/list"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewAsGrid"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/baseline_grid_view_24"
+            android:text="@string/grid"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/viewAsButtonGroupLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:id="@+id/favouritesRecyclerView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

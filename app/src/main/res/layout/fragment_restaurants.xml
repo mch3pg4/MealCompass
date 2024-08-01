@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RestaurantsFragment">
+    tools:context=".Restaurants.RestaurantsFragment">
 
 
     <TextView
@@ -14,15 +14,17 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/search_string"
-        android:textSize="44sp"
+        android:gravity="center_vertical"
+        android:textSize="32sp"
+        android:layout_marginStart="3dp"
         app:layout_constraintEnd_toStartOf="@id/profileImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/profileImageButton"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:contentDescription="@string/profile_image"
         android:background="@drawable/roundbutton"
         android:src="@drawable/baseline_account_circle_24"
@@ -36,7 +38,7 @@
         android:id="@+id/restaurantsSearchBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_margin="5dp"
         android:hint="@string/restaurant_search_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
