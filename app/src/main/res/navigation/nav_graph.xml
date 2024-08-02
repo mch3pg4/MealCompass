@@ -6,12 +6,15 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.mealcompass.HomeFragment"
+        android:name="com.example.mealcompass.Home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_restaurantsFragment"
+            app:destination="@id/restaurantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -42,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoruitesFragment"
-        android:name="com.example.mealcompass.FavouritesFragment"
+        android:name="com.example.mealcompass.Favourites.FavouritesFragment"
         android:label="fragment_favourites"
         tools:layout="@layout/fragment_favourites" >
         <action

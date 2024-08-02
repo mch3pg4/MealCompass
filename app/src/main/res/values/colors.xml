@@ -10,5 +10,7 @@
     <color name="orange">#FFFFA500</color>
     <color name="purple">#FF800080</color>
     <color name="pink">#FFFFC0CB</color>
-    <color name="light_purple">#FFB39DDB</color>
+    <color name="light_purple">#D789EB</color>
+    <color name="light_color">#F8F8F8</color>
+
 </resources>

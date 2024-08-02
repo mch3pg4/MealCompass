@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".Home.HomeFragment">
 
 
     <TextView
@@ -147,26 +147,55 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         app:layout_constraintTop_toBottomOf="@id/homeFilterGroupLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="5dp"
         android:layout_margin="5dp"
+        tools:listitem="@layout/recommend_restaurants_item"
         />
+
+    <TextView
+        android:id="@+id/recommendedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/recommended_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeRecyclerView"
+        android:padding="3dp"
+        android:layout_marginStart="6dp"
+        android:textStyle="bold"
+        android:textSize="11sp"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recommendedItemsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        app:layout_constraintTop_toBottomOf="@id/recommendedText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="3dp"
+        android:layout_marginStart="6dp"
+        android:scrollbars="horizontal"
+        tools:listitem="@layout/recommend_item"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeButtonGroupLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/homeRecyclerView"
+        app:layout_constraintTop_toBottomOf="@id/recommendedItemsRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/previousButton"
+            android:id="@+id/rateRecommendationButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -176,8 +205,6 @@
             style="?attr/materialButtonOutlinedStyle"
             android:padding="6dp"
             android:layout_marginStart="10dp"
-
-
             />
 
         <com.google.android.material.button.MaterialButton
@@ -203,8 +230,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/homeButtonGroupLayout"
-        android:layout_marginBottom="5dp"
-        android:padding="6dp"
+        android:padding="3dp"
+        android:layout_marginStart="6dp"
         android:textSize="24sp"
         android:fontFamily="@font/poppins_bold"
         />
@@ -212,16 +239,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyOfRestaurantsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/historyOfRestaurantsTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:padding="5dp"
         android:layout_margin="5dp"
+        tools:listitem="@layout/history_card"
         />
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

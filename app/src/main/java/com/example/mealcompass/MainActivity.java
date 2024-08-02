@@ -26,6 +26,7 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,18 +42,24 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        setSupportActionBar(binding.toolbar);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_container);
-        if (navHostFragment != null) {
-            navController = navHostFragment.getNavController();
-            appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-//            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
+        navController = navHostFragment.getNavController();
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
-        } else {
-            // Handle the error case where the NavHostFragment is not found
-            throw new IllegalStateException("NavHostFragment not found");
-        }
+        // do not show title in the top app bar
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        //hide top app bar when in main fragments
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.homeFragment || destination.getId() == R.id.restaurantsFragment || destination.getId() == R.id.discoverFragment || destination.getId() == R.id.favoruitesFragment) {
+                Objects.requireNonNull(getSupportActionBar()).hide();
+            } else {
+                Objects.requireNonNull(getSupportActionBar()).show();
+            }
+        });
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -83,20 +90,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onSupportNavigateUp() {

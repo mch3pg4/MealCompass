@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_purple"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:id="@+id/historyCardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/historyDetailsLayout"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <TextView
+                android:id="@+id/restaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/restaurant_name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:id="@+id/restaurantRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rating"
+                android:textSize="16sp"/>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/restaurantImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/restaurant_image"
+            android:src="@drawable/restaurant_img"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true" />
+
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
