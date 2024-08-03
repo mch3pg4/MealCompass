@@ -92,4 +92,5 @@
     <string name="back">Back</string>
     <string name="recommended_text">Recommended for you</string>
     <string name="item_name">Item 1</string>
+    <string name="restaurants_string">Restaurants</string>
 </resources>

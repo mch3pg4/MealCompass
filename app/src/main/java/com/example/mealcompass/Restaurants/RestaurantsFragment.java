@@ -24,13 +24,6 @@ public class RestaurantsFragment extends Fragment {
     private FragmentRestaurantsBinding binding;
 
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +48,8 @@ public class RestaurantsFragment extends Fragment {
 
         RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
         restaurantsRecyclerView.setAdapter(restaurantsAdapter);
+
+
 
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(RestaurantsFragment.this)

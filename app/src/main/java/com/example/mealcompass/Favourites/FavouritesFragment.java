@@ -24,13 +24,6 @@ public class FavouritesFragment extends Fragment {
     private FragmentFavouritesBinding binding;
 
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +45,7 @@ public class FavouritesFragment extends Fragment {
         List<FavouritesItem> favouritesItem = new ArrayList<>();
         favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, R.drawable.baseline_favorite_24, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
         
-        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, R.drawable.baseline_favorite_24, "The Fat British","17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
+        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, R.drawable.baseline_favorite_24, "Georgetown","17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
 
 
         FavouritesAdapter favouritesAdapter = new FavouritesAdapter(favouritesItem);

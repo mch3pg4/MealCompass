@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -49,6 +50,21 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.home) {
+                navController.navigate(R.id.homeFragment);
+            } else if (id == R.id.restaurants) {
+                navController.navigate(R.id.restaurantsFragment);
+            } else if (id == R.id.discover) {
+                navController.navigate(R.id.discoverFragment);
+            } else if (id == R.id.favourites) {
+                navController.navigate(R.id.favoruitesFragment);
+            }
+            return true;
+        });
+
         // do not show title in the top app bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
@@ -61,28 +77,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.home) {
-                navController.navigate(R.id.homeFragment);
-                return true;
-            }
-            else if (id == R.id.restaurants) {
-                navController.navigate(R.id.restaurantsFragment);
-                return true;
-            }
-            else if (id == R.id.discover) {
-                navController.navigate(R.id.discoverFragment);
-                return true;
-            }
-            else if (id == R.id.favourites) {
-                navController.navigate(R.id.favoruitesFragment);
-                return true;
-            }
-            return false;
-        });
-
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
