@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_discoverFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_discoverArticleFragment"
+            app:destination="@id/discoverArticleFragment" />
     </fragment>
     <fragment
         android:id="@+id/restaurantsFragment"
@@ -52,4 +55,9 @@
             android:id="@+id/action_favoruitesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/discoverArticleFragment"
+        android:name="com.example.mealcompass.DiscoverArticleFragment"
+        android:label="fragment_discover_article"
+        tools:layout="@layout/fragment_discover_article" />
 </navigation>

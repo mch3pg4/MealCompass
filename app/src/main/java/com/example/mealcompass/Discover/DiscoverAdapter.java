@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealcompass.R;
@@ -56,7 +58,11 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         holder.discoverArticleDescription.setText(discoverItem.getDiscoverArticleDescription());
         holder.discoverImage.setImageResource(discoverItem.getDiscoverImage());
         holder.readMoreButton.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Read more button clicked", Toast.LENGTH_SHORT).show();
+            // Navigate to the DiscoverDetailsFragment
+            Navigation.findNavController(holder.readMoreButton)
+                    .navigate(R.id.action_discoverFragment_to_discoverArticleFragment);
+
+
         });
 
     }
