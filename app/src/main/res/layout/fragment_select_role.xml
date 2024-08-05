@@ -1,14 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SelectRoleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/selectRoleTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/select_role"
+        android:textSize="32sp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/selectRoleDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_role_description"
+        app:layout_constraintTop_toBottomOf="@id/selectRoleTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="12sp"
+        android:padding="3dp"/>
+
+    <TextView
+        android:id="@+id/userRoleDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_role_description"
+        app:layout_constraintTop_toBottomOf="@id/selectRoleDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="12sp"
+        android:padding="3dp"/>
+
+    <TextView
+        android:id="@+id/ownerRoleDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/owner_role_description"
+        app:layout_constraintTop_toBottomOf="@id/userRoleDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="12sp"
+        android:padding="3dp"/>
+
+    <TextView
+        android:id="@+id/adminRoleDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/admin_role_description"
+        app:layout_constraintTop_toBottomOf="@id/ownerRoleDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="12sp"
+        android:padding="3dp"/>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressIndicator"
+        app:trackThickness="4dp"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorPrimaryVariant"
+        android:padding="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adminRoleDescription"
+        />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/userRoleCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressIndicator"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/userRoleImage"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/user_role_image"
+                android:src="@drawable/user"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:padding="20dp"/>
+
+            <TextView
+                android:id="@+id/userRoleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/user_role"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:background="@color/light_color"
+                android:textAlignment="center"
+                />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ownerRoleCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressIndicator"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/ownerRoleImage"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/restaurant_owner_image"
+                android:src="@drawable/restaurant"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:padding="20dp"/>
+
+            <TextView
+                android:id="@+id/ownerRoleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/owner_role"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/light_color"
+                android:textAlignment="center"
+                android:padding="4dp"
+                />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/adminRoleCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ownerRoleCard"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/adminRoleImage"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/admin_role"
+                android:src="@drawable/setting"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:padding="20dp"/>
+
+            <TextView
+                android:id="@+id/adminRoleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/admin_role"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:background="@color/light_color"
+                android:textAlignment="center"
+                android:padding="4dp"
+                />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/onboardingButtonGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/prevButton"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/previous"
+            app:icon="@drawable/baseline_arrow_back_24"
+            android:padding="6dp"
+            android:layout_marginStart="30dp"
+            android:enabled="false"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/refreshResultsButton"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/baseline_arrow_forward_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="6dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/next"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

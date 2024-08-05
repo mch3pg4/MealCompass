@@ -38,7 +38,6 @@
         app:trackThickness="4dp"
         app:indicatorColor="?attr/colorPrimary"
         app:trackColor="?attr/colorPrimaryVariant"
-        app:indicatorCornerRadius="4dp"
         android:padding="3dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
