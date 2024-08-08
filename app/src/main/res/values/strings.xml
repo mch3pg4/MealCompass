@@ -166,4 +166,10 @@
     <string name="german">German</string>
     <string name="italian">Italian</string>
     <string name="others">Others</string>
+    <string name="select_preferences_description">After selecting your preferred cuisine and indicating any allergy issues, MealCompass aims to provide recommendations that are accurate and always relevant based on your feedback.</string>
+    <string name="diet">Diet</string>
+    <string name="settings">Settings</string>
+    <string name="allergy">Allergy</string>
+    <string name="done">Done</string>
+    <string name="allergy_image">Allergy Image</string>
 </resources>
