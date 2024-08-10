@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddRestImageFragment">
+
+    <TextView
+        android:id="@+id/addRestImageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/add_rest_img"
+        android:textSize="32sp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/addRestImageDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_rest_img_description"
+        app:layout_constraintTop_toBottomOf="@id/addRestImageTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="15sp"
+        android:padding="3dp"/>
+
+    <LinearLayout
+        android:id="@+id/addRestImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/addRestImageDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_rest_img"
+            android:layout_marginTop="15dp"
+            app:icon="@drawable/baseline_add_24"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            app:cornerRadius="5dp"
+            />
+
+        <TextView
+            android:id="@+id/itemImagePreviewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rest_img_preview"
+            android:textSize="16sp"
+            android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:id="@+id/itemImagePreview"
+            android:layout_width="match_parent"
+            android:contentDescription="@string/item_image_preview"
+            android:layout_height="240dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/onboardingButtonGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/prevButton"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/previous"
+            app:icon="@drawable/baseline_arrow_back_24"
+            android:padding="6dp"
+            android:layout_marginStart="30dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nextButton"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/baseline_arrow_forward_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="6dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/next"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

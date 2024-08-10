@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/home"
+        android:icon="@drawable/baseline_home_24"
+        android:id="@+id/home"/>
+    <item android:title="@string/helpdesk"
+        android:icon="@drawable/baseline_help_outline_24"
+        android:id="@+id/helpdesk"
+        />
+    <item android:title="@string/discover"
+        android:icon="@drawable/baseline_newspaper_24"
+        android:id="@+id/discover"/>
+</menu>
