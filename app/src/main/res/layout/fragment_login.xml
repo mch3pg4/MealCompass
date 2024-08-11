@@ -36,7 +36,7 @@
         android:id="@+id/appImage"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:contentDescription="@string/appicon"
+        android:contentDescription="@string/appIcon"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_marginTop="50dp"

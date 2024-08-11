@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/menuItemImage"
-            android:contentDescription="@string/menuitem_image"
+            android:contentDescription="@string/menu_item_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"

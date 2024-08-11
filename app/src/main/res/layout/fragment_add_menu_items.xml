@@ -118,7 +118,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/item_nutritonal_value"
+                android:hint="@string/item_nutritional_value"
                 android:layout_marginTop="10dp"
                 >
 
@@ -168,7 +168,6 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
                     android:hint="@string/allergy_ingredients"

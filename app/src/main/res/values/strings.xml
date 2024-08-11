@@ -87,7 +87,7 @@
     <string name="distance">Distance</string>
     <string name="rate_recommendation">Rate\n recommendation</string>
     <string name="refresh_results">Refresh results</string>
-    <string name="historyofrestaurants">History of recommended restaurants</string>
+    <string name="historyOfRestaurants">History of recommended restaurants</string>
     <string name="search_favourites_hint">Search for your favourite restaurant…</string>
     <string name="back">Back</string>
     <string name="recommended_text">Recommended for you</string>
@@ -102,7 +102,7 @@
     <string name="itemCategory">Item Category</string>
     <string name="itemAllergens">Item Allergens</string>
     <string name="itemCalories">Item Calories</string>
-    <string name="appicon">App Logo</string>
+    <string name="appIcon">App Logo</string>
     <string name="welcome_text">Welcome to MealCompass, a Food Recommendation System that aims to deliver accurate results and healthy suggestions based on your personal preferences.</string>
     <string name="login">Log In</string>
     <string name="signup">Sign Up</string>
@@ -125,7 +125,7 @@
     <string name="cancel">Cancel</string>
     <string name="onboarding">Cooking Up Your Preferences</string>
     <string name="onboarding_description">After selecting your preferred cuisine choices and indicating any allergy issues, MealCompass aims to provide recommendations that are accurate and relevant based on your feedback.</string>
-    <string name="onboarding_text">This may take a while... A new experience is waiting for you...</string>
+    <string name="onboarding_text">This may take a while… A new experience is waiting for you…</string>
     <string name="get_started">Proceed</string>
     <string name="register">Register for a MealCompass Account</string>
     <string name="register_description">Unlock new possibilities and innovations in food recommendations based on your preferences.</string>
@@ -141,7 +141,7 @@
     <string name="show_reviews">All Reviews</string>
     <string name="recommended_for_you">Recommended For You</string>
     <string name="full_menu">Full Menu</string>
-    <string name="menuitem_image">Menu Item Image</string>
+    <string name="menu_item_image">Menu Item Image</string>
     <string name="select_role">Select a role</string>
     <string name="select_role_description">There are few roles to choose from:</string>
     <string name="user_role_description">User: Receives recommendation on food based on preferences.</string>
@@ -192,11 +192,26 @@
     <string name="add_menu_items_description">Add menu items into your restaurant.</string>
     <string name="add_more">Add more</string>
     <string name="item_desc">Item Description</string>
-    <string name="item_nutritonal_value">Item Nutritional Value</string>
+    <string name="item_nutritional_value">Item Nutritional Value</string>
     <string name="allergy_ingredients">Allergy Ingredients</string>
     <string name="add_item_image">Add Item Image</string>
     <string name="item_image_preview">Item Image Preview</string>
     <string name="add_rest_img">Add Restaurant Image</string>
     <string name="add_rest_img_description">Add your restaurant image here.</string>
     <string name="rest_img_preview">Restaurant Image Preview</string>
+    <string name="welcome_admin">Welcome, Admin</string>
+    <string name="shortcuts">Shortcuts</string>
+    <string name="postArticle">Post a new article</string>
+    <string name="show_all_requests">Show all requests</string>
+    <string name="show_all_restaurants">Show all restaurants</string>
+    <string name="welcome_rest_owner">Welcome, Restaurant Owner</string>
+    <string name="reviews_and_ratings">Reviews and ratings</string>
+    <string name="edit_rest_details">Edit restaurant details</string>
+    <string name="manage_menu_items">Manage menu items</string>
+    <string name="status">Status: Approved</string>
+    <string name="restaurant_details">Restaurant Details</string>
+    <string name="restaurant_requests">Restaurant Requests</string>
+    <string name="showAll">Show All</string>
+    <string name="restaurant_list">Restaurant List</string>
+    <string name="users">Users</string>
 </resources>
