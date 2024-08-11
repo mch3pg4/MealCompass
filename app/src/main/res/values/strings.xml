@@ -214,4 +214,9 @@
     <string name="showAll">Show All</string>
     <string name="restaurant_list">Restaurant List</string>
     <string name="users">Users</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="more_button">More</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

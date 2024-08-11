@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/restaurant_image"
             android:src="@drawable/restaurant_img"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true" />
 
 
