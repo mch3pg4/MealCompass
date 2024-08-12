@@ -1,4 +1,4 @@
-package com.example.mealcompass;
+package com.example.mealcompass.RestaurantOwner;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mealcompass.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TermsAndConditionsFragment#newInstance} factory method to
+ * Use the {@link AddRestImageFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TermsAndConditionsFragment extends Fragment {
+public class AddRestImageFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class TermsAndConditionsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TermsAndConditionsFragment() {
+    public AddRestImageFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class TermsAndConditionsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TermsAndConditionsFragment.
+     * @return A new instance of fragment AddRestImageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TermsAndConditionsFragment newInstance(String param1, String param2) {
-        TermsAndConditionsFragment fragment = new TermsAndConditionsFragment();
+    public static AddRestImageFragment newInstance(String param1, String param2) {
+        AddRestImageFragment fragment = new AddRestImageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class TermsAndConditionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_terms_and_conditions, container, false);
+        return inflater.inflate(R.layout.fragment_add_rest_image, container, false);
     }
 }

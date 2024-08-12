@@ -1,4 +1,4 @@
-package com.example.mealcompass;
+package com.example.mealcompass.RestaurantOwner;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mealcompass.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RestaurantDetailsFragment#newInstance} factory method to
+ * Use the {@link FillInRestDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RestaurantDetailsFragment extends Fragment {
+public class FillInRestDetailsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class RestaurantDetailsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public RestaurantDetailsFragment() {
+    public FillInRestDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class RestaurantDetailsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RestaurantDetailsFragment.
+     * @return A new instance of fragment FillInRestDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RestaurantDetailsFragment newInstance(String param1, String param2) {
-        RestaurantDetailsFragment fragment = new RestaurantDetailsFragment();
+    public static FillInRestDetailsFragment newInstance(String param1, String param2) {
+        FillInRestDetailsFragment fragment = new FillInRestDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class RestaurantDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant_details, container, false);
+        return inflater.inflate(R.layout.fragment_fill_in_rest_details, container, false);
     }
 }

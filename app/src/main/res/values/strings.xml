@@ -219,4 +219,5 @@
     <string name="more_button">More</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="add_article">Add new article</string>
 </resources>

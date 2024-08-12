@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RegisterFragment">
+    tools:context=".Register.RegisterFragment">
 
     <TextView
         android:id="@+id/registerTitle"
@@ -104,6 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:helperText="@string/passwordRequirements"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -111,7 +112,6 @@
             android:layout_width="match_parent"
             android:drawableStart="@drawable/baseline_password_24"
             android:drawablePadding="10dp"
-            android:layout_marginBottom="12dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
@@ -129,6 +129,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:helperText="@string/passwordRequirements"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -136,25 +137,43 @@
             android:layout_width="match_parent"
             android:drawableStart="@drawable/baseline_password_24"
             android:drawablePadding="10dp"
-            android:layout_marginBottom="12dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
-    
-    <CheckBox
-        android:id="@+id/acceptTermsCheckBox"
+
+    <LinearLayout
+        android:id="@+id/acceptTermsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/accept_terms"
-        android:layout_margin="40dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTextInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
-        />
+        android:layout_margin="30dp">
+
+        <CheckBox
+            android:id="@+id/acceptTermsCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/acceptTermsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/accept_terms"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            />
+
+
+    </LinearLayout>
+    
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerButton"
@@ -164,7 +183,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/acceptTermsCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/acceptTermsLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

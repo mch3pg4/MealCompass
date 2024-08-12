@@ -15,6 +15,15 @@
         <action
             android:id="@+id/action_homeFragment_to_restaurantsFragment"
             app:destination="@id/restaurantsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoruitesFragment"
+            app:destination="@id/favoruitesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_menuItemFragment"
+            app:destination="@id/menuItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -45,6 +54,9 @@
         <action
             android:id="@+id/action_restaurantsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_restaurantsFragment_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoruitesFragment"
@@ -62,57 +74,193 @@
         tools:layout="@layout/fragment_discover_article" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.mealcompass.ForgotPasswordFragment"
+        android:name="com.example.mealcompass.Register.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.mealcompass.LoginFragment"
+        android:name="com.example.mealcompass.Register.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_restaurantOwnerFragment"
+            app:destination="@id/restaurantOwnerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.example.mealcompass.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.mealcompass.Register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_termsAndConditionsFragment"
+            app:destination="@id/termsAndConditionsFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_selectRoleFragment2"
+            app:destination="@id/selectRoleFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantDetailsFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.RestaurantDetailsFragment"
+        android:label="fragment_restaurant_details"
+        tools:layout="@layout/fragment_restaurant_details" >
+        <action
+            android:id="@+id/action_restaurantDetailsFragment_to_menuItemFragment"
+            app:destination="@id/menuItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectAllergyFragment"
+        android:name="com.example.mealcompass.Register.SelectAllergyFragment"
+        android:label="fragment_select_allergy"
+        tools:layout="@layout/fragment_select_allergy" >
+        <action
+            android:id="@+id/action_selectAllergyFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment" />
+        <action
+            android:id="@+id/action_selectAllergyFragment_to_selectDietFragment"
+            app:destination="@id/selectDietFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectDietFragment"
+        android:name="com.example.mealcompass.Register.SelectDietFragment"
+        android:label="fragment_select_diet"
+        tools:layout="@layout/fragment_select_diet" >
+        <action
+            android:id="@+id/action_selectDietFragment_to_selectAllergyFragment"
+            app:destination="@id/selectAllergyFragment" />
+        <action
+            android:id="@+id/action_selectDietFragment_to_selectCuisineFragment2"
+            app:destination="@id/selectCuisineFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsAndConditionsFragment"
+        android:name="com.example.mealcompass.Register.TermsAndConditionsFragment"
+        android:label="fragment_terms_and_conditions"
+        tools:layout="@layout/fragment_terms_and_conditions" >
+        <action
+            android:id="@+id/action_termsAndConditionsFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.mealcompass.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMenuItemsFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.AddMenuItemsFragment"
+        android:label="fragment_add_menu_items"
+        tools:layout="@layout/fragment_add_menu_items" >
+        <action
+            android:id="@+id/action_addMenuItemsFragment_to_addRestImageFragment"
+            app:destination="@id/addRestImageFragment" />
+        <action
+            android:id="@+id/action_addMenuItemsFragment_to_restaurantOwnerFragment"
+            app:destination="@id/restaurantOwnerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRestImageFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.AddRestImageFragment"
+        android:label="fragment_add_rest_image"
+        tools:layout="@layout/fragment_add_rest_image" >
+        <action
+            android:id="@+id/action_addRestImageFragment_to_fillInRestDetailsFragment"
+            app:destination="@id/fillInRestDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.example.mealcompass.AdminFragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" />
+    <fragment
+        android:id="@+id/fillInRestDetailsFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.FillInRestDetailsFragment"
+        android:label="fragment_fill_in_rest_details"
+        tools:layout="@layout/fragment_fill_in_rest_details" >
+        <action
+            android:id="@+id/action_fillInRestDetailsFragment_to_addRestImageFragment"
+            app:destination="@id/addRestImageFragment" />
+        <action
+            android:id="@+id/action_fillInRestDetailsFragment_to_selectRoleFragment2"
+            app:destination="@id/selectRoleFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpdeskFragment"
+        android:name="com.example.mealcompass.HelpdeskFragment"
+        android:label="fragment_helpdesk"
+        tools:layout="@layout/fragment_helpdesk" />
+    <fragment
+        android:id="@+id/restaurantOwnerFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.RestaurantOwnerFragment"
+        android:label="fragment_restaurant_owner"
+        tools:layout="@layout/fragment_restaurant_owner" />
+    <fragment
+        android:id="@+id/selectRoleFragment2"
+        android:name="com.example.mealcompass.Register.SelectRoleFragment"
+        android:label="fragment_select_role"
+        tools:layout="@layout/fragment_select_role" >
+        <action
+            android:id="@+id/action_selectRoleFragment2_to_selectCuisineFragment2"
+            app:destination="@id/selectCuisineFragment2" />
+        <action
+            android:id="@+id/action_selectRoleFragment2_to_fillInRestDetailsFragment"
+            app:destination="@id/fillInRestDetailsFragment" />
+        <action
+            android:id="@+id/action_selectRoleFragment2_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectCuisineFragment2"
+        android:name="com.example.mealcompass.Register.SelectCuisineFragment"
+        android:label="fragment_select_cuisine"
+        tools:layout="@layout/fragment_select_cuisine" >
+        <action
+            android:id="@+id/action_selectCuisineFragment2_to_selectDietFragment"
+            app:destination="@id/selectDietFragment" />
+        <action
+            android:id="@+id/action_selectCuisineFragment2_to_selectRoleFragment22"
+            app:destination="@id/selectRoleFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/menuItemFragment"
         android:name="com.example.mealcompass.MenuItemFragment"
         android:label="fragment_menu_item"
         tools:layout="@layout/fragment_menu_item" />
-    <fragment
-        android:id="@+id/onboardingFragment"
-        android:name="com.example.mealcompass.OnboardingFragment"
-        android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" />
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.mealcompass.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
-    <fragment
-        android:id="@+id/restaurantDetailsFragment"
-        android:name="com.example.mealcompass.RestaurantDetailsFragment"
-        android:label="fragment_restaurant_details"
-        tools:layout="@layout/fragment_restaurant_details" />
-    <fragment
-        android:id="@+id/selectAllergyFragment"
-        android:name="com.example.mealcompass.SelectAllergyFragment"
-        android:label="fragment_select_allergy"
-        tools:layout="@layout/fragment_select_allergy" />
-    <fragment
-        android:id="@+id/selectRoleFragment"
-        android:name="com.example.mealcompass.SelectRoleFragment"
-        android:label="fragment_select_cuisine"
-        tools:layout="@layout/fragment_select_cuisine" />
-    <fragment
-        android:id="@+id/selectDietFragment"
-        android:name="com.example.mealcompass.SelectDietFragment"
-        android:label="fragment_select_diet"
-        tools:layout="@layout/fragment_select_diet" />
-    <fragment
-        android:id="@+id/termsAndConditionsFragment"
-        android:name="com.example.mealcompass.TermsAndConditionsFragment"
-        android:label="fragment_terms_and_conditions"
-        tools:layout="@layout/fragment_terms_and_conditions" />
-    <fragment
-        android:id="@+id/welcomeFragment"
-        android:name="com.example.mealcompass.WelcomeFragment"
-        android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" />
 </navigation>

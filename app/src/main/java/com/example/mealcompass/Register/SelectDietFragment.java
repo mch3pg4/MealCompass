@@ -1,4 +1,4 @@
-package com.example.mealcompass;
+package com.example.mealcompass.Register;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mealcompass.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SelectAllergyFragment#newInstance} factory method to
+ * Use the {@link SelectDietFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SelectAllergyFragment extends Fragment {
+public class SelectDietFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class SelectAllergyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SelectAllergyFragment() {
+    public SelectDietFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class SelectAllergyFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SelectAllergyFragment.
+     * @return A new instance of fragment SelectDietFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SelectAllergyFragment newInstance(String param1, String param2) {
-        SelectAllergyFragment fragment = new SelectAllergyFragment();
+    public static SelectDietFragment newInstance(String param1, String param2) {
+        SelectDietFragment fragment = new SelectDietFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class SelectAllergyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_allergy, container, false);
+        return inflater.inflate(R.layout.fragment_select_diet, container, false);
     }
 }
