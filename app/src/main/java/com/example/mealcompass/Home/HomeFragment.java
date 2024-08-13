@@ -1,5 +1,6 @@
 package com.example.mealcompass.Home;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,9 +9,14 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
@@ -72,8 +78,50 @@ public class HomeFragment extends Fragment {
         RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
         recommendItemRecyclerView.setAdapter(recommendItemAdapter);
 
-        binding.rateRecommendationButton.setOnClickListener(
-                v -> Toast.makeText(getContext(), "Rate recommendation button pressed", Toast.LENGTH_SHORT).show());
+//        FrameLayout blurOverlay = view.findViewById(R.id.blurOverlay);
+
+        binding.rateRecommendationButton.setOnClickListener(v -> {
+            //inflate popup layout
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.rate_recommendation_popup, null);
+
+            //create popup window
+            final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+            //blur fragment
+//            blurOverlay.setVisibility(View.VISIBLE);
+
+            RatingBar ratingBar = popupView.findViewById(R.id.ratingBar);
+
+            //show the popup window
+            popupWindow.showAtLocation(v, Gravity.CENTER,0, 0);
+
+            popupView.findViewById(R.id.confirmRatingButton).setOnClickListener(v1 -> {
+                        float rating = ratingBar.getRating();
+                        Toast.makeText(getContext(), "You have rated " + rating + "/5.0 stars", Toast.LENGTH_SHORT).show();
+                        popupWindow.dismiss();
+                    });
+
+            //close the popup window on button click
+            popupView.findViewById(R.id.closeRateRecommendation).setOnClickListener(v1 -> {
+                        popupWindow.dismiss();
+//                        blurOverlay.setVisibility(View.GONE);
+                    });
+
+
+            popupView.findViewById(R.id.cancelRatingButton).setOnClickListener(v1 -> {
+                popupWindow.dismiss();
+//                blurOverlay.setVisibility(View.GONE);
+            });
+
+//                blurOverlay.setVisibility(View.GONE);
+
+        });
+
+
+
+
+
 
         binding.refreshResultsButton.setOnClickListener(
                 v -> Toast.makeText(getContext(), "Refreshing results pressed", Toast.LENGTH_SHORT).show());

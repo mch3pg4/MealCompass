@@ -7,31 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DiscoverArticleFragment">
 
-    <TextView
-        android:id="@+id/discoverTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/discover"
-        android:textSize="32sp"
-        android:gravity="center_vertical"
-        android:layout_marginStart="3dp"
-        app:layout_constraintEnd_toStartOf="@id/profileImageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/profileImageButton"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:contentDescription="@string/profile_image"
-        android:background="@drawable/roundbutton"
-        android:src="@drawable/baseline_account_circle_24"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        app:layout_constraintStart_toEndOf="@+id/discoverTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/discoverArticleImage"
@@ -40,9 +16,10 @@
         android:src="@drawable/discover_img"
         android:contentDescription="@string/discover_image"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/profileImageButton"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
         android:padding="6dp"/>
 
     <TextView

@@ -49,10 +49,44 @@ public class SelectCuisineFragment extends Fragment {
 
         binding.progressIndicator.setProgress(3);
 
-        //grey color filter for clicked shapeable image view
-        //shapeableImageView.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-
-
+        //grey color filter to show cuisine is selected
+        if (binding.malay.isSelected()){
+            binding.malay.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.chinese.isSelected()) {
+            binding.chinese.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.indian.isSelected()) {
+            binding.indian.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.western.isSelected()) {
+            binding.western.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.japanese.isSelected()) {
+            binding.japanese.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.korean.isSelected()) {
+            binding.korean.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.thai.isSelected()) {
+            binding.thai.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.italian.isSelected()) {
+            binding.italian.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.nyonya.isSelected()) {
+            binding.nyonya.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.middleEastern.isSelected()) {
+            binding.middleEastern.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.german.isSelected()) {
+            binding.german.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        } else if (binding.others.isSelected()) {
+            binding.others.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+            binding.nextButton.setClickable(true);
+        }
 
 
     }

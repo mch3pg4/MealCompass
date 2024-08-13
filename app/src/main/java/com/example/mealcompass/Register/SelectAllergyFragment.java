@@ -1,60 +1,32 @@
 package com.example.mealcompass.Register;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.databinding.FragmentSelectAllergyBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SelectAllergyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+
 public class SelectAllergyFragment extends Fragment {
+    private FragmentSelectAllergyBinding binding;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SelectAllergyFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SelectAllergyFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SelectAllergyFragment newInstance(String param1, String param2) {
-        SelectAllergyFragment fragment = new SelectAllergyFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -62,5 +34,54 @@ public class SelectAllergyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_select_allergy, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //set next button to not clickable first
+        binding.doneButton.setClickable(false);
+
+        //create list of items for the listview
+        ArrayList<SelectAllergyItem> allergyItemArrayList = new ArrayList<>();
+        allergyItemArrayList.add(new SelectAllergyItem("Dairy", R.drawable.dairy, false));
+        allergyItemArrayList.add(new SelectAllergyItem("Soybean", R.drawable.soybean, false));
+        allergyItemArrayList.add(new SelectAllergyItem("Nut", R.drawable.nut, false));
+        allergyItemArrayList.add(new SelectAllergyItem("Seafood", R.drawable.seafood, false));
+        allergyItemArrayList.add(new SelectAllergyItem("Wheat", R.drawable.wheat, false));
+
+        binding.allergyList.setAdapter(new SelectAllergyAdapter(requireContext(), allergyItemArrayList));
+
+        binding.allergyList.setOnItemClickListener((parent, view1, position, id) -> {
+            SelectAllergyItem currentItem = allergyItemArrayList.get(position);
+            currentItem.setChecked(!currentItem.isChecked());
+            binding.allergyList.invalidateViews();
+
+            //check if any item is checked
+            boolean anyChecked = false;
+            for (SelectAllergyItem item : allergyItemArrayList) {
+                if (item.isChecked()) {
+                    anyChecked = true;
+                    break;
+                }
+            }
+
+            //if any item is checked, set done button to clickable and proceed to next fragment
+            binding.doneButton.setClickable(anyChecked);
+            binding.doneButton.setOnClickListener(v -> NavHostFragment.findNavController(SelectAllergyFragment.this)
+                    .navigate(R.id.action_selectAllergyFragment_to_onboardingFragment));
+        });
+
+
+        binding.prevButton.setOnClickListener(v -> {
+            // Navigate to the previous fragment
+            NavHostFragment.findNavController(SelectAllergyFragment.this)
+                    .navigate(R.id.action_selectAllergyFragment_to_selectDietFragment);
+        });
+
+        binding.progressIndicator.setProgress(9);
+
+
     }
 }

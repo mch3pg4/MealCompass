@@ -107,7 +107,7 @@
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.mealcompass.OnboardingFragment"
+        android:name="com.example.mealcompass.Register.OnboardingFragment"
         android:label="fragment_onboarding"
         tools:layout="@layout/fragment_onboarding" >
         <action
@@ -152,7 +152,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectDietFragment"
-        android:name="com.example.mealcompass.Register.SelectDietFragment"
+        android:name="com.example.mealcompass.Register.SelectDiet.SelectDietFragment"
         android:label="fragment_select_diet"
         tools:layout="@layout/fragment_select_diet" >
         <action

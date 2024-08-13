@@ -3,7 +3,9 @@ package com.example.mealcompass.Discover;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         public TextView authorName, timePosted, discoverArticleTitle, discoverArticleDescription;
         public ImageView discoverImage;
         public MaterialButton readMoreButton;
+        public ImageButton moreOptionsButton;
 
         public ViewHolder(View view) {
             super(view);
@@ -34,6 +37,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             discoverArticleDescription = view.findViewById(R.id.discoverArticleDescription);
             discoverImage = view.findViewById(R.id.discoverImage);
             readMoreButton = view.findViewById(R.id.readMoreButton);
+            moreOptionsButton = view.findViewById(R.id.moreButton);
         }
 
     }
@@ -61,10 +65,26 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             // Navigate to the DiscoverDetailsFragment
             Navigation.findNavController(holder.readMoreButton)
                     .navigate(R.id.action_discoverFragment_to_discoverArticleFragment);
-
-
         });
 
+        holder.moreOptionsButton.setOnClickListener(v -> {
+            // Create a PopupMenu
+            PopupMenu popupMenu = new PopupMenu(holder.moreOptionsButton.getContext(), holder.moreOptionsButton);
+            // Inflate the menu resource
+            popupMenu.getMenuInflater().inflate(R.menu.discover_card_menu, popupMenu.getMenu());
+
+            // Handle menu item clicks
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                // Handle Delete action
+                if (itemId == R.id.edit) {
+                    // Handle Edit action
+                    return true;
+                } else return itemId == R.id.delete;
+            });
+            // Show the popup menu
+            popupMenu.show();
+        });
     }
 
     @Override
