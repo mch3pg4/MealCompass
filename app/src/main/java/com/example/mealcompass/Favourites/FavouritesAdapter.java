@@ -3,6 +3,7 @@ package com.example.mealcompass.Favourites;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,13 +19,14 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
 
 
     public static class FavouritesViewHolder extends RecyclerView.ViewHolder {
-        public ImageView restaurantImage, restaurantFavourite;
+        public ImageView restaurantImage;
         public TextView restaurantName;
         public TextView restaurantAddress;
         public TextView restaurantCuisine;
         public TextView restaurantRating;
         public TextView restaurantPrice;
         public TextView restaurantOpenOrClose;
+        public CheckBox restaurantFavourite;
 
         public FavouritesViewHolder(View view) {
             super(view);
@@ -63,6 +65,14 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         holder.restaurantRating.setText(currentItem.getRestaurantRating());
         holder.restaurantPrice.setText(currentItem.getRestaurantPrice());
         holder.restaurantOpenOrClose.setText(currentItem.getRestaurantOpenOrClose());
+        // Set initial state of the CheckBox
+        holder.restaurantFavourite.setChecked(currentItem.isRestaurantFavourite());
+
+        // Handle the CheckBox state change
+        holder.restaurantFavourite.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Update your data model if needed
+            currentItem.setRestaurantFavourite(isChecked);
+        });
     }
 
     @Override

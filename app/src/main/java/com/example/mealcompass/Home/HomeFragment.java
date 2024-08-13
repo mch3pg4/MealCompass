@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -81,42 +82,45 @@ public class HomeFragment extends Fragment {
 //        FrameLayout blurOverlay = view.findViewById(R.id.blurOverlay);
 
         binding.rateRecommendationButton.setOnClickListener(v -> {
-            //inflate popup layout
+            // Inflate the popup layout
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View popupView = inflater.inflate(R.layout.rate_recommendation_popup, null);
 
-            //create popup window
+            // Create the popup window
             final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
 
-            //blur fragment
-//            blurOverlay.setVisibility(View.VISIBLE);
+            // Set focusable and elevation for the popup window
+            popupWindow.setFocusable(true);
+            popupWindow.setElevation(150);
 
+            // Blur the background
+            WindowManager.LayoutParams layoutParams = requireActivity().getWindow().getAttributes();
+            layoutParams.dimAmount = 0.8f; // Adjust the dim amount as needed
+            requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            requireActivity().getWindow().setAttributes(layoutParams);
+
+            // Show the popup window at the center
+            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+            // Handle rating bar logic
             RatingBar ratingBar = popupView.findViewById(R.id.ratingBar);
-
-            //show the popup window
-            popupWindow.showAtLocation(v, Gravity.CENTER,0, 0);
-
             popupView.findViewById(R.id.confirmRatingButton).setOnClickListener(v1 -> {
-                        float rating = ratingBar.getRating();
-                        Toast.makeText(getContext(), "You have rated " + rating + "/5.0 stars", Toast.LENGTH_SHORT).show();
-                        popupWindow.dismiss();
-                    });
-
-            //close the popup window on button click
-            popupView.findViewById(R.id.closeRateRecommendation).setOnClickListener(v1 -> {
-                        popupWindow.dismiss();
-//                        blurOverlay.setVisibility(View.GONE);
-                    });
-
-
-            popupView.findViewById(R.id.cancelRatingButton).setOnClickListener(v1 -> {
-                popupWindow.dismiss();
-//                blurOverlay.setVisibility(View.GONE);
+                float rating = ratingBar.getRating();
+                Toast.makeText(getContext(), "You have rated " + rating + "/5.0 stars", Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();  // Close the popup
             });
 
-//                blurOverlay.setVisibility(View.GONE);
+            // Close the popup window on button click
+            popupView.findViewById(R.id.closeRateRecommendation).setOnClickListener(v1 -> popupWindow.dismiss());
 
+            // Restore the original dimming effect when the popup is dismissed
+            popupWindow.setOnDismissListener(() -> {
+                WindowManager.LayoutParams originalParams = requireActivity().getWindow().getAttributes();
+                originalParams.dimAmount = 0f; // Reset dim amount to default
+                requireActivity().getWindow().setAttributes(originalParams);
+            });
         });
+
 
 
 

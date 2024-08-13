@@ -8,9 +8,9 @@ public class RestaurantItem {
     private final String restaurantRating;
     private final String restaurantPrice;
     private final String restaurantOpenOrClose;
-    private final int restaurantFavourite;
+    private boolean isRestaurantFavourite;
 
-    public RestaurantItem(int restaurantImage, String restaurantName, String restaurantAddress, String restaurantCuisine, String restaurantRating, String restaurantPrice, String restaurantOpenOrClose, int restaurantFavourite) {
+    public RestaurantItem(int restaurantImage, String restaurantName, String restaurantAddress, String restaurantCuisine, String restaurantRating, String restaurantPrice, String restaurantOpenOrClose, boolean isRestaurantFavourite) {
         this.restaurantImage = restaurantImage;
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
@@ -18,7 +18,7 @@ public class RestaurantItem {
         this.restaurantRating = restaurantRating;
         this.restaurantPrice = restaurantPrice;
         this.restaurantOpenOrClose = restaurantOpenOrClose;
-        this.restaurantFavourite = restaurantFavourite;
+        this.isRestaurantFavourite = isRestaurantFavourite;
     }
 
     public int getRestaurantImage() {
@@ -49,8 +49,12 @@ public class RestaurantItem {
         return restaurantOpenOrClose;
     }
 
-    public int getRestaurantFavourite() {
-        return restaurantFavourite;
+    public boolean isRestaurantFavourite() {
+        return isRestaurantFavourite;
+    }
+
+    public void setRestaurantFavourite(boolean restaurantFavourite) {
+        isRestaurantFavourite = restaurantFavourite;
     }
 
 

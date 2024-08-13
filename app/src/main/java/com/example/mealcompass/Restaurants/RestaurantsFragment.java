@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,14 +41,25 @@ public class RestaurantsFragment extends Fragment {
         restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<RestaurantItem> restaurantItems = new ArrayList<>();
-        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", R.drawable.baseline_favorite_border_24));
+        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", false));
 
-        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", R.drawable.baseline_favorite_border_24));
+        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", false));
 
-        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", R.drawable.baseline_favorite_border_24));
+        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", false));
 
         RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
         restaurantsRecyclerView.setAdapter(restaurantsAdapter);
+
+        // toggle between list and grid view
+        binding.restaurantsViewGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == R.id.listButton) {
+                    restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                } else if (checkedId == R.id.gridButton) {
+                    restaurantsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                }
+            }
+        });
 
 
 

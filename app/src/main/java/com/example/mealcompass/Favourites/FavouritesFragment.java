@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,13 +44,24 @@ public class FavouritesFragment extends Fragment {
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<FavouritesItem> favouritesItem = new ArrayList<>();
-        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, R.drawable.baseline_favorite_24, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
+        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, false, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
         
-        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, R.drawable.baseline_favorite_24, "Georgetown","17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
+        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, false, "Georgetown","17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
 
 
         FavouritesAdapter favouritesAdapter = new FavouritesAdapter(favouritesItem);
         favouritesRecyclerView.setAdapter(favouritesAdapter);
+
+        // Toggle between list and grid view
+        binding.viewAsButtonGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == R.id.viewAsList) {
+                    favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                } else if (checkedId == R.id.viewAsGrid) {
+                    favouritesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                }
+            }
+        });
 
 
         binding.profileImageButton.setOnClickListener(

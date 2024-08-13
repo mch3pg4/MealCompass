@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mealcompass.R;
 import com.example.mealcompass.databinding.FragmentDiscoverBinding;
@@ -56,6 +57,10 @@ public class DiscoverFragment extends Fragment {
 
         DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems);
         discoverRecyclerView.setAdapter(discoverAdapter);
+
+        binding.addFab.setOnClickListener(
+                v-> Toast.makeText(getContext(), "Add a new article", Toast.LENGTH_SHORT).show()
+        );
 
 
 

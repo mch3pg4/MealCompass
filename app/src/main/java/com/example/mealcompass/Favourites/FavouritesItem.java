@@ -1,11 +1,12 @@
 package com.example.mealcompass.Favourites;
 
 public class FavouritesItem {
-    private final int restaurantImage, restaurantFavourite;
+    private final int restaurantImage;
     private final String restaurantName, restaurantAddress, restaurantCuisine, restaurantRating, restaurantPrice, restaurantOpenOrClose;
+    private boolean isRestaurantFavourite;
 
-    public FavouritesItem(int restaurantImage, int restaurantFavourite, String restaurantName, String restaurantAddress, String restaurantCuisine, String restaurantRating, String restaurantPrice, String restaurantOpenOrClose) {
-        this.restaurantFavourite = restaurantFavourite;
+    public FavouritesItem(int restaurantImage, boolean isRestaurantFavourite, String restaurantName, String restaurantAddress, String restaurantCuisine, String restaurantRating, String restaurantPrice, String restaurantOpenOrClose) {
+        this.isRestaurantFavourite = isRestaurantFavourite;
         this.restaurantImage = restaurantImage;
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
@@ -15,8 +16,12 @@ public class FavouritesItem {
         this.restaurantOpenOrClose = restaurantOpenOrClose;
     }
 
-    public int getRestaurantFavourite() {
-        return restaurantFavourite;
+    public boolean isRestaurantFavourite() {
+        return isRestaurantFavourite;
+    }
+
+    public void setRestaurantFavourite(boolean restaurantFavourite) {
+        isRestaurantFavourite = restaurantFavourite;
     }
 
     public int getRestaurantImage() {

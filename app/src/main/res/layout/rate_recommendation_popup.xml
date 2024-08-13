@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/rounded_popup"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -52,9 +52,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:numStars="5"
+        android:progressBackgroundTint="@color/gray"
         android:progressTint="#FDD835"
+        android:secondaryProgressTint="@android:color/transparent"
         android:rating="5"
-        android:stepSize="1"
+        android:stepSize="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
@@ -98,3 +100,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
