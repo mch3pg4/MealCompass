@@ -23,26 +23,20 @@ public class SelectDietFragment extends Fragment {
     private FragmentSelectDietBinding binding;
 
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_diet, container, false);
+        binding = FragmentSelectDietBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //set next button to not clickable first
-        binding.nextButton.setClickable(false);
+        binding.progressIndicator.setProgress(70);
+
 
         //create list of items for the listview
         ArrayList<SelectDietItem> dietItemArrayList = new ArrayList<>();
@@ -57,23 +51,14 @@ public class SelectDietFragment extends Fragment {
         binding.dietList.setAdapter(new SelectDietAdapter(requireContext(), dietItemArrayList));
 
         // if an item is clicked, change the state of the next button
-        binding.dietList.setOnItemClickListener((parent, view1, position, id) -> {
-            SelectDietItem currentItem = dietItemArrayList.get(position);
-            currentItem.setChecked(!currentItem.isChecked());
-            binding.dietList.invalidateViews();
 
-            // check if any item is selected
-            boolean isAnyItemSelected = false;
-            for (SelectDietItem item : dietItemArrayList) {
-                if (item.isChecked()) {
-                    isAnyItemSelected = true;
-                    break;
-                }
-            }
 
-            // if any item is selected, make the next button clickable
-            binding.nextButton.setClickable(isAnyItemSelected);
+        binding.nextButton.setOnClickListener(v -> {
+            // Navigate to the next fragment
+            NavHostFragment.findNavController(SelectDietFragment.this)
+                    .navigate(R.id.action_selectDietFragment_to_selectAllergyFragment);
         });
+
 
 
 
@@ -83,7 +68,7 @@ public class SelectDietFragment extends Fragment {
                     .navigate(R.id.action_selectDietFragment_to_selectCuisineFragment2);
         });
 
-        binding.progressIndicator.setProgress(6);
+
 
 
     }

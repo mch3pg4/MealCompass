@@ -22,24 +22,20 @@ public class SelectCuisineFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_cuisine, container, false);
+        binding = FragmentSelectCuisineBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //set next button to not clickable first
-        binding.nextButton.setClickable(false);
+
+
+        binding.progressIndicator.setProgress(50);
 
         binding.prevButton.setOnClickListener(v -> {
             // Navigate to the previous fragment
@@ -47,46 +43,50 @@ public class SelectCuisineFragment extends Fragment {
                     .navigate(R.id.action_selectCuisineFragment2_to_selectRoleFragment22);
         });
 
-        binding.progressIndicator.setProgress(3);
+        binding.nextButton.setOnClickListener(v-> {
+            NavHostFragment.findNavController(SelectCuisineFragment.this)
+                    .navigate(R.id.action_selectCuisineFragment2_to_selectDietFragment);
+        });
 
-        //grey color filter to show cuisine is selected
-        if (binding.malay.isSelected()){
-            binding.malay.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.chinese.isSelected()) {
-            binding.chinese.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.indian.isSelected()) {
-            binding.indian.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.western.isSelected()) {
-            binding.western.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.japanese.isSelected()) {
-            binding.japanese.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.korean.isSelected()) {
-            binding.korean.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.thai.isSelected()) {
-            binding.thai.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.italian.isSelected()) {
-            binding.italian.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.nyonya.isSelected()) {
-            binding.nyonya.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.middleEastern.isSelected()) {
-            binding.middleEastern.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.german.isSelected()) {
-            binding.german.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        } else if (binding.others.isSelected()) {
-            binding.others.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-            binding.nextButton.setClickable(true);
-        }
+
+//        //grey color filter to show cuisine is selected
+//        if (binding.malay.isSelected()){
+//            binding.malay.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.chinese.isSelected()) {
+//            binding.chinese.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.indian.isSelected()) {
+//            binding.indian.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.western.isSelected()) {
+//            binding.western.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.japanese.isSelected()) {
+//            binding.japanese.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.korean.isSelected()) {
+//            binding.korean.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.thai.isSelected()) {
+//            binding.thai.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.italian.isSelected()) {
+//            binding.italian.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.nyonya.isSelected()) {
+//            binding.nyonya.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.middleEastern.isSelected()) {
+//            binding.middleEastern.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.german.isSelected()) {
+//            binding.german.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        } else if (binding.others.isSelected()) {
+//            binding.others.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
+//            binding.nextButton.setClickable(true);
+//        }
 
 
     }

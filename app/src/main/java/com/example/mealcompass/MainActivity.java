@@ -68,12 +68,18 @@ public class MainActivity extends AppCompatActivity {
         // do not show title in the top app bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        //hide top app bar when in main fragments
+        //hide top app bar when in main fragments and hide top app bar and bottom navbar when in login registration fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.homeFragment || destination.getId() == R.id.restaurantsFragment || destination.getId() == R.id.discoverFragment || destination.getId() == R.id.favoruitesFragment) {
                 Objects.requireNonNull(getSupportActionBar()).hide();
+            } else if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.welcomeFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.forgotPasswordFragment || destination.getId() == R.id.addProfilePicFragment
+                    || destination.getId() == R.id.selectRoleFragment2 || destination.getId() == R.id.selectCuisineFragment2 || destination.getId() == R.id.selectDietFragment || destination.getId() == R.id.selectAllergyFragment
+                    || destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.fillInRestDetailsFragment || destination.getId() == R.id.addRestImageFragment || destination.getId() == R.id.addMenuItemsFragment) {
+                Objects.requireNonNull(getSupportActionBar()).hide();
+                binding.bottomNavigationView.setVisibility(View.GONE);
             } else {
                 Objects.requireNonNull(getSupportActionBar()).show();
+                binding.bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -82,8 +88,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
-        return NavigationUI.onNavDestinationSelected(item, navController)
-                || super.onOptionsItemSelected(item);
+
+        if (R.id.logout == item.getItemId()) {
+            navController.navigate(R.id.loginFragment);
+            return true;
+        }
+        return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -92,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
 
     @Override

@@ -17,26 +17,19 @@ public class OnboardingFragment extends Fragment {
     private FragmentOnboardingBinding binding;
 
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_onboarding, container, false);
+        binding = FragmentOnboardingBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.proceedButton.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this).navigate(R.id.action_onboardingFragment_to_homeFragment);
-        });
+
+        binding.proceedButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_onboardingFragment_to_homeFragment));
     }
 }

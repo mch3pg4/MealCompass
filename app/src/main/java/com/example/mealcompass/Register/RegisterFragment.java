@@ -24,23 +24,19 @@ public class RegisterFragment extends Fragment {
     private FragmentRegisterBinding binding;
 
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.progressIndicator.setProgress(10);
 
         // Make "Terms and Conditions" clickable and underlined
         String fullText = "I accept the Terms and Conditions";
@@ -73,8 +69,11 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(getContext(), "Please accept the Terms and Conditions first", Toast.LENGTH_SHORT).show();
             } else {
                 NavHostFragment.findNavController(RegisterFragment.this)
-                        .navigate(R.id.action_registerFragment_to_selectRoleFragment2);
+                        .navigate(R.id.action_registerFragment_to_addProfilePicFragment);
             }
         });
+
+        binding.loginText.setOnClickListener(v -> NavHostFragment.findNavController(RegisterFragment.this)
+                .navigate(R.id.action_registerFragment_to_loginFragment));
     }
 }

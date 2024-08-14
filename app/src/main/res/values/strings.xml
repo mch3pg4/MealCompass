@@ -227,5 +227,9 @@
     <string name="objective_2">2. To develop a system that enables users to find suitable healthy options.</string>
     <string name="objective_3">3. To allow restaurant owners to provide nutritional information for users on each type of food served.</string>
     <string name="ok">OK</string>
+    <string name="logout">Logout</string>
+    <string name="add_profile_pic">Add a Profile Picture</string>
+    <string name="add_profile_pic_description">Before getting started, add a profile picture first.</string>
+    <string name="profile_pic_preview">Profile Picture Preview</string>
 
 </resources>

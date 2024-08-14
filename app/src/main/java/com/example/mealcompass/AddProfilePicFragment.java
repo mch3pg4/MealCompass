@@ -1,4 +1,4 @@
-package com.example.mealcompass.RestaurantOwner;
+package com.example.mealcompass;
 
 import android.os.Bundle;
 
@@ -14,13 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mealcompass.R;
-import com.example.mealcompass.databinding.FragmentAddRestImageBinding;
+import com.example.mealcompass.databinding.FragmentAddProfilePicBinding;
 
-
-public class AddRestImageFragment extends Fragment {
-    private FragmentAddRestImageBinding binding;
+public class AddProfilePicFragment extends Fragment {
+    private FragmentAddProfilePicBinding binding;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+
 
 
     @Override
@@ -30,20 +29,18 @@ public class AddRestImageFragment extends Fragment {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), result -> {
             if (result != null) {
                 // Get the URI of the selected image
-                Log.d("AddRestImageFragment", "Image URI: " + result);
+                Log.d("AddProfilePicFragment", "Image URI: " + result);
 
                 binding.itemImagePreview.setImageURI(result);
             }
         });
     }
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAddRestImageBinding.inflate(inflater, container, false);
+        binding = FragmentAddProfilePicBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -51,23 +48,22 @@ public class AddRestImageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // open gallery
-        binding.addRestImageButton.setOnClickListener(v -> {
+        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(AddProfilePicFragment.this)
+                .navigate(R.id.action_addProfilePicFragment_to_registerFragment));
+
+        binding.nextButton.setOnClickListener(v -> {
+            // Navigate to the next fragment
+            NavHostFragment.findNavController(AddProfilePicFragment.this)
+                    .navigate(R.id.action_addProfilePicFragment_to_selectRoleFragment2);
+        });
+
+        binding.addProfilePicButton.setOnClickListener(v -> {
 
             // Launch the photo picker and let the user choose only images.
             pickMedia.launch(new PickVisualMediaRequest.Builder()
                     .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                     .build());
         });
+        }
 
-
-        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(AddRestImageFragment.this)
-                .navigate(R.id.action_addRestImageFragment_to_fillInRestDetailsFragment));
-
-        binding.nextButton.setOnClickListener(v -> {
-            // Navigate to the next fragment
-            NavHostFragment.findNavController(AddRestImageFragment.this)
-                    .navigate(R.id.action_addRestImageFragment_to_addMenuItemsFragment);
-        });
     }
-}

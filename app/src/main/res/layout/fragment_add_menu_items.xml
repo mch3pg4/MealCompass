@@ -45,26 +45,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
             >
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/categorySelectMenu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
                 >
 
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
                     android:hint="@string/itemCategory"
-
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,10 +68,11 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemNameTextInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/item_name"
                 android:layout_marginTop="20dp"
+                android:layout_margin="5dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -85,8 +82,6 @@
                     android:drawablePadding="10dp"
                     android:layout_marginBottom="12dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -94,10 +89,11 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemDescTextInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/item_desc"
                 android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -107,8 +103,7 @@
                     android:drawablePadding="10dp"
                     android:layout_marginBottom="12dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:inputType="textMultiLine"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,10 +111,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemNutrTextInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/item_nutritional_value"
                 android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:helperText="Units in kcal"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -127,10 +124,8 @@
                     android:layout_width="match_parent"
                     android:drawableStart="@drawable/baseline_fastfood_24"
                     android:drawablePadding="10dp"
-                    android:layout_marginBottom="12dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:inputType="number"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -138,10 +133,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/itemPriceTextInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/itemPrice"
                 android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:helperText="Price is in RM"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -149,10 +146,8 @@
                     android:layout_width="match_parent"
                     android:drawableStart="@drawable/baseline_attach_money_24"
                     android:drawablePadding="10dp"
-                    android:layout_marginBottom="12dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:inputType="numberDecimal"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -160,16 +155,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/allergySelectMenu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:helperText="Add a comma to separate allergy ingredients"
                 >
 
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
                     android:hint="@string/allergy_ingredients"
 
                     />
@@ -177,6 +172,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/addItemImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/add_item_image"
@@ -215,6 +211,7 @@
         android:id="@+id/onboardingButtonGroupLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:padding="5dp"
         android:layout_marginBottom="30dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -224,7 +221,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/prevButton"
-            android:layout_width="140dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -248,7 +245,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nextButton"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             app:icon="@drawable/baseline_arrow_forward_24"
             app:layout_constraintEnd_toEndOf="parent"

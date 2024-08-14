@@ -64,11 +64,12 @@
     <ScrollView
         android:id="@+id/cuisineScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/cuisinesTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="3dp">
+        app:layout_constraintBottom_toTopOf="@id/onboardingButtonGroupLayout"
+>
 
         <LinearLayout
             android:id="@+id/cuisineListContainer"
@@ -83,38 +84,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+                >
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/malay"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/malay"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/chinese"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/chinese"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/indian"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/indian"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
@@ -125,32 +129,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="3dp">
+            >
 
             <TextView
                 android:id="@+id/malay_cuisine"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/malay"
-                android:layout_marginStart="45dp"
                 android:textAlignment="center"
                 android:padding="3dp"/>
 
             <TextView
                 android:id="@+id/chinese_cuisine"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/chinese"
-                android:layout_marginStart="97dp"
                 android:textAlignment="center"
                 android:padding="3dp"/>
 
             <TextView
                 android:id="@+id/indian_cuisine"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/indian"
-                android:layout_marginStart="86dp"
                 android:textAlignment="center"
                 android:padding="3dp"/>
         </LinearLayout>
@@ -160,38 +164,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+                >
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/korean"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/korean"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/japanese"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/japanese"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/thai"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/thai"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
@@ -202,32 +209,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+                >
 
                 <TextView
                     android:id="@+id/korean_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/korean"
-                    android:layout_marginStart="45dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/japanese_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/japanese"
-                    android:layout_marginStart="82dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/thai_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/thai"
-                    android:layout_marginStart="92dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
             </LinearLayout>
@@ -237,38 +244,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+              >
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/nyonya"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/nyonya"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/western"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/western"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/middle_eastern"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/middle_eastern"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
@@ -279,32 +289,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+                >
 
                 <TextView
                     android:id="@+id/nyonya_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/nyonya"
-                    android:layout_marginStart="45dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/western_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/western"
-                    android:layout_marginStart="84dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/middle_eastern_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/middle_eastern"
-                    android:layout_marginStart="62dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
             </LinearLayout>
@@ -314,38 +324,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+                >
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/german"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/german"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/italian"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@drawable/italian"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/others"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:src="@drawable/others"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/Circular"/>
 
@@ -356,32 +369,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="3dp">
+                >
 
                 <TextView
                     android:id="@+id/german_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/german"
-                    android:layout_marginStart="42dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/italian_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/italian"
-                    android:layout_marginStart="94dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
 
                 <TextView
                     android:id="@+id/others_cuisine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/others"
-                    android:layout_marginStart="92dp"
                     android:textAlignment="center"
                     android:padding="3dp"/>
             </LinearLayout>

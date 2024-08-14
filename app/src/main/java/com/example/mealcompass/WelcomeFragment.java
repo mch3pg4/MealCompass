@@ -17,13 +17,12 @@ public class WelcomeFragment extends Fragment {
     private FragmentWelcomeBinding binding;
 
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_welcome, container, false);
+        binding = FragmentWelcomeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override

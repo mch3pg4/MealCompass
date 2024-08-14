@@ -28,8 +28,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/poppins_bold"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:padding="3dp"/>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/onboardingProgressBar"
+        app:trackThickness="4dp"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorPrimaryVariant"
+        android:padding="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/onboardingDescription"
+        android:indeterminate="true"
+        />
+
 
     <ImageView
         android:id="@+id/appIcon"
@@ -38,20 +53,21 @@
         android:src="@drawable/appicon"
         android:contentDescription="@string/appIcon"
         android:scaleType="fitCenter"
-        android:layout_marginTop="100dp"
-        app:layout_constraintTop_toBottomOf="@id/onboardingDescription"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/onboardingProgressBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="6dp"/>
 
     <TextView
         android:id="@+id/onboardingText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/onboarding_text"
         app:layout_constraintTop_toBottomOf="@id/appIcon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/proceedButton"
         android:textAlignment="center"
         android:textSize="16sp"
         android:padding="3dp"/>

@@ -88,9 +88,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progressIndicator"
+            app:layout_constraintEnd_toStartOf="@id/ownerRoleCard"
             android:layout_margin="20dp"
+            android:layout_marginStart="5dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
+            android:checkable="true"
+            android:clickable="true"
             >
 
             <LinearLayout
@@ -101,7 +105,7 @@
 
             <ImageView
                 android:id="@+id/userRoleImage"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="200dp"
                 android:contentDescription="@string/user_role_image"
                 android:src="@drawable/user"
@@ -114,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/user_role"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:background="@color/light_color"
                 android:textAlignment="center"
@@ -129,8 +133,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progressIndicator"
+        app:layout_constraintStart_toEndOf="@+id/userRoleCard"
         android:layout_margin="20dp"
+        android:layout_marginEnd="5dp"
         app:cardCornerRadius="8dp"
+        android:clickable="true"
+        android:checkable="true"
         app:cardElevation="4dp">
 
         <LinearLayout
@@ -141,7 +149,7 @@
 
             <ImageView
                 android:id="@+id/ownerRoleImage"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="200dp"
                 android:contentDescription="@string/restaurant_owner_image"
                 android:src="@drawable/restaurant"
@@ -171,8 +179,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ownerRoleCard"
+        app:layout_constraintBottom_toTopOf="@id/onboardingButtonGroupLayout"
         android:layout_margin="20dp"
         app:cardCornerRadius="8dp"
+        android:clickable="true"
+        android:checkable="true"
         app:cardElevation="4dp">
 
         <LinearLayout
@@ -183,7 +194,7 @@
 
             <ImageView
                 android:id="@+id/adminRoleImage"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="200dp"
                 android:contentDescription="@string/admin_role"
                 android:src="@drawable/setting"
@@ -227,7 +238,6 @@
             app:icon="@drawable/baseline_arrow_back_24"
             android:padding="6dp"
             android:layout_marginStart="30dp"
-            android:enabled="false"
             />
 
         <com.google.android.material.button.MaterialButton

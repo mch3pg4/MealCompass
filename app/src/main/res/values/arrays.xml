@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cuisine_list">
+        <item>Malay</item>
+        <item>Chinese</item>
+        <item>Indian</item>
+        <item>Korean</item>
+        <item>Japanese</item>
+        <item>Thai</item>
+        <item>Nyonya</item>
+        <item>Western</item>
+        <item>Middle Eastern</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="menu_item_category_list">
+        <item>Appetizer</item>
+        <item>Soup</item>
+        <item>Salad</item>
+        <item>Specials</item>
+        <item>Main Course</item>
+        <item>Vegetables</item>
+        <item>Chicken</item>
+        <item>Beef</item>
+        <item>Pork</item>
+        <item>Seafood</item>
+        <item>Fish</item>
+        <item>Dessert</item>
+        <item>Drinks</item>
+        <item>Others</item>
+    </string-array>
+</resources>

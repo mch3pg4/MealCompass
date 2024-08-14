@@ -22,26 +22,20 @@ public class SelectAllergyFragment extends Fragment {
     private FragmentSelectAllergyBinding binding;
 
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_allergy, container, false);
+        binding = FragmentSelectAllergyBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //set next button to not clickable first
-        binding.doneButton.setClickable(false);
+        binding.progressIndicator.setProgress(90);
+
 
         //create list of items for the listview
         ArrayList<SelectAllergyItem> allergyItemArrayList = new ArrayList<>();
@@ -53,25 +47,9 @@ public class SelectAllergyFragment extends Fragment {
 
         binding.allergyList.setAdapter(new SelectAllergyAdapter(requireContext(), allergyItemArrayList));
 
-        binding.allergyList.setOnItemClickListener((parent, view1, position, id) -> {
-            SelectAllergyItem currentItem = allergyItemArrayList.get(position);
-            currentItem.setChecked(!currentItem.isChecked());
-            binding.allergyList.invalidateViews();
 
-            //check if any item is checked
-            boolean anyChecked = false;
-            for (SelectAllergyItem item : allergyItemArrayList) {
-                if (item.isChecked()) {
-                    anyChecked = true;
-                    break;
-                }
-            }
-
-            //if any item is checked, set done button to clickable and proceed to next fragment
-            binding.doneButton.setClickable(anyChecked);
-            binding.doneButton.setOnClickListener(v -> NavHostFragment.findNavController(SelectAllergyFragment.this)
-                    .navigate(R.id.action_selectAllergyFragment_to_onboardingFragment));
-        });
+        binding.doneButton.setOnClickListener(v -> NavHostFragment.findNavController(SelectAllergyFragment.this)
+                .navigate(R.id.action_selectAllergyFragment_to_onboardingFragment));
 
 
         binding.prevButton.setOnClickListener(v -> {
@@ -80,7 +58,7 @@ public class SelectAllergyFragment extends Fragment {
                     .navigate(R.id.action_selectAllergyFragment_to_selectDietFragment);
         });
 
-        binding.progressIndicator.setProgress(9);
+
 
 
     }
