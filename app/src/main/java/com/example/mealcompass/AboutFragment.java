@@ -1,4 +1,4 @@
-package com.example.mealcompass.Register;
+package com.example.mealcompass;
 
 import android.os.Bundle;
 
@@ -10,19 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mealcompass.R;
-import com.example.mealcompass.databinding.FragmentTermsAndConditionsBinding;
+import com.example.mealcompass.databinding.FragmentAboutBinding;
 
 
-public class TermsAndConditionsFragment extends Fragment {
-    private FragmentTermsAndConditionsBinding binding;
+public class AboutFragment extends Fragment {
+    private FragmentAboutBinding binding;
+
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentTermsAndConditionsBinding.inflate(inflater, container, false);
+        binding = FragmentAboutBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -30,8 +30,7 @@ public class TermsAndConditionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.proceedButton.setOnClickListener(
-                // go back to last fragment
-                v -> NavHostFragment.findNavController(this).popBackStack());
+        binding.okButton.setOnClickListener(v-> NavHostFragment.findNavController(AboutFragment.this)
+                .navigate(R.id.action_aboutFragment_to_profileFragment));
     }
 }

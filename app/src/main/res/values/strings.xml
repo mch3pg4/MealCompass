@@ -220,4 +220,12 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="add_article">Add new article</string>
+    <string name="about_mealcompass">About MealCompass</string>
+    <string name="app_description">MealCompass is a Food Recommendation System that aims to deliver accurate results and healthy suggestions based on your personal preferences.</string>
+    <string name="objectives">The three main objectives of MealCompass are: </string>
+    <string name="objective_1">1. To develop a food recommendation system that accurately predicts user preferences by analyzing user behavior and feedback.</string>
+    <string name="objective_2">2. To develop a system that enables users to find suitable healthy options.</string>
+    <string name="objective_3">3. To allow restaurant owners to provide nutritional information for users on each type of food served.</string>
+    <string name="ok">OK</string>
+
 </resources>
