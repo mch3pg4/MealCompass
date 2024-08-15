@@ -41,6 +41,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/fillInRestDetailsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -124,12 +125,12 @@
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:layout_marginBottom="12dp"
-                    android:hint="@string/cuisines"
+                    android:hint="@string/cuisine"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -137,9 +138,13 @@
                 <TextView
                     android:id="@+id/restaurantHoursTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="@string/restaurant_hours"
                     android:textSize="16sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+
                 />
 
                 <CheckBox
@@ -147,32 +152,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/split_hours"
-                    android:layout_marginStart="170dp"
-                />
-            </LinearLayout>
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    tools:ignore="RelativeOverlap" />
+            </RelativeLayout>
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    >
-
-                    <include layout="@layout/business_hours_card"/>
-                    <include layout="@layout/business_hours_card"/>
-                    <include layout="@layout/business_hours_card"/>
-                    <include layout="@layout/business_hours_card"/>
-                    <include layout="@layout/business_hours_card"/>
-                    <include layout="@layout/business_hours_card"/>
-                    <include layout="@layout/business_hours_card"/>
-
-
-                </LinearLayout>
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:id="@+id/businessHoursRecyclerView"
+                tools:listitem="@layout/business_hours_card" />
 
         </LinearLayout>
-
-
 
     </ScrollView>
 
@@ -212,9 +204,4 @@
 
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

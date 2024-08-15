@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     || destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.fillInRestDetailsFragment || destination.getId() == R.id.addRestImageFragment || destination.getId() == R.id.addMenuItemsFragment) {
                 Objects.requireNonNull(getSupportActionBar()).hide();
                 binding.bottomNavigationView.setVisibility(View.GONE);
-            } else {
+            }
+            else {
                 Objects.requireNonNull(getSupportActionBar()).show();
                 binding.bottomNavigationView.setVisibility(View.VISIBLE);
             }
