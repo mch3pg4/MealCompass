@@ -63,16 +63,15 @@
             android:textSize="16sp"
             android:layout_marginStart="10dp"/>
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/itemImagePreview"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/item_image_preview"
-            android:layout_height="240dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="300dp"
+            android:layout_margin="30dp"
             android:src="@drawable/placeholder"
+            app:shapeAppearance="@style/CircularProfilePic"
             android:scaleType="centerCrop"/>
 
     </LinearLayout>

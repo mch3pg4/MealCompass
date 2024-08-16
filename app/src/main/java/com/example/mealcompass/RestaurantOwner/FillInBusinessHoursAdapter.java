@@ -8,16 +8,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealcompass.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 
 import java.util.List;
 
 public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusinessHoursAdapter.ViewHolder> {
 
     private final List<FillInBusinessHoursItem> businessHoursItems;
+    private final FragmentManager fragmentManager;
 
 
 
@@ -49,8 +53,9 @@ public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusin
         }
     }
 
-    public FillInBusinessHoursAdapter(List<FillInBusinessHoursItem> businessHoursItems) {
+    public FillInBusinessHoursAdapter(List<FillInBusinessHoursItem> businessHoursItems, FragmentManager fragmentManager) {
         this.businessHoursItems = businessHoursItems;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -69,33 +74,8 @@ public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusin
         holder.dayClosingTextView.setText(item.getClosingHour());
         holder.closedCheckBox.setChecked(item.isClosed());
 
-//        // Set visibility based on the item state
+        // Set visibility based on the item state
         holder.splitHoursLayout.setVisibility(item.isSplitHours() ? View.VISIBLE : View.GONE);
-//
-//        holder.splitHoursCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            item.setSplitHours(isChecked);
-//            // Update the visibility of split hours layout
-//            holder.splitHoursLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-//
-//        });
-
-//        holder.splitHoursCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            item.setSplitHours(isChecked);
-//            if (isChecked) {
-//                holder.splitHoursLayout.setVisibility(View.VISIBLE);
-//            } else {
-//                holder.splitHoursLayout.setVisibility(View.GONE);
-//            }
-////            if (item.isSplitHours()) {
-////                holder.splitHoursLayout.setVisibility(View.VISIBLE);
-////                holder.splitDayOpeningTextView.setText(item.getSplitOpeningHour());
-////                holder.splitDayClosingTextView.setText(item.getSplitClosingHour());
-////            } else {
-////                holder.splitHoursLayout.setVisibility(View.GONE);
-////            }
-//        });
-
-
 
         // Handle checkboxes and buttons here, e.g., opening time pickers
         holder.closedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -105,26 +85,88 @@ public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusin
                 //grey out the opening and closing time
                 holder.dayOpeningTextView.setEnabled(false);
                 holder.dayClosingTextView.setEnabled(false);
+                holder.splitDayOpeningTextView.setEnabled(false);
+                holder.splitDayClosingTextView.setEnabled(false);
                 holder.openingHourButton.setEnabled(false);
                 holder.closingHourButton.setEnabled(false);
+                holder.splitOpeningHourButton.setEnabled(false);
+                holder.splitClosingHourButton.setEnabled(false);
                 holder.dayOpeningTextView.setAlpha(0.5f); // 50% transparent
                 holder.dayClosingTextView.setAlpha(0.5f);
+                holder.splitDayOpeningTextView.setAlpha(0.5f);
+                holder.splitDayClosingTextView.setAlpha(0.5f);
                 holder.openingHourButton.setAlpha(0.5f);
                 holder.closingHourButton.setAlpha(0.5f);
+                holder.splitOpeningHourButton.setAlpha(0.5f);
+                holder.splitClosingHourButton.setAlpha(0.5f);
             } else {
                 holder.dayOpeningTextView.setEnabled(true);
                 holder.dayClosingTextView.setEnabled(true);
+                holder.splitDayOpeningTextView.setEnabled(true);
+                holder.splitDayClosingTextView.setEnabled(true);
                 holder.openingHourButton.setEnabled(true);
                 holder.closingHourButton.setEnabled(true);
+                holder.splitOpeningHourButton.setEnabled(true);
+                holder.splitClosingHourButton.setEnabled(true);
                 holder.dayOpeningTextView.setAlpha(1.0f); // 100% opaque
                 holder.dayClosingTextView.setAlpha(1.0f);
+                holder.splitDayOpeningTextView.setAlpha(1.0f);
+                holder.splitDayClosingTextView.setAlpha(1.0f);
                 holder.openingHourButton.setAlpha(1.0f);
                 holder.closingHourButton.setAlpha(1.0f);
+                holder.splitOpeningHourButton.setAlpha(1.0f);
+                holder.splitClosingHourButton.setAlpha(1.0f);
             }
         });
 
+       // Set up listeners for the buttons to open time pickers
+        holder.openingHourButton.setOnClickListener(v -> {
+            // Open time picker for the opening hour
+            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(9)
+                    .setMinute(0)
+                    .setTitleText("Select Opening Hour")
+                    .build();
 
-        // Set up listeners for the buttons to open time pickers
+            timePicker.show(fragmentManager, "tag");
+        });
+
+        holder.closingHourButton.setOnClickListener(v -> {
+            // Open time picker for the closing hour
+            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(18)
+                    .setMinute(0)
+                    .setTitleText("Select Closing Hour")
+                    .build();
+
+            timePicker.show(fragmentManager, "tag");
+        });
+
+        holder.splitOpeningHourButton.setOnClickListener(v -> {
+            // Open time picker for the opening hour
+            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(9)
+                    .setMinute(0)
+                    .setTitleText("Select Split Opening Hour")
+                    .build();
+
+            timePicker.show(fragmentManager, "tag");
+        });
+
+        holder.splitClosingHourButton.setOnClickListener(v -> {
+            // Open time picker for the closing hour
+            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                    .setTimeFormat(TimeFormat.CLOCK_12H)
+                    .setHour(18)
+                    .setMinute(0)
+                    .setTitleText("Select Split Closing Hour")
+                    .build();
+
+            timePicker.show(fragmentManager, "tag");
+        });
 
 
     }

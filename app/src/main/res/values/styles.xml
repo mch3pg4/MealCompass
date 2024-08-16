@@ -6,6 +6,12 @@
         <item name="cornerSize">30%</item>
     </style>
 
+    <style name="CircularProfilePic">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="RoundedSquare">
         <item name="cornerSize">30%</item>
     </style>

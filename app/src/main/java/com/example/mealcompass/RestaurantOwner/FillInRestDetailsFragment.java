@@ -61,8 +61,18 @@ public class FillInRestDetailsFragment extends Fragment {
         businessHoursItems.add(new FillInBusinessHoursItem("Sat", "9:00 AM", "6:00 PM", "", "", false, false));
         businessHoursItems.add(new FillInBusinessHoursItem("Sun", "9:00 AM", "6:00 PM", "", "", false, false));
 
-        FillInBusinessHoursAdapter adapter1 = new FillInBusinessHoursAdapter(businessHoursItems);
+        FillInBusinessHoursAdapter adapter1 = new FillInBusinessHoursAdapter(businessHoursItems, getChildFragmentManager());
         binding.businessHoursRecyclerView.setAdapter(adapter1);
+
+        binding.splitHoursCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            for (int i = 0; i < businessHoursItems.size(); i++) {
+                FillInBusinessHoursItem item = businessHoursItems.get(i);
+                if (item.isSplitHours() != isChecked) {
+                    item.setSplitHours(isChecked);
+                    adapter1.notifyItemChanged(i);
+                }
+            }
+        });
 
 
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(FillInRestDetailsFragment.this)

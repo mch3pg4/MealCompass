@@ -43,9 +43,11 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/proceedButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/proceed"
+        app:cornerRadius="5dp"
+        android:layout_margin="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"

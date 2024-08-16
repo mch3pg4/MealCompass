@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         //hide top app bar when in main fragments and hide top app bar and bottom navbar when in login registration fragments
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.homeFragment || destination.getId() == R.id.restaurantsFragment || destination.getId() == R.id.discoverFragment || destination.getId() == R.id.favoruitesFragment) {
+            if (destination.getId() == R.id.homeFragment || destination.getId() == R.id.restaurantsFragment || destination.getId() == R.id.discoverFragment || destination.getId() == R.id.favoruitesFragment
+            || destination.getId() == R.id.restaurantOwnerFragment || destination.getId() == R.id.adminFragment) {
                 Objects.requireNonNull(getSupportActionBar()).hide();
             } else if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.welcomeFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.forgotPasswordFragment || destination.getId() == R.id.addProfilePicFragment
                     || destination.getId() == R.id.selectRoleFragment2 || destination.getId() == R.id.selectCuisineFragment2 || destination.getId() == R.id.selectDietFragment || destination.getId() == R.id.selectAllergyFragment
