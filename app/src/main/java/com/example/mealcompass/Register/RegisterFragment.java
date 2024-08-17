@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,26 @@ import android.widget.Toast;
 
 import com.example.mealcompass.R;
 import com.example.mealcompass.databinding.FragmentRegisterBinding;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 
 public class RegisterFragment extends Fragment {
     private FragmentRegisterBinding binding;
+    private FirebaseAuth mAuth;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+    }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
@@ -61,19 +74,79 @@ public class RegisterFragment extends Fragment {
         binding.acceptTermsText.setText(spannableString);
         binding.acceptTermsText.setMovementMethod(LinkMovementMethod.getInstance());
 
-        binding.acceptTermsCheckBox.setOnClickListener(v -> binding.registerButton.setEnabled(binding.acceptTermsCheckBox.isChecked()));
+        // validate user name
+        binding.nameEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String name = Objects.requireNonNull(binding.nameEditText.getText()).toString();
+                if (name.isEmpty()) {
+                    binding.nameEditText.setError("Please enter your name");
+                }
+            }
+        });
+
+        // validate user email
+        binding.emailEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String email = Objects.requireNonNull(binding.emailEditText.getText()).toString();
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    binding.emailEditText.setError("Please enter a valid email address");
+                }
+            }
+        });
+
+        // validate user password
+        binding.passwordEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
+                if (password.length() < 6) {
+                    binding.passwordEditText.setError("Password must be at least 6 characters");
+                }
+            }
+        });
+
+        //validate user reenter password
+        binding.confirmPasswordEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
+                String reenterPassword = Objects.requireNonNull(binding.confirmPasswordEditText.getText()).toString();
+                if (!reenterPassword.equals(password)) {
+                    binding.confirmPasswordEditText.setError("Passwords do not match");
+                }
+            }
+        });
+
 
         // if register button is disabled and tried to pressed, show toast message
         binding.registerButton.setOnClickListener(v -> {
-            if (!binding.registerButton.isEnabled()) {
-                Toast.makeText(getContext(), "Please accept the Terms and Conditions first", Toast.LENGTH_SHORT).show();
+            if (!binding.acceptTermsCheckBox.isChecked()) {
+                Toast.makeText(getContext(), "Please accept the Terms and Conditions", Toast.LENGTH_SHORT).show();
             } else {
-                NavHostFragment.findNavController(RegisterFragment.this)
-                        .navigate(R.id.action_registerFragment_to_addProfilePicFragment);
+                String email = Objects.requireNonNull(binding.emailEditText.getText()).toString();
+                String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
+                createAccount(email, password);
             }
         });
 
         binding.loginText.setOnClickListener(v -> NavHostFragment.findNavController(RegisterFragment.this)
                 .navigate(R.id.action_registerFragment_to_loginFragment));
     }
+
+    private void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getContext(), "Account created successfully", Toast.LENGTH_SHORT).show();
+                        NavHostFragment.findNavController(RegisterFragment.this)
+                                .navigate(R.id.action_registerFragment_to_addProfilePicFragment);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
+
+
 }

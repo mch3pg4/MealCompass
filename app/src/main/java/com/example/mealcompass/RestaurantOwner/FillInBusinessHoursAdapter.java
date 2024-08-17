@@ -119,56 +119,48 @@ public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusin
             }
         });
 
-       // Set up listeners for the buttons to open time pickers
-        holder.openingHourButton.setOnClickListener(v -> {
-            // Open time picker for the opening hour
-            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_12H)
-                    .setHour(9)
-                    .setMinute(0)
-                    .setTitleText("Select Opening Hour")
-                    .build();
 
-            timePicker.show(fragmentManager, "tag");
+        holder.openingHourButton.setOnClickListener(v -> showTimePicker(9, "Select Opening Hour", fragmentManager, holder.dayOpeningTextView));
+
+        holder.closingHourButton.setOnClickListener(v -> showTimePicker(18, "Select Closing Hour", fragmentManager, holder.dayClosingTextView));
+
+        holder.splitOpeningHourButton.setOnClickListener(v -> showTimePicker(9, "Select Split Opening Hour", fragmentManager, holder.splitDayOpeningTextView));
+
+        holder.splitClosingHourButton.setOnClickListener(v -> showTimePicker(18, "Select Split Closing Hour", fragmentManager, holder.splitDayClosingTextView));
+
+    }
+
+    // function to show time picker and set the selected time to the target TextView
+    private void showTimePicker(int initialHour, String title, FragmentManager fragmentManager, TextView targetTextView) {
+        // Open time picker for the given parameters
+        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(initialHour)
+                .setMinute(0)
+                .setTitleText(title)
+                .build();
+
+        timePicker.addOnPositiveButtonClickListener(view -> {
+            int hour = timePicker.getHour();
+            int minute = timePicker.getMinute();
+
+            // Format the hour in 12-hour format
+            String formattedHour = (hour == 0 || hour == 12) ? "12" : String.valueOf(hour % 12);
+
+            // Format the minutes with leading zero if needed
+            String formattedMinute = minute < 10 ? "0" + minute : String.valueOf(minute);
+
+            // Determine AM or PM
+            String amPm = (hour >= 12) ? "PM" : "AM";
+
+            // Combine to form the final time string
+            String formattedTime = formattedHour + ":" + formattedMinute + " " + amPm;
+
+            // Set the formatted time to the target TextView
+            targetTextView.setText(formattedTime);
         });
 
-        holder.closingHourButton.setOnClickListener(v -> {
-            // Open time picker for the closing hour
-            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_12H)
-                    .setHour(18)
-                    .setMinute(0)
-                    .setTitleText("Select Closing Hour")
-                    .build();
-
-            timePicker.show(fragmentManager, "tag");
-        });
-
-        holder.splitOpeningHourButton.setOnClickListener(v -> {
-            // Open time picker for the opening hour
-            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_12H)
-                    .setHour(9)
-                    .setMinute(0)
-                    .setTitleText("Select Split Opening Hour")
-                    .build();
-
-            timePicker.show(fragmentManager, "tag");
-        });
-
-        holder.splitClosingHourButton.setOnClickListener(v -> {
-            // Open time picker for the closing hour
-            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_12H)
-                    .setHour(18)
-                    .setMinute(0)
-                    .setTitleText("Select Split Closing Hour")
-                    .build();
-
-            timePicker.show(fragmentManager, "tag");
-        });
-
-
+        timePicker.show(fragmentManager, "tag");
     }
 
     @Override

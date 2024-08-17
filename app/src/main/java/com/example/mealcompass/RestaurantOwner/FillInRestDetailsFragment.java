@@ -37,6 +37,17 @@ public class FillInRestDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.restaurantMapView.setVisibility(View.GONE);
+
+        // show map when clicked on restaurant address field
+        binding.restAddressEditText.setOnClickListener(v -> {
+            binding.restaurantMapView.setVisibility(View.VISIBLE);
+
+            // Initialize map
+
+
+        });
+
         // adapter for list of cuisines
         List<String> items = Arrays.asList(getResources().getStringArray(R.array.cuisine_list));
 

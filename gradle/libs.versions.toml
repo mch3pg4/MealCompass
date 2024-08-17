@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.0"
+firebaseBom = "33.1.2"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.6.1"
@@ -11,6 +12,8 @@ navigationUi = "2.6.0"
 playServicesMaps = "19.0.0"
 
 [libraries]
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

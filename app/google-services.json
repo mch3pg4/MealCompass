@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "161689287010",
+    "project_id": "mealcompass-fyp",
+    "storage_bucket": "mealcompass-fyp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161689287010:android:5daa3c2aa68014a977d43b",
+        "android_client_info": {
+          "package_name": "com.example.mealcompass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjWUg9smzCy3Qav_2_vMxBfSdD-V8oIfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

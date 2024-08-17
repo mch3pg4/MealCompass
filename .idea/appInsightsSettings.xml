@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.mealcompass" />
+                  <option name="mobileSdkAppId" value="1:161689287010:android:5daa3c2aa68014a977d43b" />
+                  <option name="projectId" value="mealcompass-fyp" />
+                  <option name="projectNumber" value="161689287010" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

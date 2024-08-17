@@ -22,22 +22,23 @@
         android:padding="12dp"
         >
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:contentDescription="@string/profile_image"
-            android:id="@+id/profileImage"
+            android:id="@+id/userProfileImage"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/baseline_account_circle_24"
-            android:background="@drawable/roundbutton"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"
+            app:shapeAppearance="@style/CircularProfilePic"
             />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:layout_toEndOf="@+id/profileImage"
+            android:layout_toEndOf="@+id/userProfileImage"
             android:text="@string/user"
             android:textSize="16sp"
             />

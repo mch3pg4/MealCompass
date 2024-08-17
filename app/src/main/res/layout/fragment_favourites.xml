@@ -20,15 +20,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImageButton"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:contentDescription="@string/profile_image"
-        android:background="@drawable/roundbutton"
+        app:shapeAppearance="@style/CircularProfilePic"
         android:src="@drawable/baseline_account_circle_24"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        android:clickable="true"
         app:layout_constraintStart_toEndOf="@id/favouritesTitle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -232,5 +232,6 @@
     <string name="add_profile_pic_description">Before getting started, add a profile picture first.</string>
     <string name="profile_pic_preview">Profile Picture Preview</string>
     <string name="mon">Mon</string>
+    <string name="ratings">Ratings</string>
 
 </resources>
