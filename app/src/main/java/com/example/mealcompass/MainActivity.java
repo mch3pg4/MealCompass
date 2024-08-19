@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (R.id.logout == item.getItemId()) {
             FirebaseAuth.getInstance().signOut();
+            navController.navigate(R.id.welcomeFragment);
             return true;
         }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);

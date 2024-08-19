@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddProfilePicFragment">
+    tools:context=".Register.AddProfilePicFragment">
 
     <TextView
         android:id="@+id/addProfilePicTitle"
@@ -42,13 +42,15 @@
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
         >
+
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/addProfilePicButton"
+            android:id="@+id/addFromGalleryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_profile_pic"
+            android:text="@string/add_from_gallery"
             android:layout_marginTop="15dp"
-            app:icon="@drawable/baseline_add_24"
+            app:icon="@drawable/baseline_insert_photo_24"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="20dp"

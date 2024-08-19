@@ -1,11 +1,11 @@
 package com.example.mealcompass.Discover;
 
 public class Discover {
-    String articleTitle;
-    String articleContent;
-    String articleImageUrl;
-    String articleAuthor;
-    String articleTime;
+    private String articleTitle;
+    private String articleContent;
+    private String articleImageUrl;
+    private String articleAuthor;
+    private String articleTime;
 
     public Discover() {
     }

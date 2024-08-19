@@ -1,7 +1,5 @@
-package com.example.mealcompass.Register;
+package com.example.mealcompass.Register.SelectAllergy;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

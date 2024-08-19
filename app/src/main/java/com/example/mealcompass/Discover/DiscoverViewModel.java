@@ -10,8 +10,8 @@ import java.util.List;
 
 
 public class DiscoverViewModel extends ViewModel {
-    private MutableLiveData<List<Discover>> discoverListLiveData = new MutableLiveData<>();
-    private DiscoverRepository discoverRepository;
+    private final MutableLiveData<List<Discover>> discoverListLiveData = new MutableLiveData<>();
+    private final DiscoverRepository discoverRepository;
 
     public DiscoverViewModel() {
         discoverRepository = new DiscoverRepository();

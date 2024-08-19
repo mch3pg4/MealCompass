@@ -1,4 +1,4 @@
-package com.example.mealcompass.Register;
+package com.example.mealcompass.Register.SelectAllergy;
 
 public class SelectAllergyItem {
 

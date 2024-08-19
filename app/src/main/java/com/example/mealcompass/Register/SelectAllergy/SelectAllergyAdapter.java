@@ -1,4 +1,4 @@
-package com.example.mealcompass.Register;
+package com.example.mealcompass.Register.SelectAllergy;
 
 import android.content.Context;
 import android.view.LayoutInflater;

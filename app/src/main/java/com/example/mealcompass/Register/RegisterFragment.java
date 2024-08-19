@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.SpannableString;
@@ -18,9 +19,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentRegisterBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -28,6 +33,8 @@ import java.util.Objects;
 public class RegisterFragment extends Fragment {
     private FragmentRegisterBinding binding;
     private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private UserViewModel userViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,10 @@ public class RegisterFragment extends Fragment {
 
         //initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
     }
 
 
@@ -124,7 +135,11 @@ public class RegisterFragment extends Fragment {
             } else {
                 String email = Objects.requireNonNull(binding.emailEditText.getText()).toString();
                 String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
-                createAccount(email, password);
+                String name = Objects.requireNonNull(binding.nameEditText.getText()).toString();
+                userViewModel.setUserEmail(email);
+                userViewModel.setUserPassword(password);
+                userViewModel.setUserName(name);
+                createAccount();
 
             }
         });
@@ -133,10 +148,20 @@ public class RegisterFragment extends Fragment {
                 .navigate(R.id.action_registerFragment_to_loginFragment));
     }
 
-    private void createAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
+    private void createAccount() {
+        String name = userViewModel.getUserName().getValue();
+        String email = userViewModel.getUserEmail().getValue();
+        String password = userViewModel.getUserPassword().getValue();
+
+        userRepository.createUser(name, email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        //get user id and store in view model
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            String userId = firebaseUser.getUid();
+                            userViewModel.setUserId(userId);
+                        }
                         // Sign in success, update UI with the signed-in user's information
                         Toast.makeText(getContext(), "Account created successfully", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(RegisterFragment.this)

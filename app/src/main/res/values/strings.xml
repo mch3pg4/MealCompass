@@ -234,5 +234,7 @@
     <string name="mon">Mon</string>
     <string name="ratings">Ratings</string>
     <string name="logging_in">Logging in…</string>
+    <string name="add_from_gallery">Add From Gallery</string>
+    <string name="add_from_camera">Add From Camera</string>
 
 </resources>
