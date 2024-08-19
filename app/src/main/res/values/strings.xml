@@ -233,5 +233,6 @@
     <string name="profile_pic_preview">Profile Picture Preview</string>
     <string name="mon">Mon</string>
     <string name="ratings">Ratings</string>
+    <string name="logging_in">Logging in…</string>
 
 </resources>

@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/home"
         android:icon="@drawable/baseline_home_24"
-        android:id="@+id/home"/>
+        android:id="@+id/homeFragment"/>
     <item android:title="@string/menu"
         android:icon="@drawable/baseline_menu_book_24"
-        android:id="@+id/menu"
+        android:id="@+id/menuItemFragment"
         />
     <item android:title="@string/ratings"
         android:icon="@drawable/baseline_reviews_24"
-        android:id="@+id/ratings"
+        android:id="@+id/ratingsFragment"
         />
     <item android:title="@string/helpdesk"
         android:icon="@drawable/baseline_help_outline_24"
-        android:id="@+id/helpdesk"/>
+        android:id="@+id/helpdeskFragment"/>
     <item android:title="@string/discover"
         android:icon="@drawable/baseline_newspaper_24"
-        android:id="@+id/discover"/>
+        android:id="@+id/discoverFragment"/>
 </menu>

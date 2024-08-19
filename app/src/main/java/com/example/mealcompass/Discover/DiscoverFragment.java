@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,13 +51,30 @@ public class DiscoverFragment extends Fragment {
         RecyclerView discoverRecyclerView = view.findViewById(R.id.discoverRecyclerView);
         discoverRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<DiscoverItem> discoverItems = new ArrayList<>();
-        discoverItems.add(new DiscoverItem(R.drawable.discover_img, "John Doe", "2 hours ago", "The Best Restaurants in New York City", "New York City is home to some of the best restaurants in the world. Here are some of the best restaurants in New York City that you must visit."));
-        discoverItems.add(new DiscoverItem(R.drawable.discover_img, "John Doe", "2 hours ago", "The Best Restaurants in New York City", "New York City is home to some of the best restaurants in the world. Here are some of the best restaurants in New York City that you must visit."));
-        discoverItems.add(new DiscoverItem(R.drawable.discover_img, "John Doe", "2 hours ago", "The Best Restaurants in New York City", "New York City is home to some of the best restaurants in the world. Here are some of the best restaurants in New York City that you must visit."));
+        // initialize viewmodel
+        DiscoverViewModel discoverViewModel = new ViewModelProvider(this).get(DiscoverViewModel.class);
 
-        DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems);
-        discoverRecyclerView.setAdapter(discoverAdapter);
+        // Observe the LiveData for changes
+        discoverViewModel.getDiscoverListLiveData().observe(getViewLifecycleOwner(), discovers -> {
+            if (discovers != null && !discovers.isEmpty()) {
+                // Populate the RecyclerView with the fetched articles
+                List<DiscoverItem> discoverItems = new ArrayList<>();
+                for (Discover discover : discovers) {
+                    discoverItems.add(new DiscoverItem(
+                            discover.getArticleImageUrl(),
+                            discover.getArticleAuthor(),
+                            discover.getArticleTime(),
+                            discover.getArticleTitle(),
+                            discover.getArticleContent()));
+                }
+                DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems);
+                discoverRecyclerView.setAdapter(discoverAdapter);
+            }
+        });
+
+        // Fetch all discover articles
+        discoverViewModel.fetchAllDiscover();
+
 
         binding.addFab.setOnClickListener(
                 v-> Toast.makeText(getContext(), "Add a new article", Toast.LENGTH_SHORT).show()

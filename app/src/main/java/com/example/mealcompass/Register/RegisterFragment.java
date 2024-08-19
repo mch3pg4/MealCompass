@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.mealcompass.R;
 import com.example.mealcompass.databinding.FragmentRegisterBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 import java.util.Objects;
 
@@ -124,6 +125,7 @@ public class RegisterFragment extends Fragment {
                 String email = Objects.requireNonNull(binding.emailEditText.getText()).toString();
                 String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
                 createAccount(email, password);
+
             }
         });
 
@@ -139,14 +141,15 @@ public class RegisterFragment extends Fragment {
                         Toast.makeText(getContext(), "Account created successfully", Toast.LENGTH_SHORT).show();
                         NavHostFragment.findNavController(RegisterFragment.this)
                                 .navigate(R.id.action_registerFragment_to_addProfilePicFragment);
-                    } else {
+                    } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(getContext(), "Email is already registered", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+
                     }
                 });
-
-
     }
-
-
 }

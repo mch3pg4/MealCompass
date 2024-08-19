@@ -1,13 +1,13 @@
 package com.example.mealcompass.Discover;
 
 public class DiscoverItem {
-    private final int discoverImage;
+    private final String discoverImage;
     private final String authorName;
     private final String timePosted;
     private final String discoverArticleTitle;
     private final String discoverArticleDescription;
 
-    public DiscoverItem(int discoverImage, String authorName, String timePosted, String discoverArticleTitle, String discoverArticleDescription) {
+    public DiscoverItem(String discoverImage, String authorName, String timePosted, String discoverArticleTitle, String discoverArticleDescription) {
         this.discoverImage = discoverImage;
         this.authorName = authorName;
         this.timePosted = timePosted;
@@ -15,7 +15,7 @@ public class DiscoverItem {
         this.discoverArticleDescription = discoverArticleDescription;
     }
 
-    public int getDiscoverImage() {
+    public String getDiscoverImage() {
         return discoverImage;
     }
 

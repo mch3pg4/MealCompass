@@ -3,16 +3,16 @@
 
     <item android:title="@string/home"
         android:icon="@drawable/baseline_home_24"
-        android:id="@+id/home"/>
+        android:id="@+id/homeFragment"/>
     <item android:title="@string/restaurants"
         android:icon="@drawable/baseline_restaurant_24"
-        android:id="@+id/restaurants"
+        android:id="@+id/restaurantsFragment"
         />
     <item android:title="@string/favourites"
         android:icon="@drawable/baseline_favorite_border_24"
-        android:id="@+id/favourites"
+        android:id="@+id/favoruitesFragment"
         />
     <item android:title="@string/discover"
         android:icon="@drawable/baseline_newspaper_24"
-        android:id="@+id/discover"/>
+        android:id="@+id/discoverFragment"/>
 </menu>

@@ -54,17 +54,19 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.home) {
+            if (id == R.id.homeFragment) {
                 navController.navigate(R.id.homeFragment);
-            } else if (id == R.id.restaurants) {
+            } else if (id == R.id.restaurantsFragment) {
                 navController.navigate(R.id.restaurantsFragment);
-            } else if (id == R.id.discover) {
+            } else if (id == R.id.discoverFragment) {
                 navController.navigate(R.id.discoverFragment);
-            } else if (id == R.id.favourites) {
+            } else if (id == R.id.favoruitesFragment) {
                 navController.navigate(R.id.favoruitesFragment);
             }
             return true;
         });
+
+
 
         // do not show title in the top app bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             if (destination.getId() == R.id.homeFragment || destination.getId() == R.id.restaurantsFragment || destination.getId() == R.id.discoverFragment || destination.getId() == R.id.favoruitesFragment
             || destination.getId() == R.id.restaurantOwnerFragment || destination.getId() == R.id.adminFragment) {
                 Objects.requireNonNull(getSupportActionBar()).hide();
+                binding.bottomNavigationView.setVisibility(View.VISIBLE);
             } else if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.welcomeFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.forgotPasswordFragment || destination.getId() == R.id.addProfilePicFragment
                     || destination.getId() == R.id.selectRoleFragment2 || destination.getId() == R.id.selectCuisineFragment2 || destination.getId() == R.id.selectDietFragment || destination.getId() == R.id.selectAllergyFragment
                     || destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.fillInRestDetailsFragment || destination.getId() == R.id.addRestImageFragment || destination.getId() == R.id.addMenuItemsFragment) {

@@ -32,16 +32,16 @@ public class LoginFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-//            NavHostFragment.findNavController(LoginFragment.this)
-//                    .navigate(R.id.action_loginFragment_to_homeFragment);
-//        }
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            NavHostFragment.findNavController(LoginFragment.this)
+                    .navigate(R.id.action_loginFragment_to_homeFragment);
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -102,6 +102,7 @@ public class LoginFragment extends Fragment {
             } else {
                 // If all validations pass, sign in the user
                 signInUser(email, password);
+
             }
         });
 
@@ -118,6 +119,10 @@ public class LoginFragment extends Fragment {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        // make the login button unclickable and greyed out
+                        binding.loginButton.setClickable(false);
+                        binding.loginButton.setText(R.string.logging_in);
+                        binding.loginButton.setBackgroundColor(getResources().getColor(R.color.gray));
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = mAuth.getCurrentUser();
                         NavHostFragment.findNavController(LoginFragment.this)

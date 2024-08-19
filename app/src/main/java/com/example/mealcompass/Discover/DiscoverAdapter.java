@@ -60,7 +60,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         holder.timePosted.setText(discoverItem.getTimePosted());
         holder.discoverArticleTitle.setText(discoverItem.getDiscoverArticleTitle());
         holder.discoverArticleDescription.setText(discoverItem.getDiscoverArticleDescription());
-        holder.discoverImage.setImageResource(discoverItem.getDiscoverImage());
+//        holder.discoverImage.setImageResource(discoverItem.getDiscoverImage());
+        holder.discoverImage.setImageResource(R.drawable.placeholder);
         holder.readMoreButton.setOnClickListener(v -> {
             // Navigate to the DiscoverDetailsFragment
             Navigation.findNavController(holder.readMoreButton)
