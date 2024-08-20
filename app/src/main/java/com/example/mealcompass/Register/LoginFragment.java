@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.mealcompass.MainActivity;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
@@ -161,6 +162,10 @@ public class LoginFragment extends Fragment {
 
                             userRepository.getUserType(userId).addOnSuccessListener(userType -> {
                                 if (userType != null) {
+                                    MainActivity mainActivity = (MainActivity) getActivity();
+                                    if (mainActivity != null) {
+                                        mainActivity.updateBottomNavView(userType);
+                                    }
                                     switch (userType) {
                                         case "user":
                                             NavHostFragment.findNavController(LoginFragment.this)
@@ -186,4 +191,12 @@ public class LoginFragment extends Fragment {
                     }
                 });
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+
 }

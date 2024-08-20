@@ -32,4 +32,10 @@ public class OnboardingFragment extends Fragment {
 
         binding.proceedButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_onboardingFragment_to_homeFragment));
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

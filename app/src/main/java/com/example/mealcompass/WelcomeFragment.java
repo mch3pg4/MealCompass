@@ -22,9 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class WelcomeFragment extends Fragment {
     private FragmentWelcomeBinding binding;
 
-
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,8 +34,6 @@ public class WelcomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         binding.loginButton.setOnClickListener(v -> NavHostFragment.findNavController(WelcomeFragment.this)
                 .navigate(R.id.action_welcomeFragment_to_loginFragment));
 
@@ -48,10 +43,6 @@ public class WelcomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+
 }
 

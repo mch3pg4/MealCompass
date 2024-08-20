@@ -71,7 +71,6 @@ public class SelectDietFragment extends Fragment {
 
         binding.progressIndicator.setProgress(70);
 
-
         //create list of items for the listview
         ArrayList<SelectDietItem> dietItemArrayList = new ArrayList<>();
         dietItemArrayList.add(new SelectDietItem("Vegetarian", false));

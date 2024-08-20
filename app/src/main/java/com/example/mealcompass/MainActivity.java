@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private UserRepository userRepository;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,17 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             userRepository.getUserType(userId).addOnSuccessListener(userType -> {
                 if (userType != null) {
-                    switch (userType) {
-                        case "user":
-                            binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu);
-                            break;
-                        case "owner":
-                            binding.bottomNavigationView.inflateMenu(R.menu.owner_bottom_nav_menu);
-                            break;
-                        case "admin":
-                            binding.bottomNavigationView.inflateMenu(R.menu.admin_bottom_nav_menu);
-                            break;
-                    }
+                    updateBottomNavView(userType);
                 }
             });
 
@@ -105,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.helpdeskFragment);
                 } else if (id == R.id.menuItemFragment) {
                     navController.navigate(R.id.menuItemFragment);
-                } else if (id == R.id.ratingsFragment) {
-                    navController.navigate(R.id.ratingsFragment);
+                } else if (id == R.id.ratingsFragment2) {
+                    navController.navigate(R.id.ratingsFragment2);
                 } else if (id == R.id.restaurantOwnerFragment) {
                     navController.navigate(R.id.restaurantOwnerFragment);
                 } else if (id == R.id.adminFragment) {
@@ -114,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             });
+
+        }
 
             // do not show title in the top app bar
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -136,7 +127,24 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-    }
+
+        public void updateBottomNavView(String userType) {
+            switch (userType) {
+                case "user":
+                    binding.bottomNavigationView.getMenu().clear();
+                    binding.bottomNavigationView.inflateMenu(R.menu.bottom_nav_menu);
+                    break;
+                case "owner":
+                    binding.bottomNavigationView.getMenu().clear();
+                    binding.bottomNavigationView.inflateMenu(R.menu.owner_bottom_nav_menu);
+                    break;
+                case "admin":
+                    binding.bottomNavigationView.getMenu().clear();
+                    binding.bottomNavigationView.inflateMenu(R.menu.admin_bottom_nav_menu);
+                    break;
+            }
+        }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

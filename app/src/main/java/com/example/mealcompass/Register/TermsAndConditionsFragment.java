@@ -34,4 +34,10 @@ public class TermsAndConditionsFragment extends Fragment {
                 // go back to last fragment
                 v -> NavHostFragment.findNavController(this).popBackStack());
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

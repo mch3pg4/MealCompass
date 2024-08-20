@@ -253,6 +253,9 @@
         <action
             android:id="@+id/action_restaurantOwnerFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_restaurantOwnerFragment_to_ratingsFragment2"
+            app:destination="@id/ratingsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/selectRoleFragment2"
@@ -288,7 +291,17 @@
         android:id="@+id/menuItemFragment"
         android:name="com.example.mealcompass.MenuItemFragment"
         android:label="fragment_menu_item"
-        tools:layout="@layout/fragment_menu_item" />
+        tools:layout="@layout/fragment_menu_item" >
+        <action
+            android:id="@+id/action_menuItemFragment_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
+        <action
+            android:id="@+id/action_menuItemFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_menuItemFragment_to_restaurantOwnerFragment"
+            app:destination="@id/restaurantOwnerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.mealcompass.AboutFragment"
@@ -309,5 +322,14 @@
         <action
             android:id="@+id/action_addProfilePicFragment_to_selectRoleFragment2"
             app:destination="@id/selectRoleFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/ratingsFragment2"
+        android:name="com.example.mealcompass.RestaurantOwner.RatingsFragment"
+        android:label="fragment_ratings"
+        tools:layout="@layout/fragment_ratings" >
+        <action
+            android:id="@+id/action_ratingsFragment2_to_restaurantOwnerFragment"
+            app:destination="@id/restaurantOwnerFragment" />
     </fragment>
 </navigation>
