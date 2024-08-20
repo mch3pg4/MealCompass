@@ -18,15 +18,12 @@ import java.util.ArrayList;
 public class SelectDietAdapter extends ArrayAdapter<SelectDietItem> {
 
     public SelectDietAdapter(@NonNull Context context, ArrayList<SelectDietItem> dietItemArrayList){
-
         super(context, 0, dietItemArrayList);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.diet_list_item, parent, false);
         }
@@ -40,7 +37,11 @@ public class SelectDietAdapter extends ArrayAdapter<SelectDietItem> {
         checkBox.setChecked(currentItem.isChecked());
 
         // handle check box click
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> currentItem.setChecked(isChecked));
+        checkBox.setOnClickListener(v ->{
+                currentItem.setChecked(checkBox.isChecked());
+                notifyDataSetChanged();
+
+        });
 
         return convertView;
     }

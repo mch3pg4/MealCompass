@@ -6,6 +6,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
+import java.util.Objects;
+
 public class UserRepository {
     private final FirebaseAuth mAuth;
     private final FirebaseFirestore db;
@@ -28,7 +31,7 @@ public class UserRepository {
                                     .continueWith(t -> task);
                         }
                     }
-                    throw task.getException();
+                    throw Objects.requireNonNull(task.getException());
                 });
     }
 
@@ -44,6 +47,24 @@ public class UserRepository {
                 .update("userType", userType);
     }
 
+    public Task<Void> updateUserCuisines(String userId, List<String> cuisine) {
+        return db.collection("users")
+                .document(userId)
+                .update("userCuisines", cuisine);
+    }
+
+    public Task<Void> updateUserDiets(String userId, List<String> diet) {
+        return db.collection("users")
+                .document(userId)
+                .update("userDiets", diet);
+    }
+
+    public Task<Void> updateUserAllergens(String userId, List<String> allergen) {
+        return db.collection("users")
+                .document(userId)
+                .update("userAllergens", allergen);
+
+    }
 }
 
 

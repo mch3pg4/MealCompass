@@ -6,9 +6,9 @@ public class SelectDietItem {
 
     private boolean isChecked;
 
-    public SelectDietItem(String dietName, boolean checkBox) {
+    public SelectDietItem(String dietName, boolean isChecked) {
         this.dietName = dietName;
-        this.isChecked = isChecked();
+        this.isChecked = isChecked;
     }
 
     public String getDietName() {

@@ -25,7 +25,6 @@ public class SelectAllergyAdapter extends ArrayAdapter<SelectAllergyItem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.allergy_list_item, parent, false);
         }
@@ -42,7 +41,11 @@ public class SelectAllergyAdapter extends ArrayAdapter<SelectAllergyItem> {
         checkBox.setChecked(currentItem.isChecked());
 
         // handle check box click
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> currentItem.setChecked(isChecked));
+        checkBox.setOnClickListener(v ->{
+            currentItem.setChecked(checkBox.isChecked());
+            notifyDataSetChanged();
+
+        });
 
         return convertView;
     }
