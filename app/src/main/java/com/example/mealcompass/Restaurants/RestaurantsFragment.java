@@ -62,10 +62,15 @@ public class RestaurantsFragment extends Fragment {
         });
 
 
-
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(RestaurantsFragment.this)
                         .navigate(R.id.action_restaurantsFragment_to_profileFragment));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
 

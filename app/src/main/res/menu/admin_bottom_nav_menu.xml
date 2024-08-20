@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/home"
         android:icon="@drawable/baseline_home_24"
-        android:id="@+id/homeFragment"/>
+        android:id="@+id/adminFragment"/>
     <item android:title="@string/helpdesk"
         android:icon="@drawable/baseline_help_outline_24"
         android:id="@+id/helpdeskFragment"

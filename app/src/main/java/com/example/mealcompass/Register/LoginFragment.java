@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Patterns;
@@ -13,15 +14,21 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private UserViewModel userViewModel;
+    private UserRepository userRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,11 @@ public class LoginFragment extends Fragment {
 
         //initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // get the current user type to determine which bottom navigation view to show
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
     }
 
@@ -38,8 +50,27 @@ public class LoginFragment extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            NavHostFragment.findNavController(LoginFragment.this)
-                    .navigate(R.id.action_loginFragment_to_homeFragment);
+            String userId = currentUser.getUid();
+
+            userRepository.getUserType(userId).addOnSuccessListener(userType -> {
+                if (userType != null) {
+                    switch (userType) {
+                        case "user":
+                            NavHostFragment.findNavController(LoginFragment.this)
+                                    .navigate(R.id.action_loginFragment_to_homeFragment);
+                            break;
+                        case "owner":
+                            NavHostFragment.findNavController(LoginFragment.this)
+                                    .navigate(R.id.action_loginFragment_to_restaurantOwnerFragment);
+                            break;
+                        case "admin":
+                            NavHostFragment.findNavController(LoginFragment.this)
+                                    .navigate(R.id.action_loginFragment_to_adminFragment);
+                            break;
+                    }
+
+                }
+            });
         }
     }
 
@@ -125,8 +156,29 @@ public class LoginFragment extends Fragment {
                         binding.loginButton.setBackgroundColor(getResources().getColor(R.color.gray));
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = mAuth.getCurrentUser();
-                        NavHostFragment.findNavController(LoginFragment.this)
-                                .navigate(R.id.action_loginFragment_to_homeFragment);
+                        if(user != null){
+                            String userId = user.getUid();
+
+                            userRepository.getUserType(userId).addOnSuccessListener(userType -> {
+                                if (userType != null) {
+                                    switch (userType) {
+                                        case "user":
+                                            NavHostFragment.findNavController(LoginFragment.this)
+                                                    .navigate(R.id.action_loginFragment_to_homeFragment);
+                                            break;
+                                        case "owner":
+                                            NavHostFragment.findNavController(LoginFragment.this)
+                                                    .navigate(R.id.action_loginFragment_to_restaurantOwnerFragment);
+                                            break;
+                                        case "admin":
+                                            NavHostFragment.findNavController(LoginFragment.this)
+                                                    .navigate(R.id.action_loginFragment_to_adminFragment);
+                                            break;
+                                    }
+
+                                }
+                            });
+                        }
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(getContext(), "Authentication failed.",

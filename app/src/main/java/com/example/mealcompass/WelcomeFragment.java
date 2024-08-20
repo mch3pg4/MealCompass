@@ -4,17 +4,25 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentWelcomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class WelcomeFragment extends Fragment {
     private FragmentWelcomeBinding binding;
+
+
 
 
     @Override
@@ -29,6 +37,8 @@ public class WelcomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         binding.loginButton.setOnClickListener(v -> NavHostFragment.findNavController(WelcomeFragment.this)
                 .navigate(R.id.action_welcomeFragment_to_loginFragment));
 
@@ -36,6 +46,12 @@ public class WelcomeFragment extends Fragment {
                 .navigate(R.id.action_welcomeFragment_to_registerFragment));
 
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
 

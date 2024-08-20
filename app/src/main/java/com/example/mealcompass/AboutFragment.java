@@ -33,4 +33,10 @@ public class AboutFragment extends Fragment {
         binding.okButton.setOnClickListener(v-> NavHostFragment.findNavController(AboutFragment.this)
                 .navigate(R.id.action_aboutFragment_to_profileFragment));
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

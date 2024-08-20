@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -16,6 +17,29 @@ public class UserRepository {
     public UserRepository(FirebaseAuth mAuth, FirebaseFirestore db) {
         this.mAuth = mAuth;
         this.db = db;
+    }
+
+    //get user type
+    public Task<String> getUserType(String userId) {
+        return db.collection("users")
+                .document(userId)
+                .get()
+                .continueWith(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) {
+                            return document.getString("userType");
+                        } else {
+                            throw new Exception("User not found");
+                        }
+                    } else {
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                });
+    }
+
+    public Task<AuthResult> signIn(String email, String password) {
+        return mAuth.signInWithEmailAndPassword(email, password);
     }
 
     public Task<Task<AuthResult>> createUser(String name, String email, String password) {
