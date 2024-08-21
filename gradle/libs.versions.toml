@@ -1,6 +1,7 @@
 [versions]
 agp = "8.4.0"
 firebaseBom = "33.1.2"
+glide = "4.16.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.6.1"
@@ -12,10 +13,12 @@ navigationUi = "2.6.0"
 playServicesMaps = "19.0.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseFirestore = "25.0.0"
+firebaseStorage = "21.0.0"
 
 [libraries]
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -26,6 +29,7 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

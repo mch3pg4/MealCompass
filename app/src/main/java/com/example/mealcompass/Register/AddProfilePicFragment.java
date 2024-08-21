@@ -26,6 +26,8 @@ import com.example.mealcompass.databinding.FragmentAddProfilePicBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class AddProfilePicFragment extends Fragment {
     private FragmentAddProfilePicBinding binding;
@@ -100,27 +102,40 @@ public class AddProfilePicFragment extends Fragment {
                     .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                     .build());
         });
-
-
     }
 
     private void uploadProfilePicture(Uri profilePicUri) {
         String userId = userViewModel.getUserId().getValue();
-        if (userId != null) {
-            // Assuming profilePicUri is the Uri of the uploaded image
-            userRepository.updateUserImageUrl(userId, profilePicUri.toString())
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Uploading profile picture", Toast.LENGTH_SHORT).show();
-                            // Navigate to next fragment
-                            NavHostFragment.findNavController(AddProfilePicFragment.this)
-                                    .navigate(R.id.action_addProfilePicFragment_to_selectRoleFragment2);
-                        } else {
-                            // Handle the error as needed
-                            Toast.makeText(getContext(), "Failed to upload profile picture", Toast.LENGTH_SHORT).show();
-                        }
+        if (userId != null && profilePicUri != null) {
+            // Reference to Firebase Storage
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference profilePicRef = storageRef.child("users/" + userId + ".jpg");
+
+            // Upload file to Firebase Storage
+            profilePicRef.putFile(profilePicUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Retrieve the download URL once upload is complete
+                        profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String downloadUrl = uri.toString();  // This is the URL you want to store in Firestore
+                            // Now update Firestore with the download URL
+                            userRepository.updateUserImageUrl(userId, downloadUrl)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Profile picture uploaded", Toast.LENGTH_SHORT).show();
+                                            // Navigate to the next fragment
+                                            NavHostFragment.findNavController(AddProfilePicFragment.this)
+                                                    .navigate(R.id.action_addProfilePicFragment_to_selectRoleFragment2);
+                                        } else {
+                                            Toast.makeText(getContext(), "Failed to upload profile picture", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        });
+                    }).addOnFailureListener(e -> {
+                        // Handle any errors in uploading the image to Firebase Storage
+                        Toast.makeText(getContext(), "Failed to upload image to Firebase Storage", Toast.LENGTH_SHORT).show();
                     });
         }
     }
+
 
 }

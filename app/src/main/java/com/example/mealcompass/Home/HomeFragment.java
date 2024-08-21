@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,14 +21,40 @@ import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentHomeBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
+    private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private UserViewModel userViewModel;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
+
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,6 +70,12 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUid();
+        }
+
         RecyclerView recommendRestaurantsRecyclerView = view.findViewById(R.id.homeRecyclerView);
         recommendRestaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -51,7 +84,7 @@ public class HomeFragment extends Fragment {
 
         //horizontal layout
         LinearLayoutManager horizontalLayoutManager
-        = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recommendItemRecyclerView = view.findViewById(R.id.recommendedItemsRecyclerView);
         recommendItemRecyclerView.setLayoutManager(horizontalLayoutManager);
 
@@ -93,11 +126,6 @@ public class HomeFragment extends Fragment {
             popupWindow.setFocusable(true);
             popupWindow.setElevation(150);
 
-            // Blur the background
-            WindowManager.LayoutParams layoutParams = requireActivity().getWindow().getAttributes();
-            layoutParams.dimAmount = 0.8f; // Adjust the dim amount as needed
-            requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-            requireActivity().getWindow().setAttributes(layoutParams);
 
             // Show the popup window at the center
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
@@ -122,11 +150,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
-
-
-
         binding.refreshResultsButton.setOnClickListener(
                 v -> Toast.makeText(getContext(), "Refreshing results pressed", Toast.LENGTH_SHORT).show());
 
@@ -134,8 +157,29 @@ public class HomeFragment extends Fragment {
                 v -> NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_homeFragment_to_restaurantsFragment));
 
+        // load image from firebase storage using Glide
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profilePicRef = storageReference.child("users/" + userId + ".jpg");
+
+        // Fetch the download URL and load image into button
+        profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
+            // Use Glide to load the image using the URL
+            Glide.with(requireContext())
+                    .load(uri)  // Use the download URL instead of the StorageReference
+                    .into(binding.profileImageButton);
+        }).addOnFailureListener(exception -> {
+            // Handle the error, e.g., image not found
+            Toast.makeText(requireContext(), "Failed to load profile picture", Toast.LENGTH_SHORT).show();
+        });
+
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_homeFragment_to_profileFragment));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
