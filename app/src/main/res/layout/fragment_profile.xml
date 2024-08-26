@@ -11,7 +11,6 @@
             android:id="@+id/profileImage"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:src="@drawable/baseline_account_circle_24"
             app:shapeAppearance="@style/CircularProfilePic"
             android:contentDescription="@string/profile_image"
             app:layout_constraintStart_toStartOf="parent"
