@@ -15,7 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentDiscoverBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +29,21 @@ import java.util.List;
 public class DiscoverFragment extends Fragment {
 
     private FragmentDiscoverBinding binding;
-
-
+    private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private UserViewModel userViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,8 +57,18 @@ public class DiscoverFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-
         super.onViewCreated(view, savedInstanceState);
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUid();
+        }
+
+        // load user name and profile image
+        // set up profile image
+        userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
         RecyclerView discoverRecyclerView = view.findViewById(R.id.discoverRecyclerView);
         discoverRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -69,6 +91,8 @@ public class DiscoverFragment extends Fragment {
                 }
                 DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems);
                 discoverRecyclerView.setAdapter(discoverAdapter);
+            } else {
+                Toast.makeText(getContext(), "No articles found", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -86,5 +110,11 @@ public class DiscoverFragment extends Fragment {
                 v -> NavHostFragment.findNavController(DiscoverFragment.this)
                         .navigate(R.id.action_discoverFragment_to_profileFragment));
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

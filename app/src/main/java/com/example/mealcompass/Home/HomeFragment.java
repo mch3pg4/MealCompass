@@ -22,6 +22,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
@@ -75,6 +76,16 @@ public class HomeFragment extends Fragment {
         if (user != null) {
             userId = user.getUid();
         }
+
+        // set up welcome text with user's name
+        userRepository.getUserName(userId).addOnSuccessListener(name -> {
+            if (name != null) {
+                binding.welcomeText.setText(String.format("Welcome, %s!", name));
+            }
+        });
+
+        // set up profile image
+        userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
         RecyclerView recommendRestaurantsRecyclerView = view.findViewById(R.id.homeRecyclerView);
         recommendRestaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -157,20 +168,7 @@ public class HomeFragment extends Fragment {
                 v -> NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_homeFragment_to_restaurantsFragment));
 
-        // load image from firebase storage using Glide
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profilePicRef = storageReference.child("users/" + userId + ".jpg");
 
-        // Fetch the download URL and load image into button
-        profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
-            // Use Glide to load the image using the URL
-            Glide.with(requireContext())
-                    .load(uri)  // Use the download URL instead of the StorageReference
-                    .into(binding.profileImageButton);
-        }).addOnFailureListener(exception -> {
-            // Handle the error, e.g., image not found
-            Toast.makeText(requireContext(), "Failed to load profile picture", Toast.LENGTH_SHORT).show();
-        });
 
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(HomeFragment.this)

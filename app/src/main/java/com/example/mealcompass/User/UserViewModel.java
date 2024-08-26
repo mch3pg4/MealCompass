@@ -1,8 +1,21 @@
 package com.example.mealcompass.User;
 
+import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -17,6 +30,7 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<List<User>> userCuisines = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userDiets = new MutableLiveData<>();
     private final MutableLiveData<List<User>> favouriteRestaurants = new MutableLiveData<>();
+
 
     public LiveData<String> getUserId() {
         return userId;
@@ -58,6 +72,8 @@ public class UserViewModel extends ViewModel {
         return favouriteRestaurants;
     }
 
+
+
     public void setUserId(String userId) {
         this.userId.setValue(userId);
     }
@@ -97,6 +113,7 @@ public class UserViewModel extends ViewModel {
     public void setFavouriteRestaurants(List<User> favouriteRestaurants) {
         this.favouriteRestaurants.setValue(favouriteRestaurants);
     }
+
 
     public void addFavouriteRestaurant(User restaurant) {
         List<User> currentFavourites = favouriteRestaurants.getValue();

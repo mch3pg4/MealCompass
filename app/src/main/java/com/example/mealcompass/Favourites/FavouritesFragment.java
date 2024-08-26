@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentFavouritesBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +29,20 @@ import java.util.List;
 public class FavouritesFragment extends Fragment {
 
     private FragmentFavouritesBinding binding;
+    private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private UserViewModel userViewModel;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
 
 
     @Override
@@ -37,8 +57,18 @@ public class FavouritesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-
         super.onViewCreated(view, savedInstanceState);
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUid();
+        }
+
+        // load user name and profile image
+        // set up profile image
+        userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
         RecyclerView favouritesRecyclerView = view.findViewById(R.id.favouritesRecyclerView);
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

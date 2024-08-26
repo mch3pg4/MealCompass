@@ -96,7 +96,6 @@ public class AddProfilePicFragment extends Fragment {
         });
 
         binding.addFromGalleryButton.setOnClickListener(v -> {
-
             // Launch the photo picker and let the user choose only images.
             pickMedia.launch(new PickVisualMediaRequest.Builder()
                     .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
@@ -111,13 +110,13 @@ public class AddProfilePicFragment extends Fragment {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             StorageReference profilePicRef = storageRef.child("users/" + userId + ".jpg");
 
-            // Upload file to Firebase Storage
+            // Upload image to Firebase Storage
             profilePicRef.putFile(profilePicUri)
                     .addOnSuccessListener(taskSnapshot -> {
-                        // Retrieve the download URL once upload is complete
+                        // get url of uploaded image
                         profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String downloadUrl = uri.toString();  // This is the URL you want to store in Firestore
-                            // Now update Firestore with the download URL
+                            String downloadUrl = uri.toString();
+                            // update profile picture url in firestore database
                             userRepository.updateUserImageUrl(userId, downloadUrl)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
@@ -130,10 +129,7 @@ public class AddProfilePicFragment extends Fragment {
                                         }
                                     });
                         });
-                    }).addOnFailureListener(e -> {
-                        // Handle any errors in uploading the image to Firebase Storage
-                        Toast.makeText(getContext(), "Failed to upload image to Firebase Storage", Toast.LENGTH_SHORT).show();
-                    });
+                    }).addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to upload image to Firebase Storage", Toast.LENGTH_SHORT).show());
         }
     }
 

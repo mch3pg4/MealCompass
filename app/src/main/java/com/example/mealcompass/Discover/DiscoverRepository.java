@@ -67,24 +67,26 @@ public class DiscoverRepository {
 
     // Fetch all discover articles
     public void getAllDiscover(DiscoverListCallback callback) {
-        db.collection("discover")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<Discover> discoverList = new ArrayList<>();
-                        for (DocumentSnapshot document : task.getResult()) {
-                            Discover discover = document.toObject(Discover.class);
-                            if (discover != null) {
-                                discoverList.add(discover);
-                            }
+    db.collection("discover")
+            .get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    List<Discover> discoverList = new ArrayList<>();
+                    for (DocumentSnapshot document : task.getResult()) {
+                        Discover discover = document.toObject(Discover.class);
+                        if (discover != null) {
+                            discoverList.add(discover);
+                            Log.d("DiscoverRepository", "Discover object: " + discover.toString());
                         }
-                        callback.onSuccess(discoverList);
-                    } else {
-                        callback.onFailure(task.getException());
                     }
-                });
+                    callback.onSuccess(discoverList);
+                    Log.d("DiscoverRepository", "onSuccess called with " + discoverList.size() + " items.");
+                } else {
+                    callback.onFailure(task.getException());
+                    Log.d("DiscoverRepository", "onFailure called.", task.getException());
+                }
+            });
+}
     }
 
 
-
-}

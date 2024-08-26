@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,8 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentRestaurantsBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +31,21 @@ import java.util.List;
 public class RestaurantsFragment extends Fragment {
 
     private FragmentRestaurantsBinding binding;
+
+    private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private UserViewModel userViewModel;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
 
 
     @Override
@@ -36,6 +59,17 @@ public class RestaurantsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUid();
+        }
+
+        // load user name and profile image
+        // set up profile image
+        userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
+
 
         RecyclerView restaurantsRecyclerView = view.findViewById(R.id.restaurantsRecyclerView);
         restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -60,6 +94,10 @@ public class RestaurantsFragment extends Fragment {
                 }
             }
         });
+
+        // load profile image
+
+
 
 
         binding.profileImageButton.setOnClickListener(
