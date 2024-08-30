@@ -1,6 +1,8 @@
 package com.example.mealcompass.RestaurantOwner;
 
+
 import android.os.Bundle;
+
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import com.example.mealcompass.R;
 import com.example.mealcompass.databinding.FragmentFillInRestDetailsBinding;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +26,13 @@ import java.util.List;
 
 public class FillInRestDetailsFragment extends Fragment {
     private FragmentFillInRestDetailsBinding binding;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 
 
     @Override
@@ -37,16 +47,6 @@ public class FillInRestDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.restaurantMapView.setVisibility(View.GONE);
-
-        // show map when clicked on restaurant address field
-        binding.restAddressEditText.setOnClickListener(v -> {
-            binding.restaurantMapView.setVisibility(View.VISIBLE);
-
-            // Initialize map
-
-
-        });
 
         // adapter for list of cuisines
         List<String> items = Arrays.asList(getResources().getStringArray(R.array.cuisine_list));
@@ -92,9 +92,13 @@ public class FillInRestDetailsFragment extends Fragment {
         binding.nextButton.setOnClickListener(v -> {
             // Navigate to the next fragment
             NavHostFragment.findNavController(FillInRestDetailsFragment.this)
-                    .navigate(R.id.action_fillInRestDetailsFragment_to_addRestImageFragment);
+                    .navigate(R.id.action_fillInRestDetailsFragment_to_fillInRestAddressFragment);
         });
         }
 
 
+
+
     }
+
+

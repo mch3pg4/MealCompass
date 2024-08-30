@@ -1,5 +1,6 @@
 package com.example.mealcompass.RestaurantOwner;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -15,12 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.Restaurants.RestaurantRepository;
+import com.example.mealcompass.Restaurants.RestaurantViewModel;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentAddRestImageBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class AddRestImageFragment extends Fragment {
     private FragmentAddRestImageBinding binding;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    private FirebaseAuth mAuth;
+    private RestaurantRepository userRepository;
+    private RestaurantViewModel restaurantViewModel;
+    private Uri restaurantImageUri;
 
 
     @Override
@@ -32,6 +42,7 @@ public class AddRestImageFragment extends Fragment {
                 // Get the URI of the selected image
                 Log.d("AddRestImageFragment", "Image URI: " + result);
 
+                restaurantImageUri = result;
                 binding.itemImagePreview.setImageURI(result);
             }
         });
@@ -62,7 +73,7 @@ public class AddRestImageFragment extends Fragment {
 
 
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(AddRestImageFragment.this)
-                .navigate(R.id.action_addRestImageFragment_to_fillInRestDetailsFragment));
+                .navigate(R.id.action_addRestImageFragment_to_fillInRestAddressFragment));
 
         binding.nextButton.setOnClickListener(v -> {
             // Navigate to the next fragment

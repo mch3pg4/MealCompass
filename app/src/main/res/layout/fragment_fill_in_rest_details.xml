@@ -32,6 +32,7 @@
         android:padding="3dp"/>
 
     <ScrollView
+        android:id="@+id/fillInRestDetailsScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/fillInRestDetailsDescription"
@@ -68,33 +69,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/restAddressTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/restaurant_address"
-                android:layout_marginTop="10dp"
-                android:layout_margin="5dp"
-                >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/restAddressEditText"
-                    android:layout_width="match_parent"
-                    android:drawableStart="@drawable/baseline_location_pin_24"
-                    android:drawablePadding="10dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/restaurantMapView"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_margin="10dp"
-                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/restContactTextInputLayout"

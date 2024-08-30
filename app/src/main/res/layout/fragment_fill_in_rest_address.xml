@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RestaurantOwner.FillInRestAddressFragment">
+
+    <TextView
+        android:id="@+id/fillInRestDetailsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/fill_in_rest_details"
+        android:textSize="32sp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fillInRestDetailsDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fill_in_rest_details_description"
+        app:layout_constraintTop_toBottomOf="@id/fillInRestDetailsTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="15sp"
+        android:padding="3dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/restAddressTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/restaurant_address"
+        android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fillInRestDetailsDescription"
+        >
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/restAddressEditText"
+            android:layout_width="match_parent"
+            android:drawableStart="@drawable/baseline_location_pin_24"
+            android:drawablePadding="15dp"
+            android:layout_marginBottom="12dp"
+            android:layout_height="50dp"
+            tools:ignore="LabelFor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/restaurantMapView"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restAddressTextInputLayout"
+        app:layout_constraintBottom_toTopOf="@id/onboardingButtonGroupLayout"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/onboardingButtonGroupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/prevButton"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/previous"
+            app:icon="@drawable/baseline_arrow_back_24"
+            android:padding="6dp"
+            android:layout_marginStart="30dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nextButton"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            app:icon="@drawable/baseline_arrow_forward_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="6dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/next"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

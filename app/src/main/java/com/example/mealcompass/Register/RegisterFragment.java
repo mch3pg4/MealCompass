@@ -130,19 +130,61 @@ public class RegisterFragment extends Fragment {
 
         // if register button is disabled and tried to pressed, show toast message
         binding.registerButton.setOnClickListener(v -> {
+            boolean isValid = true;
+
+            // Validate name
+            String name = Objects.requireNonNull(binding.nameEditText.getText()).toString().trim();
+            if (name.isEmpty()) {
+                binding.nameEditText.setError("Please enter your name");
+                isValid = false;
+            } else {
+                binding.nameEditText.setError(null); // Clear previous error
+            }
+
+            // Validate email
+            String email = Objects.requireNonNull(binding.emailEditText.getText()).toString().trim();
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.emailEditText.setError("Please enter a valid email address");
+                isValid = false;
+            } else {
+                binding.emailEditText.setError(null);
+            }
+
+            // Validate password
+            String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString().trim();
+            if (password.length() < 6) {
+                binding.passwordEditText.setError("Password must be at least 6 characters");
+                isValid = false;
+            } else {
+                binding.passwordEditText.setError(null);
+            }
+
+            // Validate confirm password
+            String confirmPassword = Objects.requireNonNull(binding.confirmPasswordEditText.getText()).toString().trim();
+            if (!confirmPassword.equals(password)) {
+                binding.confirmPasswordEditText.setError("Passwords do not match");
+                isValid = false;
+            } else {
+                binding.confirmPasswordEditText.setError(null);
+            }
+
+            // Check if terms and conditions are accepted
             if (!binding.acceptTermsCheckBox.isChecked()) {
                 Toast.makeText(getContext(), "Please accept the Terms and Conditions", Toast.LENGTH_SHORT).show();
-            } else {
-                String email = Objects.requireNonNull(binding.emailEditText.getText()).toString();
-                String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
-                String name = Objects.requireNonNull(binding.nameEditText.getText()).toString();
+                isValid = false;
+            }
+
+            // If all validations are passed
+            if (isValid) {
                 userViewModel.setUserEmail(email);
                 userViewModel.setUserPassword(password);
                 userViewModel.setUserName(name);
                 createAccount();
-
+            } else {
+                Toast.makeText(getContext(), "Please correct the errors above", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         binding.loginText.setOnClickListener(v -> NavHostFragment.findNavController(RegisterFragment.this)
                 .navigate(R.id.action_registerFragment_to_loginFragment));

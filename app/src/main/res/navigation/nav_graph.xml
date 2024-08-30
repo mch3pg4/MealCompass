@@ -213,11 +213,11 @@
         android:label="fragment_add_rest_image"
         tools:layout="@layout/fragment_add_rest_image" >
         <action
-            android:id="@+id/action_addRestImageFragment_to_fillInRestDetailsFragment"
-            app:destination="@id/fillInRestDetailsFragment" />
-        <action
             android:id="@+id/action_addRestImageFragment_to_addMenuItemsFragment"
             app:destination="@id/addMenuItemsFragment" />
+        <action
+            android:id="@+id/action_addRestImageFragment_to_fillInRestAddressFragment"
+            app:destination="@id/fillInRestAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminFragment"
@@ -234,11 +234,11 @@
         android:label="fragment_fill_in_rest_details"
         tools:layout="@layout/fragment_fill_in_rest_details" >
         <action
-            android:id="@+id/action_fillInRestDetailsFragment_to_addRestImageFragment"
-            app:destination="@id/addRestImageFragment" />
-        <action
             android:id="@+id/action_fillInRestDetailsFragment_to_selectRoleFragment2"
             app:destination="@id/selectRoleFragment2" />
+        <action
+            android:id="@+id/action_fillInRestDetailsFragment_to_fillInRestAddressFragment"
+            app:destination="@id/fillInRestAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpdeskFragment"
@@ -331,5 +331,17 @@
         <action
             android:id="@+id/action_ratingsFragment2_to_restaurantOwnerFragment"
             app:destination="@id/restaurantOwnerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fillInRestAddressFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.FillInRestAddressFragment"
+        android:label="fragment_fill_in_rest_address"
+        tools:layout="@layout/fragment_fill_in_rest_address" >
+        <action
+            android:id="@+id/action_fillInRestAddressFragment_to_addRestImageFragment"
+            app:destination="@id/addRestImageFragment" />
+        <action
+            android:id="@+id/action_fillInRestAddressFragment_to_fillInRestDetailsFragment"
+            app:destination="@id/fillInRestDetailsFragment" />
     </fragment>
 </navigation>

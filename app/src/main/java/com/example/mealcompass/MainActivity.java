@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     Objects.requireNonNull(getSupportActionBar()).hide();
                     binding.bottomNavigationView.setVisibility(View.VISIBLE);
                 } else if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.welcomeFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.forgotPasswordFragment || destination.getId() == R.id.addProfilePicFragment
-                        || destination.getId() == R.id.selectRoleFragment2 || destination.getId() == R.id.selectCuisineFragment2 || destination.getId() == R.id.selectDietFragment || destination.getId() == R.id.selectAllergyFragment
+                        || destination.getId() == R.id.selectRoleFragment2 || destination.getId() == R.id.selectCuisineFragment2 || destination.getId() == R.id.selectDietFragment || destination.getId() == R.id.selectAllergyFragment || destination.getId() == R.id.fillInRestAddressFragment
                         || destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.fillInRestDetailsFragment || destination.getId() == R.id.addRestImageFragment || destination.getId() == R.id.addMenuItemsFragment) {
                     Objects.requireNonNull(getSupportActionBar()).hide();
                     binding.bottomNavigationView.setVisibility(View.GONE);
