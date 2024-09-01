@@ -1,6 +1,7 @@
 package com.example.mealcompass.User;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -12,11 +13,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -94,7 +97,7 @@ public class UserRepository {
                     if (task.isSuccessful()) {
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser != null) {
-                            User user = new User(name, email, "", "", null, null, null, null, null);
+                            User user = new User(name, email, "", "", null, null, null, null, null, null);
                             return db.collection("users")
                                     .document(firebaseUser.getUid())
                                     .set(user)
@@ -135,6 +138,33 @@ public class UserRepository {
                 .update("userAllergens", allergen);
 
     }
+
+    public void updateOwnerRestaurants(String userId, String newRestaurantId) {
+        DocumentReference userRef = db.collection("users").document(userId);
+
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                // Retrieve the existing list
+                List<String> restaurantIds = (List<String>) documentSnapshot.get("ownerRestaurants");
+
+                if (restaurantIds == null) {
+                    restaurantIds = new ArrayList<>();
+                }
+
+                // Add the new restaurant ID to the list
+                restaurantIds.add(newRestaurantId);
+
+                // Update the user's document with the new list
+                userRef.update("ownerRestaurants", restaurantIds)
+                        .addOnSuccessListener(aVoid -> Log.d("UserRepository", "Restaurant ID added successfully!"))
+                        .addOnFailureListener(e -> Log.d("UserRepository", "Error updating document", e));
+            } else {
+                // Handle the case where the user document does not exist
+                Log.d("UserRepository", "User document does not exist.");
+            }
+        }).addOnFailureListener(e -> Log.d("UserRepository", "Error fetching document", e));
+    }
+
 }
 
 

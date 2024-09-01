@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.example.mealcompass.BuildConfig;
 import com.example.mealcompass.R;
 import com.example.mealcompass.Register.AutocompleteAdapter;
+import com.example.mealcompass.Restaurants.RestaurantRepository;
+import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.databinding.FragmentFillInRestAddressBinding;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,9 +50,16 @@ public class FillInRestAddressFragment extends Fragment {
     private GoogleMap googleMap;
     private ActivityResultLauncher<String> locationPermissionRequest;
 
+    private RestaurantViewModel restaurantViewModel;
+    private RestaurantRepository restaurantRepository;
+
+    private String restaurantId;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -63,6 +73,19 @@ public class FillInRestAddressFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        restaurantRepository = new RestaurantRepository();
+        restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
+
+//        restaurantViewModel.getRestaurantId().observe(getViewLifecycleOwner(), restaurant -> {
+//            if (restaurant != null) {
+//                Toast.makeText(getContext(), "Restaurant ID: " + restaurant, Toast.LENGTH_SHORT).show();
+//                restaurantId = restaurant;
+//            } else {
+//                Toast.makeText(getContext(), "Error getting restaurant ID", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
 
         // Initialize the FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
@@ -137,7 +160,30 @@ public class FillInRestAddressFragment extends Fragment {
         });
 
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_fillInRestAddressFragment_to_fillInRestDetailsFragment));
-        binding.nextButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_fillInRestAddressFragment_to_addRestImageFragment));
+        binding.nextButton.setOnClickListener(v -> addRestaurantAddress());
+    }
+
+    // function to add address into database and proceed to next fragment
+    private void addRestaurantAddress() {
+        String address = binding.restAddressEditText.getText().toString();
+        if (getArguments() != null){
+            String restaurantId = getArguments().getString("restaurantId");
+            // pass restaurant id to next fragment
+            Bundle bundle = new Bundle();
+            bundle.putString("restaurantId", restaurantId);
+        if (restaurantId != null) {
+            restaurantRepository.updateRestaurantAddress(restaurantId, address)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Restaurant address added successfully", Toast.LENGTH_SHORT).show();
+                            NavHostFragment.findNavController(FillInRestAddressFragment.this)
+                                    .navigate(R.id.action_fillInRestAddressFragment_to_addRestImageFragment, bundle);
+                        }
+                    });
+        } else {
+            Toast.makeText(getContext(), "Error adding restaurant address", Toast.LENGTH_SHORT).show();
+        }
+        }
     }
 
     // Fetch address from LatLng on map long press
@@ -209,5 +255,4 @@ public class FillInRestAddressFragment extends Fragment {
         super.onLowMemory();
         binding.restaurantMapView.onLowMemory();
     }
-
 }

@@ -30,6 +30,7 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<List<User>> userCuisines = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userDiets = new MutableLiveData<>();
     private final MutableLiveData<List<User>> favouriteRestaurants = new MutableLiveData<>();
+    private final MutableLiveData<List<User>> ownerRestaurants = new MutableLiveData<>();
 
 
     public LiveData<String> getUserId() {
@@ -72,7 +73,9 @@ public class UserViewModel extends ViewModel {
         return favouriteRestaurants;
     }
 
-
+    public LiveData<List<User>> getOwnerRestaurants() {
+        return ownerRestaurants;
+    }
 
     public void setUserId(String userId) {
         this.userId.setValue(userId);
@@ -112,6 +115,10 @@ public class UserViewModel extends ViewModel {
 
     public void setFavouriteRestaurants(List<User> favouriteRestaurants) {
         this.favouriteRestaurants.setValue(favouriteRestaurants);
+    }
+
+    public void setOwnerRestaurants(List<User> ownerRestaurants) {
+        this.ownerRestaurants.setValue(ownerRestaurants);
     }
 
 

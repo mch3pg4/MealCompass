@@ -12,11 +12,16 @@ public class User {
     private List <String> userDiets;
     private List<String> favouriteRestaurants;
     private List<String> recommendedHistory;
+    private List<String> ownerRestaurants;
 
     public User() {
     }
 
-    public User(String userName, String userEmail, String userType, String userImageUrl, List<String> userAllergens, List<String> userCuisines, List<String> userDiets, List<String> favouriteRestaurants, List<String> recommendedHistory) {
+    public User(List<String> ownerRestaurants) {
+        this.ownerRestaurants = ownerRestaurants;
+    }
+
+    public User(String userName, String userEmail, String userType, String userImageUrl, List<String> userAllergens, List<String> userCuisines, List<String> userDiets, List<String> favouriteRestaurants, List<String> recommendedHistory, List<String> ownerRestaurants) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userType = userType;
@@ -26,6 +31,7 @@ public class User {
         this.userDiets = userDiets;
         this.favouriteRestaurants = favouriteRestaurants;
         this.recommendedHistory = recommendedHistory;
+        this.ownerRestaurants = ownerRestaurants;
     }
 
     public String getUserName() {
@@ -64,6 +70,10 @@ public class User {
         return recommendedHistory;
     }
 
+    public List<String> ownerRestaurants() {
+        return ownerRestaurants;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -98,6 +108,10 @@ public class User {
 
     public void setRecommendedHistory(List<String> recommendedHistory) {
         this.recommendedHistory = recommendedHistory;
+    }
+
+    public void setOwnerRestaurants(List<String> ownerRestaurants) {
+        this.ownerRestaurants = ownerRestaurants;
     }
 
 

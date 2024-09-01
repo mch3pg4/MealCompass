@@ -2,6 +2,8 @@ package com.example.mealcompass.Restaurants;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -14,19 +16,19 @@ public class RestaurantRepository {
 private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //add restaurant
-    public void addRestaurant(String name, String address, String imageUrl, float rating, int price, String status, String businessHours, String cuisine, String contact) {
+    public Task<DocumentReference> addRestaurant(String name, String businessHours, String cuisine, String contact) {
         Map<String, Object> restaurant = new HashMap<>();
         restaurant.put("name", name);
-        restaurant.put("address", address);
-        restaurant.put("imageUrl", imageUrl);
-        restaurant.put("rating", rating);
-        restaurant.put("price", price);
-        restaurant.put("status", status);
+        restaurant.put("address", "");
+        restaurant.put("imageUrl", "");
+        restaurant.put("rating", 0);
+        restaurant.put("price", 0);
+        restaurant.put("status", "Pending");
         restaurant.put("businessHours", businessHours);
         restaurant.put("cuisine", cuisine);
         restaurant.put("contact", contact);
 
-        db.collection("restaurant")
+        return db.collection("restaurant")
                 .add(restaurant)
                 .addOnSuccessListener(documentReference ->
                         Log.d("RestaurantRepository", "DocumentSnapshot added with ID: " + documentReference.getId()))
@@ -34,17 +36,39 @@ private final FirebaseFirestore db = FirebaseFirestore.getInstance();
                         Log.d("RestaurantRepository", "Error adding document", e));
     }
 
-    // update restaurant image
-    public void updateRestaurantImage(String documentId, String imageUrl) {
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("imageUrl", imageUrl);
+    // get restaurant by id
+    public Task<DocumentSnapshot> getRestaurantById(String documentId) {
+        return db.collection("restaurant").document(documentId).get();
+    }
 
-        db.collection("restaurant").document(documentId)
-                .update(updates)
-                .addOnSuccessListener(aVoid ->
-                        Log.d("RestaurantRepository", "Document updated successfully"))
-                .addOnFailureListener(e ->
-                        Log.d("RestaurantRepository", "Error updating document", e));
+    // update restaurant address
+    public Task<Void> updateRestaurantAddress(String documentId, String address) {
+        return db.collection("restaurant").document(documentId)
+                .update("address", address);
+    }
+
+    // update restaurant image
+    public Task<Void> updateRestaurantImage(String documentId, String imageUrl) {
+        return db.collection("restaurant").document(documentId)
+                .update("imageUrl", imageUrl);
+    }
+
+    // add menu item
+    public Task<DocumentReference> addMenuItem(String restaurantId, String name, String description, String imageUrl, float price, int nutritionalValue, String category, List<String> allergen) {
+        Map<String, Object> menuItem = new HashMap<>();
+        menuItem.put("name", name);
+        menuItem.put("description", description);
+        menuItem.put("imageUrl", imageUrl);
+        menuItem.put("price", price);
+        menuItem.put("nutritionalValue", nutritionalValue);
+        menuItem.put("category", category);
+        menuItem.put("allergens", allergen);
+
+
+        return db.collection("restaurant")
+                .document(restaurantId)
+                .collection("menuItem")
+                .add(menuItem);
     }
 
 

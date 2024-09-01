@@ -26,7 +26,6 @@ public class RestaurantOwnerFragment extends Fragment {
     private FragmentRestaurantOwnerBinding binding;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

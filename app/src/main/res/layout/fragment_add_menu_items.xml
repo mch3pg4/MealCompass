@@ -97,7 +97,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/restContactEditText"
+                    android:id="@+id/itemDescEditText"
                     android:layout_width="match_parent"
                     android:drawableStart="@drawable/baseline_description_24"
                     android:drawablePadding="10dp"

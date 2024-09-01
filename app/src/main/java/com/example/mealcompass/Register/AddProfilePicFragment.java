@@ -37,7 +37,6 @@ public class AddProfilePicFragment extends Fragment {
     private UserViewModel userViewModel;
     private Uri profilePicUri;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +131,4 @@ public class AddProfilePicFragment extends Fragment {
                     }).addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to upload image to Firebase Storage", Toast.LENGTH_SHORT).show());
         }
     }
-
-
 }

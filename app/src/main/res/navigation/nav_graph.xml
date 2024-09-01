@@ -193,31 +193,17 @@
             app:destination="@id/registerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addMenuItemsFragment"
-        android:name="com.example.mealcompass.RestaurantOwner.AddMenuItemsFragment"
-        android:label="fragment_add_menu_items"
-        tools:layout="@layout/fragment_add_menu_items" >
-        <action
-            android:id="@+id/action_addMenuItemsFragment_to_addRestImageFragment"
-            app:destination="@id/addRestImageFragment" />
-        <action
-            android:id="@+id/action_addMenuItemsFragment_to_restaurantOwnerFragment"
-            app:destination="@id/restaurantOwnerFragment" />
-        <action
-            android:id="@+id/action_addMenuItemsFragment_self"
-            app:destination="@id/addMenuItemsFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/addRestImageFragment"
         android:name="com.example.mealcompass.RestaurantOwner.AddRestImageFragment"
         android:label="fragment_add_rest_image"
         tools:layout="@layout/fragment_add_rest_image" >
-        <action
-            android:id="@+id/action_addRestImageFragment_to_addMenuItemsFragment"
-            app:destination="@id/addMenuItemsFragment" />
+
         <action
             android:id="@+id/action_addRestImageFragment_to_fillInRestAddressFragment"
             app:destination="@id/fillInRestAddressFragment" />
+        <action
+            android:id="@+id/action_addRestImageFragment_to_addMenuItemsFragment"
+            app:destination="@id/addMenuItemsFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminFragment"
@@ -343,5 +329,17 @@
         <action
             android:id="@+id/action_fillInRestAddressFragment_to_fillInRestDetailsFragment"
             app:destination="@id/fillInRestDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMenuItemsFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.AddMenuItemsFragment"
+        android:label="fragment_add_menu_items"
+        tools:layout="@layout/fragment_add_menu_items">
+        <action
+            android:id="@+id/action_addMenuItemsFragment_to_restaurantOwnerFragment"
+            app:destination="@id/restaurantOwnerFragment" />
+        <action
+            android:id="@+id/action_addMenuItemsFragment_to_addRestImageFragment"
+            app:destination="@id/addRestImageFragment" />
     </fragment>
 </navigation>
