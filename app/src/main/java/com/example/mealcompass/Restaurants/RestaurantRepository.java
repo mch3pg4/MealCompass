@@ -71,7 +71,6 @@ private final FirebaseFirestore db = FirebaseFirestore.getInstance();
                 .add(menuItem);
     }
 
-
     // update restaurant
     public void updateRestaurant(String documentId, String name, String address, String imageUrl, float rating, int price, String status, String businessHours, String cuisine, String contact) {
         Map<String, Object> updates = new HashMap<>();

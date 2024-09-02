@@ -1,7 +1,5 @@
 package com.example.mealcompass.Register;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -90,7 +88,7 @@ public class AddProfilePicFragment extends Fragment {
                 binding.nextButton.setAlpha(0.5f);
             } else {
                 // upload the default profile picture
-                uploadProfilePicture(Uri.parse("android.resource://com.example.mealcompass/" + R.drawable.baseline_account_circle_24));
+                uploadProfilePicture(Uri.parse("android.resource://com.example.mealcompass/" + R.drawable.default_profile));
             }
         });
 

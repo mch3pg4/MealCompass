@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_discoverFragment_to_discoverArticleFragment"
             app:destination="@id/discoverArticleFragment" />
+        <action
+            android:id="@+id/action_discoverFragment_to_addDiscoverArticleFragment"
+            app:destination="@id/addDiscoverArticleFragment" />
     </fragment>
     <fragment
         android:id="@+id/restaurantsFragment"
@@ -75,9 +78,13 @@
     </fragment>
     <fragment
         android:id="@+id/discoverArticleFragment"
-        android:name="com.example.mealcompass.DiscoverArticleFragment"
+        android:name="com.example.mealcompass.Discover.DiscoverArticleFragment"
         android:label="fragment_discover_article"
-        tools:layout="@layout/fragment_discover_article" />
+        tools:layout="@layout/fragment_discover_article" >
+        <action
+            android:id="@+id/action_discoverArticleFragment_to_addDiscoverArticleFragment"
+            app:destination="@id/addDiscoverArticleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.mealcompass.Register.ForgotPasswordFragment"
@@ -341,5 +348,17 @@
         <action
             android:id="@+id/action_addMenuItemsFragment_to_addRestImageFragment"
             app:destination="@id/addRestImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDiscoverArticleFragment"
+        android:name="com.example.mealcompass.Discover.AddDiscoverArticleFragment"
+        android:label="fragment_add_discover_article"
+        tools:layout="@layout/fragment_add_discover_article" >
+        <action
+            android:id="@+id/action_addDiscoverArticleFragment_to_discoverArticleFragment"
+            app:destination="@id/discoverArticleFragment" />
+        <action
+            android:id="@+id/action_addDiscoverArticleFragment_to_discoverFragment"
+            app:destination="@id/discoverFragment" />
     </fragment>
 </navigation>

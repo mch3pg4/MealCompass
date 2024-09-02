@@ -2,6 +2,8 @@ package com.example.mealcompass.Discover;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -14,15 +16,15 @@ public class DiscoverRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //add discover article
-    public void addDiscover(String title, String content, String imageUrl, String author, String time) {
+    public Task<DocumentReference> addDiscover(String title, String content, String imageUrl, String author, String time) {
         Map<String, Object> discover = new HashMap<>();
-        discover.put("title", title);
-        discover.put("content", content);
-        discover.put("imageUrl", imageUrl);
-        discover.put("author", author);
-        discover.put("time", time);
+        discover.put("articleTitle", title);
+        discover.put("articleContent", content);
+        discover.put("articleImageUrl", imageUrl);
+        discover.put("articleAuthor", author);
+        discover.put("articleTime", time);
 
-        db.collection("discover")
+        return db.collection("discover")
                 .add(discover)
                 .addOnSuccessListener(documentReference ->
                         Log.d("DiscoverRepository", "DocumentSnapshot added with ID: " + documentReference.getId()))
@@ -31,15 +33,15 @@ public class DiscoverRepository {
     }
 
     // update discover article
-    public void updateDiscover(String documentId, String title, String content, String imageUrl, String author, String time) {
+    public Task<Void> updateDiscover(String documentId, String title, String content, String imageUrl, String author, String time) {
         Map<String, Object> updates = new HashMap<>();
-        updates.put("title", title);
-        updates.put("content", content);
-        updates.put("imageUrl", imageUrl);
-        updates.put("author", author);
-        updates.put("time", time);
+        updates.put("articleTitle", title);
+        updates.put("articleContent", content);
+        updates.put("articleImageUrl", imageUrl);
+        updates.put("articleAuthor", author);
+        updates.put("articleTime", time);
 
-        db.collection("discover").document(documentId)
+        return db.collection("discover").document(documentId)
                 .update(updates)
                 .addOnSuccessListener(aVoid ->
                         Log.d("DiscoverRepository", "Document updated successfully"))
@@ -64,6 +66,25 @@ public class DiscoverRepository {
         void onFailure(Exception e);
     }
 
+    // get discover article by id
+//    public void getDiscoverById(String documentId, DiscoverCallback callback) {
+//        db.collection("discover").document(documentId)
+//                .get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        if (document != null) {
+//                            Discover discover = document.toObject(Discover.class);
+//                            if (discover != null) {
+//                                discover.setArticleId(document.getId());
+//                                callback.onSuccess(discover);
+//                            }
+//                        }
+//                    } else {
+//                        callback.onFailure(task.getException());
+//                    }
+//                });
+//    }
 
     // Fetch all discover articles
     public void getAllDiscover(DiscoverListCallback callback) {
@@ -75,6 +96,7 @@ public class DiscoverRepository {
                     for (DocumentSnapshot document : task.getResult()) {
                         Discover discover = document.toObject(Discover.class);
                         if (discover != null) {
+                            discover.setArticleId(document.getId());
                             discoverList.add(discover);
                             Log.d("DiscoverRepository", "Discover object: " + discover.toString());
                         }

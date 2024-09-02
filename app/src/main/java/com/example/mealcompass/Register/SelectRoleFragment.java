@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.mealcompass.MainActivity;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
@@ -54,9 +55,11 @@ public class SelectRoleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        String userId = null;
+        String userId;
         if (firebaseUser != null) {
             userId = firebaseUser.getUid();
+        } else {
+            userId = null;
         }
 
         userViewModel.setUserId(userId);
@@ -93,6 +96,16 @@ public class SelectRoleFragment extends Fragment {
                 NavHostFragment.findNavController(SelectRoleFragment.this)
                         .navigate(R.id.action_selectRoleFragment2_to_fillInRestDetailsFragment);
             }
+
+            userRepository.getUserType(userId).addOnSuccessListener(userType -> {
+                if (userType != null) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null) {
+                        mainActivity.updateBottomNavView(userType);
+                    }
+                }
+            });
+
         });
     }
 

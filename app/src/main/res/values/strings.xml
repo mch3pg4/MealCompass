@@ -219,7 +219,7 @@
     <string name="more_button">More</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="add_article">Add new article</string>
+    <string name="add_article">Add a new article</string>
     <string name="about_mealcompass">About MealCompass</string>
     <string name="app_description">MealCompass is a Food Recommendation System that aims to deliver accurate results and healthy suggestions based on your personal preferences.</string>
     <string name="objectives">The three main objectives of MealCompass are: </string>
@@ -236,5 +236,14 @@
     <string name="logging_in">Logging in…</string>
     <string name="add_from_gallery">Add From Gallery</string>
     <string name="add_from_camera">Add From Camera</string>
+    <string name="add_article_description">Provide users with daily updated article contents.</string>
+    <string name="post">Post</string>
+    <string name="article_title">Article Title</string>
+    <string name="article_content">Article Content</string>
+    <string name="add_article_image">Add Article Image</string>
+    <string name="article_img_preview">Article Image Preview</string>
+    <string name="discover_article_author">Discover Article Author</string>
+    <string name="update_article">Update article</string>
+    <string name="update">Update</string>
 
 </resources>

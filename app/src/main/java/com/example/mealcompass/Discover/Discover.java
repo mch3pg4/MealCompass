@@ -1,6 +1,7 @@
 package com.example.mealcompass.Discover;
 
 public class Discover {
+    private  String articleId;
     private String articleTitle;
     private String articleContent;
     private String articleImageUrl;
@@ -10,12 +11,18 @@ public class Discover {
     public Discover() {
     }
 
-    public Discover(String articleTitle, String articleContent, String articleImageUrl, String articleAuthor, String articleTime) {
+
+    public Discover(String articleId, String articleTitle, String articleContent, String articleImageUrl, String articleAuthor, String articleTime) {
+        this.articleId = articleId;
         this.articleTitle = articleTitle;
         this.articleContent = articleContent;
         this.articleImageUrl = articleImageUrl;
         this.articleAuthor = articleAuthor;
         this.articleTime = articleTime;
+    }
+
+    public String getArticleId() {
+        return articleId;
     }
 
     public String getArticleTitle() {
@@ -38,6 +45,9 @@ public class Discover {
         return articleTime;
     }
 
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
+    }
 
     public void setArticleTitle(String articleTitle) {
         this.articleTitle = articleTitle;

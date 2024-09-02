@@ -1,5 +1,7 @@
 package com.example.mealcompass.Discover;
 
+import android.app.AlertDialog;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mealcompass.R;
 import com.google.android.material.button.MaterialButton;
 
@@ -22,6 +24,7 @@ import java.util.List;
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHolder> {
 
     private final List<DiscoverItem> mDiscoverItems;
+    private final boolean isAdmin;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView authorName, timePosted, discoverArticleTitle, discoverArticleDescription;
@@ -42,8 +45,9 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
 
     }
 
-    public DiscoverAdapter(List<DiscoverItem> discoverItems) {
+    public DiscoverAdapter(List<DiscoverItem> discoverItems, boolean isAdmin) {
         this.mDiscoverItems = discoverItems;
+        this.isAdmin = isAdmin;
     }
 
     @NonNull
@@ -60,13 +64,24 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         holder.timePosted.setText(discoverItem.getTimePosted());
         holder.discoverArticleTitle.setText(discoverItem.getDiscoverArticleTitle());
         holder.discoverArticleDescription.setText(discoverItem.getDiscoverArticleDescription());
-//        holder.discoverImage.setImageResource(discoverItem.getDiscoverImage());
-        holder.discoverImage.setImageResource(R.drawable.placeholder);
+        Glide.with(holder.discoverImage.getContext())
+                .load(discoverItem.getDiscoverImage())
+                .into(holder.discoverImage);
         holder.readMoreButton.setOnClickListener(v -> {
-            // Navigate to the DiscoverDetailsFragment
+            // pass article data to DiscoverArticleFragment
+            Bundle bundle = new Bundle();
+            bundle.putString("discoverId", discoverItem.getDiscoverId());
+            bundle.putString("authorName", discoverItem.getAuthorName());
+            bundle.putString("timePosted", discoverItem.getTimePosted());
+            bundle.putString("discoverArticleTitle", discoverItem.getDiscoverArticleTitle());
+            bundle.putString("discoverArticleDescription", discoverItem.getDiscoverArticleDescription());
+            bundle.putString("discoverImage", discoverItem.getDiscoverImage());
             Navigation.findNavController(holder.readMoreButton)
-                    .navigate(R.id.action_discoverFragment_to_discoverArticleFragment);
+                    .navigate(R.id.action_discoverFragment_to_discoverArticleFragment, bundle);
         });
+
+        // if user type is admin, show more options button
+        holder.moreOptionsButton.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
 
         holder.moreOptionsButton.setOnClickListener(v -> {
             // Create a PopupMenu
@@ -79,9 +94,30 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
                 int itemId = item.getItemId();
                 // Handle Delete action
                 if (itemId == R.id.edit) {
-                    // Handle Edit action
+                    Bundle bundle = new Bundle();
+                    bundle.putString("articleId", discoverItem.getDiscoverId());
+
+                    // navigate to EditDiscoverArticleFragment
+                    Navigation.findNavController(v)
+                            .navigate(R.id.action_discoverFragment_to_addDiscoverArticleFragment, bundle);
                     return true;
-                } else return itemId == R.id.delete;
+                } else if (itemId == R.id.delete) {
+                    // Show an alert dialog to confirm deletion
+                    AlertDialog alertDialog = new AlertDialog.Builder(holder.moreOptionsButton.getContext())
+                            .setTitle("Delete Article")
+                            .setMessage("Are you sure you want to delete this article?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
+                                // Delete the article
+                                DiscoverRepository discoverRepository = new DiscoverRepository();
+                                discoverRepository.deleteDiscover(discoverItem.getDiscoverId());
+                                Toast.makeText(holder.moreOptionsButton.getContext(), "Article deleted", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                            .create();
+                    alertDialog.show();
+                    return true;
+                }
+                return false;
             });
             // Show the popup menu
             popupMenu.show();

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,18 +16,32 @@ import android.widget.Toast;
 import com.example.mealcompass.Home.RecommendRestaurantsAdapter;
 import com.example.mealcompass.Home.RecommendRestaurantsItem;
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentAdminBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 
 public class AdminFragment extends Fragment {
     private FragmentAdminBinding binding;
+    private FirebaseAuth mAuth;
+    private UserRepository userRepository;
+    private UserViewModel userViewModel;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
     }
 
@@ -43,9 +57,15 @@ public class AdminFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.profileImageButton.setOnClickListener(v-> {
-            NavHostFragment.findNavController(this).navigate(R.id.action_adminFragment_to_profileFragment);
-        });
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUid();
+        }
+
+        // load user name and profile image
+        // set up profile image
+        userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
         // restaurant requests recycler view
         RecyclerView restaurantRequestsRecyclerView = view.findViewById(R.id.restaurantRequestsRecyclerView);

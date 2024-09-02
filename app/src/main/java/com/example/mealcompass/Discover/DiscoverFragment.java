@@ -32,6 +32,7 @@ public class DiscoverFragment extends Fragment {
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
     private UserViewModel userViewModel;
+    private boolean isAdmin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class DiscoverFragment extends Fragment {
         userRepository = new UserRepository(mAuth, db);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -70,6 +70,22 @@ public class DiscoverFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
+        // check if user is admin
+        userRepository.getUserType(userId).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String userType = task.getResult();
+                isAdmin = userType.equals("admin");
+                // only if user type is admin show add article button
+                if (isAdmin) {
+                    binding.addFab.setVisibility(View.VISIBLE);
+                } else {
+                    binding.addFab.setVisibility(View.GONE);
+                }
+            } else {
+                Toast.makeText(getContext(), "Failed to get user type", Toast.LENGTH_SHORT).show();
+            }
+
+
         RecyclerView discoverRecyclerView = view.findViewById(R.id.discoverRecyclerView);
         discoverRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -83,13 +99,14 @@ public class DiscoverFragment extends Fragment {
                 List<DiscoverItem> discoverItems = new ArrayList<>();
                 for (Discover discover : discovers) {
                     discoverItems.add(new DiscoverItem(
+                            discover.getArticleId(),
                             discover.getArticleImageUrl(),
                             discover.getArticleAuthor(),
                             discover.getArticleTime(),
                             discover.getArticleTitle(),
                             discover.getArticleContent()));
                 }
-                DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems);
+                DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems, isAdmin);
                 discoverRecyclerView.setAdapter(discoverAdapter);
             } else {
                 Toast.makeText(getContext(), "No articles found", Toast.LENGTH_SHORT).show();
@@ -99,12 +116,15 @@ public class DiscoverFragment extends Fragment {
         // Fetch all discover articles
         discoverViewModel.fetchAllDiscover();
 
-
-        binding.addFab.setOnClickListener(
-                v-> Toast.makeText(getContext(), "Add a new article", Toast.LENGTH_SHORT).show()
-        );
+        });
 
 
+
+        binding.addFab.setOnClickListener(v -> {
+            NavHostFragment.findNavController(DiscoverFragment.this)
+                    .navigate(R.id.action_discoverFragment_to_addDiscoverArticleFragment);
+            Toast.makeText(getContext(), "Add a new article", Toast.LENGTH_SHORT).show();
+        });
 
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(DiscoverFragment.this)
