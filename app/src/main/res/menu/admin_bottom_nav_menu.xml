@@ -5,7 +5,7 @@
         android:id="@+id/adminFragment"/>
     <item android:title="@string/helpdesk"
         android:icon="@drawable/baseline_help_outline_24"
-        android:id="@+id/helpdeskFragment"
+        android:id="@+id/helpdeskAdminFragment"
         />
     <item android:title="@string/discover"
         android:icon="@drawable/baseline_newspaper_24"

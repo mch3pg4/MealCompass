@@ -66,25 +66,31 @@ public class DiscoverRepository {
         void onFailure(Exception e);
     }
 
+    public interface DiscoverCallback {
+        void onSuccess(Discover discover);
+        void onFailure(Exception e);
+    }
+
+
     // get discover article by id
-//    public void getDiscoverById(String documentId, DiscoverCallback callback) {
-//        db.collection("discover").document(documentId)
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        if (document != null) {
-//                            Discover discover = document.toObject(Discover.class);
-//                            if (discover != null) {
-//                                discover.setArticleId(document.getId());
-//                                callback.onSuccess(discover);
-//                            }
-//                        }
-//                    } else {
-//                        callback.onFailure(task.getException());
-//                    }
-//                });
-//    }
+    public void getDiscoverById(String documentId, DiscoverCallback callback) {
+        db.collection("discover").document(documentId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            Discover discover = document.toObject(Discover.class);
+                            if (discover != null) {
+                                discover.setArticleId(document.getId());
+                                callback.onSuccess(discover);
+                            }
+                        }
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
 
     // Fetch all discover articles
     public void getAllDiscover(DiscoverListCallback callback) {

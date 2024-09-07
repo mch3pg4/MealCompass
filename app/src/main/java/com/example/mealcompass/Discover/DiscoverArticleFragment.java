@@ -75,10 +75,8 @@ public class DiscoverArticleFragment extends Fragment {
         // Retrieve data from previous fragment
         Bundle args = getArguments();
         if (args != null) {
-            String articleId = args.getString("discoverId");
             String title = args.getString("discoverArticleTitle");
             String author = args.getString("authorName");
-            String time = args.getString("timePosted");
             String content = args.getString("discoverArticleDescription");
             String imageUrl = args.getString("discoverImage");
 

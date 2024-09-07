@@ -43,7 +43,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="discover">Discover</string>
     <string name="favourites">Favourites</string>
@@ -245,5 +244,17 @@
     <string name="discover_article_author">Discover Article Author</string>
     <string name="update_article">Update article</string>
     <string name="update">Update</string>
+    <string name="helpdesk_description">Start chatting away!</string>
+    <string name="helpdesk_chats">Helpdesk Chats</string>
+    <string name="sender_message">Sender Message</string>
+    <string name="message_time">Sep 4 2024, 8:10 PM</string>
+    <string name="receiver_message">Receiver Message</string>
+    <string name="receiver_name">Receiver\'s Name</string>
+    <string name="message_hint">Send a message…</string>
+    <string name="send">Send</string>
+    <string name="chat_name">Chat Name</string>
+    <string name="chat_content">Chat: Hi, how are you!</string>
+    <string name="admin">Admin</string>
+    <string name="chat_time">12:10 PM</string>
 
 </resources>

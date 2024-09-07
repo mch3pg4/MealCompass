@@ -113,6 +113,7 @@ public class ProfileFragment extends Fragment {
             if (position == 0) {
                 // Contact Helpdesk
                 // Navigate to Contact Helpdesk Fragment
+                NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_helpdeskFragment);
                 Toast.makeText(getContext(), "Contact Helpdesk", Toast.LENGTH_SHORT).show();
             } else if (position == 1) {
                 // Dark Mode

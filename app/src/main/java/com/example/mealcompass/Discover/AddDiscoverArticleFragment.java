@@ -139,23 +139,24 @@ public class AddDiscoverArticleFragment extends Fragment {
     }
 
     private void loadArticleData(String articleId) {
-        FirebaseFirestore.getInstance()
-                .collection("discover")
-                .document(articleId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // Populate the fields with the existing article data
-                        binding.articleTitleEditText.setText(documentSnapshot.getString("articleTitle"));
-                        binding.articleContentEditText.setText(documentSnapshot.getString("articleContent"));
-                        // Load the image using Glide or another image loading library
-                        String imageUrl = documentSnapshot.getString("articleImageUrl");
-                        Glide.with(this).load(imageUrl).into(binding.itemImagePreview);
-                    } else {
-                        Toast.makeText(getContext(), "Article not found", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to load article", Toast.LENGTH_SHORT).show());
+        discoverRepository.getDiscoverById(articleId, new DiscoverRepository.DiscoverCallback() {
+            @Override
+            public void onSuccess(Discover discover) {
+                // Populate the fields with the existing article data
+                binding.articleTitleEditText.setText(discover.getArticleTitle());
+                binding.articleContentEditText.setText(discover.getArticleContent());
+                // Load the image using Glide or another image loading library
+                String imageUrl = discover.getArticleImageUrl();
+                Glide.with(requireContext()).load(imageUrl).into(binding.itemImagePreview);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Toast.makeText(getContext(), "Failed to load article", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 
     private void updateDiscoverArticle(String articleId, String title, String content, Uri discoverImageUri, String author, String time) {

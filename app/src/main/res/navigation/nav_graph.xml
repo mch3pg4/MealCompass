@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_profileFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_helpdeskFragment"
+            app:destination="@id/helpdeskFragment" />
     </fragment>
     <fragment
         android:id="@+id/discoverFragment"
@@ -220,6 +223,9 @@
         <action
             android:id="@+id/action_adminFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_helpdeskAdminFragment"
+            app:destination="@id/helpdeskAdminFragment" />
     </fragment>
     <fragment
         android:id="@+id/fillInRestDetailsFragment"
@@ -235,7 +241,7 @@
     </fragment>
     <fragment
         android:id="@+id/helpdeskFragment"
-        android:name="com.example.mealcompass.HelpdeskFragment"
+        android:name="com.example.mealcompass.Helpdesk.HelpdeskFragment"
         android:label="fragment_helpdesk"
         tools:layout="@layout/fragment_helpdesk" />
     <fragment
@@ -360,5 +366,14 @@
         <action
             android:id="@+id/action_addDiscoverArticleFragment_to_discoverFragment"
             app:destination="@id/discoverFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpdeskAdminFragment"
+        android:name="com.example.mealcompass.Helpdesk.HelpdeskAdminFragment"
+        android:label="fragment_helpdesk_admin"
+        tools:layout="@layout/fragment_helpdesk_admin" >
+        <action
+            android:id="@+id/action_helpdeskAdminFragment_to_helpdeskFragment"
+            app:destination="@id/helpdeskFragment" />
     </fragment>
 </navigation>

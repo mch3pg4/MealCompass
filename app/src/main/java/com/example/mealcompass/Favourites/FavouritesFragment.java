@@ -70,7 +70,7 @@ public class FavouritesFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
-        RecyclerView favouritesRecyclerView = view.findViewById(R.id.favouritesRecyclerView);
+        RecyclerView favouritesRecyclerView = binding.favouritesRecyclerView;
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<FavouritesItem> favouritesItem = new ArrayList<>();

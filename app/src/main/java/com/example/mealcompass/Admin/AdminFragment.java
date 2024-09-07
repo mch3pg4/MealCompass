@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,6 +67,10 @@ public class AdminFragment extends Fragment {
         // load user name and profile image
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
+        binding.profileImageButton.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_adminFragment_to_profileFragment);
+        });
 
         // restaurant requests recycler view
         RecyclerView restaurantRequestsRecyclerView = view.findViewById(R.id.restaurantRequestsRecyclerView);

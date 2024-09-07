@@ -86,7 +86,7 @@ public class DiscoverFragment extends Fragment {
             }
 
 
-        RecyclerView discoverRecyclerView = view.findViewById(R.id.discoverRecyclerView);
+        RecyclerView discoverRecyclerView = binding.discoverRecyclerView;
         discoverRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // initialize viewmodel

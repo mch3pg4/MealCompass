@@ -7,6 +7,7 @@ import com.example.mealcompass.User.UserViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.restaurantOwnerFragment);
                 } else if (id == R.id.adminFragment) {
                     navController.navigate(R.id.adminFragment);
+                } else if (id == R.id.helpdeskAdminFragment) {
+                    navController.navigate(R.id.helpdeskAdminFragment);
                 }
                 return true;
             });
@@ -151,8 +154,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
 
         if (R.id.logout == item.getItemId()) {
-            FirebaseAuth.getInstance().signOut();
-            navController.navigate(R.id.welcomeFragment);
+            //show alert dialog to let user confirm log out
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Logout");
+            builder.setMessage("Are you sure you want to logout?");
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                FirebaseAuth.getInstance().signOut();
+                navController.navigate(R.id.welcomeFragment);
+            });
+            builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+            builder.show();
             return true;
         }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
