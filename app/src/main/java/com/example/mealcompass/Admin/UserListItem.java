@@ -3,19 +3,19 @@ package com.example.mealcompass.Admin;
 public class UserListItem {
 
     private final String userName;
-    private final int userProfileImage;
+    private final String userId;
 
-    public UserListItem(String userName, int userProfileImage) {
+    public UserListItem(String userName, String userId) {
         this.userName = userName;
-        this.userProfileImage = userProfileImage;
+        this.userId = userId;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public int getUserProfileImage() {
-        return userProfileImage;
+    public String getUserId() {
+        return userId;
     }
 
 }

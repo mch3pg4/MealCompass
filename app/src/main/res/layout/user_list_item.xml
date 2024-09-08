@@ -19,14 +19,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:padding="8dp"
         >
 
         <com.google.android.material.imageview.ShapeableImageView
             android:contentDescription="@string/profile_image"
             android:id="@+id/userProfileImage"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
             android:src="@drawable/placeholder"
             app:shapeAppearance="@style/CircularProfilePic"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/userProfileImage"
             android:text="@string/user"
             android:textSize="16sp"
@@ -47,6 +47,7 @@
             android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/arrow"
             android:src="@drawable/baseline_chevron_right_24" />

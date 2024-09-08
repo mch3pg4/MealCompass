@@ -104,7 +104,7 @@ public class DiscoverRepository {
                         if (discover != null) {
                             discover.setArticleId(document.getId());
                             discoverList.add(discover);
-                            Log.d("DiscoverRepository", "Discover object: " + discover.toString());
+                            Log.d("DiscoverRepository", "Discover object: " + discover);
                         }
                     }
                     callback.onSuccess(discoverList);

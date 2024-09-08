@@ -14,13 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.mealcompass.Home.RecommendRestaurantsAdapter;
-import com.example.mealcompass.Home.RecommendRestaurantsItem;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
-import com.example.mealcompass.databinding.FragmentAdminBinding;
+import com.example.mealcompass.databinding.FragmentShowAllUsersBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,12 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AdminFragment extends Fragment {
-    private FragmentAdminBinding binding;
+public class ShowAllUsersFragment extends Fragment {
+    private FragmentShowAllUsersBinding binding;
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
     private UserViewModel userViewModel;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,7 @@ public class AdminFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAdminBinding.inflate(inflater, container, false);
+        binding = FragmentShowAllUsersBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -74,43 +71,8 @@ public class AdminFragment extends Fragment {
                     .navigate(R.id.action_adminFragment_to_profileFragment);
         });
 
-        // restaurant requests recycler view
-        RecyclerView restaurantRequestsRecyclerView = view.findViewById(R.id.restaurantRequestsRecyclerView);
-        restaurantRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        List<RestaurantRequestsItem> restaurantRequestsItems = List.of(
-                new RestaurantRequestsItem(R.drawable.restaurant_img, "The Fat Radish", "American"),
-                new RestaurantRequestsItem(R.drawable.restaurant_img, "The Fat Radish", "American"),
-                new RestaurantRequestsItem(R.drawable.restaurant_img, "The Fat Radish", "American")
-        );
-
-        RestaurantRequestsAdapter restaurantRequestsAdapter = new RestaurantRequestsAdapter(restaurantRequestsItems);
-        restaurantRequestsRecyclerView.setAdapter(restaurantRequestsAdapter);
-
-
-        binding.showAllRequestsText.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Show all requests", Toast.LENGTH_SHORT).show();
-        });
-
-        // restaurants list recycler view
-        RecyclerView recommendRestaurantsRecyclerView = view.findViewById(R.id.restaurantListRecyclerView);
-        recommendRestaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        List<RecommendRestaurantsItem> recommendRestaurantsItems = List.of(
-                new RecommendRestaurantsItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
-                new RecommendRestaurantsItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
-                new RecommendRestaurantsItem(R.drawable.restaurant_img, "The Fat Radish", "4.5")
-        );
-
-        RecommendRestaurantsAdapter recommendRestaurantsAdapter = new RecommendRestaurantsAdapter(recommendRestaurantsItems);
-        recommendRestaurantsRecyclerView.setAdapter(recommendRestaurantsAdapter);
-
-        binding.showAllRestaurantText.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Show all restaurants", Toast.LENGTH_SHORT).show();
-        });
-
         // users list recycler view
-        RecyclerView usersListRecyclerView = binding.restaurantUsersRecyclerView;
+        RecyclerView usersListRecyclerView = binding.showAllUsersRecyclerView;
         usersListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // initialize viewmodel
@@ -135,11 +97,5 @@ public class AdminFragment extends Fragment {
                 Toast.makeText(getContext(), "No users found", Toast.LENGTH_SHORT).show();
             }
         });
-
-        binding.showAllUsersText.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_adminFragment_to_showAllUsersFragment);
-        });
-
     }
 }

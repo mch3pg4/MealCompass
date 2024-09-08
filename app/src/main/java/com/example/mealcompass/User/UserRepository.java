@@ -3,12 +3,9 @@ package com.example.mealcompass.User;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.example.mealcompass.R;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +43,7 @@ public class UserRepository {
                     .into(imageView);
         }).addOnFailureListener(exception -> {
             // Handle the error, e.g., image not found
-            Toast.makeText(context, "Failed to load profile picture", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Failed to load profile picture", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -165,6 +162,61 @@ public class UserRepository {
         }).addOnFailureListener(e -> Log.d("UserRepository", "Error fetching document", e));
     }
 
+    public interface UserListCallback {
+        void onSuccess(List<User> userList);
+        void onFailure(Exception e);
+    }
+
+    public interface UserCallback {
+        void onSuccess(User user);
+        void onFailure(Exception e);
+    }
+
+    public void getUserById(String userId, UserCallback callback) {
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null && document.exists()) {
+                            User user = document.toObject(User.class);
+                            if (user != null) {
+                                user.setUserId(document.getId());
+                                callback.onSuccess(user);
+                            } else {
+                                callback.onFailure(new Exception("User not found"));
+                            }
+                        } else {
+                            callback.onFailure(new Exception("User not found"));
+                        }
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
+
+    // get all users
+    public void getAllUsers(UserListCallback callback) {
+         db.collection("users")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<User> userList = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            User user = document.toObject(User.class);
+                            if (user != null) {
+                                user.setUserId(document.getId());
+                                userList.add(user);
+                                Log.d("UserRepository", "User object: " + user);
+                            }
+                        }
+                        callback.onSuccess(userList);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
 }
 
 

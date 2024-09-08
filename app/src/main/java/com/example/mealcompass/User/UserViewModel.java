@@ -1,21 +1,10 @@
 package com.example.mealcompass.User;
 
-import android.app.Application;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -32,6 +21,12 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<List<User>> favouriteRestaurants = new MutableLiveData<>();
     private final MutableLiveData<List<User>> ownerRestaurants = new MutableLiveData<>();
 
+    private final MutableLiveData<List<User>> userListLiveData = new MutableLiveData<>();
+    private final UserRepository userRepository;
+
+    public UserViewModel() {
+        userRepository = new UserRepository(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+    }
 
     public LiveData<String> getUserId() {
         return userId;
@@ -75,6 +70,10 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<List<User>> getOwnerRestaurants() {
         return ownerRestaurants;
+    }
+
+    public LiveData<List<User>> getUserListLiveData() {
+        return userListLiveData;
     }
 
     public void setUserId(String userId) {
@@ -132,6 +131,40 @@ public class UserViewModel extends ViewModel {
         List<User> currentFavourites = favouriteRestaurants.getValue();
         currentFavourites.remove(restaurant);
         favouriteRestaurants.setValue(currentFavourites);
+    }
+
+    // get all users
+    public void getAllUsers() {
+        userRepository.getAllUsers(new UserRepository.UserListCallback() {
+            @Override
+            public void onSuccess(List<User> userList) {
+                userListLiveData.setValue(userList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // handle error
+            }
+        });
+    }
+
+    // get user by id
+    public void getUserById(String userId) {
+        userRepository.getUserById(userId, new UserRepository.UserCallback() {
+            @Override
+            public void onSuccess(User user) {
+                setUserId(user.getUserId());
+                setUserName(user.getUserName());
+                setUserEmail(user.getUserEmail());
+                setUserType(user.getUserType());
+                setUserImageUrl(user.getUserImageUrl());
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // handle error
+            }
+        });
     }
 
 

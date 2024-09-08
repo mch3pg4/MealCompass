@@ -3,6 +3,7 @@ package com.example.mealcompass.User;
 import java.util.List;
 
 public class User {
+    private String userId;
     private String userName;
     private String userEmail;
     private String userType;
@@ -15,6 +16,10 @@ public class User {
     private List<String> ownerRestaurants;
 
     public User() {
+    }
+
+    public User(String userId) {
+        this.userId = userId;
     }
 
     public User(List<String> ownerRestaurants) {
@@ -32,6 +37,10 @@ public class User {
         this.favouriteRestaurants = favouriteRestaurants;
         this.recommendedHistory = recommendedHistory;
         this.ownerRestaurants = ownerRestaurants;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getUserName() {
@@ -72,6 +81,10 @@ public class User {
 
     public List<String> ownerRestaurants() {
         return ownerRestaurants;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setUserName(String userName) {

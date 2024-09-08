@@ -226,6 +226,12 @@
         <action
             android:id="@+id/action_adminFragment_to_helpdeskAdminFragment"
             app:destination="@id/helpdeskAdminFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_showAllUsersFragment"
+            app:destination="@id/showAllUsersFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fillInRestDetailsFragment"
@@ -375,5 +381,29 @@
         <action
             android:id="@+id/action_helpdeskAdminFragment_to_helpdeskFragment"
             app:destination="@id/helpdeskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showAllUsersFragment"
+        android:name="com.example.mealcompass.Admin.ShowAllUsersFragment"
+        android:label="fragment_show_all_users"
+        tools:layout="@layout/fragment_show_all_users" >
+        <action
+            android:id="@+id/action_showAllUsersFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_showAllUsersFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.example.mealcompass.Admin.UserDetailsFragment"
+        android:label="fragment_user_details"
+        tools:layout="@layout/fragment_user_details" >
+        <action
+            android:id="@+id/action_userDetailsFragment_to_showAllUsersFragment"
+            app:destination="@id/showAllUsersFragment" />
+        <action
+            android:id="@+id/action_userDetailsFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
     </fragment>
 </navigation>

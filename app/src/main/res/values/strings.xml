@@ -256,5 +256,11 @@
     <string name="chat_content">Chat: Hi, how are you!</string>
     <string name="admin">Admin</string>
     <string name="chat_time">12:10 PM</string>
+    <string name="show_all_users">All Users</string>
+    <string name="all_users_text">Manage users here.</string>
+    <string name="user_name">"User Name: "</string>
+    <string name="user_email">"User Email: "</string>
+    <string name="user_type">"User Type: "</string>
+    <string name="delete_user">Delete User</string>
 
 </resources>
