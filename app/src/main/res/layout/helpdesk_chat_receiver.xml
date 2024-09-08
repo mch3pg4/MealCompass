@@ -22,12 +22,12 @@
             android:layout_height="wrap_content"
             android:text="@string/receiver_message"
             android:background="@drawable/receiver_circular_shape"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:paddingStart="7dp"
-            android:paddingEnd="7dp"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             />
 
         <TextView

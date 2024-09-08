@@ -65,7 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:text="@string/chat_time"

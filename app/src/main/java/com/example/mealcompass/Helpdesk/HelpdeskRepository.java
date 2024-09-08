@@ -5,12 +5,16 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mealcompass.Discover.Discover;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HelpdeskRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -44,10 +48,12 @@ public class HelpdeskRepository {
                             // Access the senderId field (if needed)
                             String senderId = chatDocument.getString("senderId");
 
-                            // Access the messages subcollection inside each chat document
+                            // Access the messages collection inside each chat document and get the latest message
                             db.collection("helpdesk")
                                     .document(chatId)
                                     .collection("messages")
+                                    .orderBy("sendTime", Query.Direction.DESCENDING) // Get latest message by time
+                                    .limit(1) // Fetch only the most recent message
                                     .get()
                                     .addOnCompleteListener(messageTask -> {
                                         if (messageTask.isSuccessful()) {
@@ -55,15 +61,25 @@ public class HelpdeskRepository {
                                                 Helpdesk helpdesk = messageDocument.toObject(Helpdesk.class);
                                                 if (helpdesk != null) {
                                                     helpdesk.setChatId(chatId); // Add chatId to the helpdesk object
-                                                    helpdesk.setSenderId(senderId);// Add senderId to the helpdesk object
+                                                    helpdesk.setSenderId(senderId); // Add senderId to the helpdesk object
                                                     helpdesk.setMessage(messageDocument.getString("message"));
-                                                    helpdesk.setSendTime(messageDocument.getString("sendTime"));
+                                                    // Get the sendTime and convert it
+                                                    Timestamp timestamp = messageDocument.getTimestamp("sendTime");
+                                                    if (timestamp != null) {
+                                                        Date sendTime = timestamp.toDate();
+                                                        helpdesk.setSendTime(sendTime);
+                                                    }
+
+                                                    // Add to the helpdesk list
                                                     helpdeskList.add(helpdesk);
                                                 }
                                             }
-                                            // Once all messages are retrieved, send them via the callback
-                                            callback.onSuccess(helpdeskList);
-                                            Log.d("HelpdeskRepository", "onSuccess called with " + helpdeskList.size() + " items.");
+
+                                            // Send the results via the callback after fetching the latest message for each chat
+                                            if (!helpdeskList.isEmpty()) {
+                                                callback.onSuccess(helpdeskList);
+                                                Log.d("HelpdeskRepository", "onSuccess called with " + helpdeskList.size() + " items.");
+                                            }
                                         } else {
                                             callback.onFailure(messageTask.getException());
                                             Log.d("HelpdeskRepository", "onFailure called.", messageTask.getException());
@@ -76,12 +92,13 @@ public class HelpdeskRepository {
                 });
     }
 
+
     // fetch messages from firebase
     public void fetchMessages(String chatId) {
         db.collection("helpdesk")
                 .document(chatId)
                 .collection("messages")
-//                .orderBy("sendTime", Query.Direction.ASCENDING)
+                .orderBy("sendTime", Query.Direction.ASCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, error) -> {
                     if (error != null) {
                         return;

@@ -23,8 +23,8 @@ import java.util.List;
 
 public class HelpdeskChatsAdapter extends RecyclerView.Adapter<HelpdeskChatsAdapter.HelpdeskChatsViewHolder> {
     private final List<HelpdeskChatsItem> mHelpdeskChatsItems;
-    private UserRepository userRepository;
-    private Context context;
+    private final UserRepository userRepository;
+    private final Context context;
 
     public static class HelpdeskChatsViewHolder extends RecyclerView.ViewHolder {
         public ImageView chatImage;
@@ -62,10 +62,10 @@ public class HelpdeskChatsAdapter extends RecyclerView.Adapter<HelpdeskChatsAdap
         holder.chatTime.setText(currentItem.getChatTime());
         holder.chatMessage.setText(currentItem.getChatMessage());
         holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Chat with " + currentItem.getChatName(), Toast.LENGTH_SHORT).show();
             Bundle bundle = new Bundle();
             bundle.putString("chatId", currentItem.getChatId());
             bundle.putString("chatName", currentItem.getChatName());
+            bundle.putString("senderId", currentItem.getSenderId());
             Navigation.findNavController(v).navigate(R.id.action_helpdeskAdminFragment_to_helpdeskFragment, bundle );
         });
     }

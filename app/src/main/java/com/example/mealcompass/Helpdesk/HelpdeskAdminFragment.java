@@ -19,8 +19,10 @@ import com.example.mealcompass.databinding.FragmentHelpdeskAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HelpdeskAdminFragment extends Fragment {
     private FragmentHelpdeskAdminBinding binding;
@@ -48,7 +50,6 @@ public class HelpdeskAdminFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         RecyclerView helpdeskChatsRecyclerView = binding.helpdeskChatsRecyclerView;
         helpdeskChatsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -58,36 +59,54 @@ public class HelpdeskAdminFragment extends Fragment {
         // Observe live data from viewmodel
         helpdeskViewModel.getHelpdeskChatListLiveData().observe(getViewLifecycleOwner(), helpdeskChatList -> {
             if (helpdeskChatList != null && !helpdeskChatList.isEmpty()) {
-                Toast.makeText(getContext(), "Helpdesk chats found", Toast.LENGTH_SHORT).show();
                 List<HelpdeskChatsItem> helpdeskChatsItems = new ArrayList<>();
-                // Populate recyclerview
+
+                // Total number of chats to process
+                int totalChats = helpdeskChatList.size();
+                final int[] processedChats = {0}; // Track the number of processed chats
+
                 for (Helpdesk helpdesk : helpdeskChatList) {
                     String senderId = helpdesk.getSenderId();
+
                     // Get user name and profile picture
                     userRepository.getUserName(senderId).addOnSuccessListener(name -> {
-                        String senderName = name;
+                        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
 
+                        // Add the item to the list
                         helpdeskChatsItems.add(new HelpdeskChatsItem(
                                 senderId,
-                                senderId,// senderId for profile picture
-                                senderName, // senderId name
-                                helpdesk.getMessage(),// last message
-                                helpdesk.getSendTime(),
+                                senderId, // senderId for profile picture
+                                name, // senderId name
+                                helpdesk.getMessage(), // last message
+                                sdf.format(helpdesk.getSendTime()), // last message time
                                 helpdesk.getChatId()
                         ));
 
+                        // Increment the processed chats count
+                        processedChats[0]++;
+
+                        // Only notify the adapter when all chats have been processed
+                        if (processedChats[0] == totalChats) {
+                            HelpdeskChatsAdapter helpdeskChatsAdapter = new HelpdeskChatsAdapter(helpdeskChatsItems, userRepository, requireContext());
+                            helpdeskChatsRecyclerView.setAdapter(helpdeskChatsAdapter);
+                        }
+
+                    }).addOnFailureListener(e -> {
+                        processedChats[0]++; // Even on failure, increment the count to avoid locking
+                        if (processedChats[0] == totalChats) {
+                            HelpdeskChatsAdapter helpdeskChatsAdapter = new HelpdeskChatsAdapter(helpdeskChatsItems, userRepository, requireContext());
+                            helpdeskChatsRecyclerView.setAdapter(helpdeskChatsAdapter);
+                        }
                     });
                 }
-                HelpdeskChatsAdapter helpdeskChatsAdapter = new HelpdeskChatsAdapter(helpdeskChatsItems, userRepository, requireContext());
-                helpdeskChatsRecyclerView.setAdapter(helpdeskChatsAdapter);
             } else {
-                Toast.makeText(getContext(), "No helpdesk chats found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No chats found", Toast.LENGTH_SHORT).show();
             }
         });
+
         helpdeskViewModel.fetchAllChats();
-
-
     }
+
 
     @Override
     public void onDestroyView() {

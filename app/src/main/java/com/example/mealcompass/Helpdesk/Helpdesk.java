@@ -1,11 +1,13 @@
 package com.example.mealcompass.Helpdesk;
 
+import java.util.Date;
+
 public class Helpdesk {
     private String chatId;
     private String senderId;
     private String receiverId;
     private String message;
-    private String sendTime;
+    private Date sendTime;
 
     public Helpdesk() {
     }
@@ -14,7 +16,8 @@ public class Helpdesk {
         this.senderId = senderId;
     }
 
-    public Helpdesk(String senderId, String receiverId, String message, String sendTime) {
+    public Helpdesk(String chatId, String senderId, String receiverId, String message, Date sendTime) {
+        this.chatId = chatId;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.message = message;
@@ -37,7 +40,7 @@ public class Helpdesk {
         return message;
     }
 
-    public String getSendTime() {
+    public Date getSendTime() {
         return sendTime;
     }
 
@@ -53,10 +56,11 @@ public class Helpdesk {
         this.message = message;
     }
 
-    public void setSendTime(String sendTime) {
+    public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
     }
 
     public void setChatId(String id) {
+        this.chatId = id;
     }
 }

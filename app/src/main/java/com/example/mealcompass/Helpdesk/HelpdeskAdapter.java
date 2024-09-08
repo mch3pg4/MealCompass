@@ -10,11 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealcompass.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HelpdeskAdapter extends RecyclerView.Adapter<HelpdeskAdapter.ViewHolder> {
     private List<Helpdesk> helpdeskList;
-    private String userId;
+    private final String userId;
     private static final int SENDER_VIEW = 1;
     private static final int RECEIVER_VIEW = 2;
 
@@ -35,7 +38,10 @@ public class HelpdeskAdapter extends RecyclerView.Adapter<HelpdeskAdapter.ViewHo
 
         public void bindMessage(Helpdesk helpdesk) {
             messageTextView.setText(helpdesk.getMessage());
-            timeTextView.setText(helpdesk.getSendTime());
+            // convert time to string
+            Date sendTime = helpdesk.getSendTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.US);
+            timeTextView.setText(sdf.format(sendTime));
         }
     }
 
@@ -74,9 +80,12 @@ public class HelpdeskAdapter extends RecyclerView.Adapter<HelpdeskAdapter.ViewHo
     }
 
     // Method to update the list when new messages are added
-    public void updateMessages(List<Helpdesk> newMessages) {
+    public void updateMessages(List<Helpdesk> newMessages, RecyclerView recyclerView) {
         this.helpdeskList = newMessages;
-        notifyDataSetChanged(); // or optimize using notifyItemRangeInserted()
+        notifyItemChanged(newMessages.size()); // or optimize using notifyItemRangeInserted()
+        recyclerView.scrollToPosition(newMessages.size() - 1); // scroll to the last message
+
+
     }
 }
 

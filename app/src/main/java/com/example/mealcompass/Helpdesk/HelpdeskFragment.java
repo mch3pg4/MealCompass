@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.databinding.FragmentHelpdeskBinding;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -93,6 +95,8 @@ public class HelpdeskFragment extends Fragment {
             chatId = getArguments().getString("chatId");
             listenForMessages(chatId);
             binding.receiverName.setText(getArguments().getString("chatName"));
+            Toast.makeText(getContext(), "helpdesk list size " + helpdeskList.size(), Toast.LENGTH_SHORT).show();
+
         } else {
             // if user is not admin, then fetch chat id
             fetchChatId(userId);
@@ -129,10 +133,9 @@ public class HelpdeskFragment extends Fragment {
 
             String messageText = Objects.requireNonNull(binding.messageEditText.getText()).toString();
             Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a", new Locale("en", "US"));
-            String timestamp = sdf.format(calendar.getTime());
+            Date sendTime = calendar.getTime();
 
-            Helpdesk message = new Helpdesk(userId, chatId, messageText, timestamp);
+            Helpdesk message = new Helpdesk(chatId, userId, "admin", messageText, sendTime);
             helpdeskRepository.sendMessage(chatId, message);
             binding.messageEditText.setText("");
             Toast.makeText(getContext(), "Message sent", Toast.LENGTH_SHORT).show();
@@ -158,7 +161,9 @@ public class HelpdeskFragment extends Fragment {
         helpdeskRepository.fetchMessages(chatId);
         helpdeskRepository.getHelpdeskLiveData().observe(getViewLifecycleOwner(), messages -> {
             // update the UI with the messages
-            helpdeskAdapter.updateMessages(messages);
+            helpdeskAdapter.updateMessages(messages, binding.chatRecyclerview);
+
         });
+
     }
 }
