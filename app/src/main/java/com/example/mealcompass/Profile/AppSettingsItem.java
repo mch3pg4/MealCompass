@@ -4,6 +4,7 @@ public class AppSettingsItem {
     private final int iconResId;
     private final String title;
 
+
     public AppSettingsItem(int iconResId, String title) {
         this.iconResId = iconResId;
         this.title = title;

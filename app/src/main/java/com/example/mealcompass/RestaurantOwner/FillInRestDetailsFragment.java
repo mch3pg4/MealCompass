@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -121,35 +125,109 @@ public class FillInRestDetailsFragment extends Fragment {
             }
         });
 
-
-
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(FillInRestDetailsFragment.this)
                 .navigate(R.id.action_fillInRestDetailsFragment_to_selectRoleFragment2));
 
         binding.nextButton.setOnClickListener(v -> {
-            //check if all fields are filled
-            String name = Objects.requireNonNull(binding.restNameEditText.getText()).toString();
-            String cuisine = Objects.requireNonNull(binding.cuisineSelectMenu.getEditText()).getText().toString();
-//            String businessHours = Objects.requireNonNull(binding.getText()).toString();
-            String contact = Objects.requireNonNull(binding.restContactEditText.getText()).toString();
+            if (validateBusinessHours(businessHoursItems)) {
+                Toast.makeText(getContext(), "Valid business hours", Toast.LENGTH_SHORT).show();
 
-            if (name.isEmpty()) {
-                binding.restNameEditText.setError("Please enter restaurant name");
-            } else if (cuisine.isEmpty()) {
-                binding.cuisineSelectMenu.setError("Please select cuisine");
-            } else if (contact.isEmpty()) {
-                binding.restContactEditText.setError("Please enter contact number");
-            } else if (!contact.matches("^01[0-9]{8,9}$")) {
-                binding.restContactEditText.setError("Please enter a valid contact number");
-            }
-            else {
-                restaurantViewModel.setRestaurantName(name);
-                restaurantViewModel.setRestaurantCuisine(cuisine);
-                restaurantViewModel.setRestaurantContact(contact);
-                restaurantViewModel.setRestaurantBusinessHours("");
-                addRestaurantDetails();
+                //check if all fields are filled
+                String name = Objects.requireNonNull(binding.restNameEditText.getText()).toString();
+                String cuisine = Objects.requireNonNull(binding.cuisineSelectMenu.getEditText()).getText().toString();
+                String businessHours = formatBusinessHoursOutput(businessHoursItems); // format business hours (string output)
+                String contact = Objects.requireNonNull(binding.restContactEditText.getText()).toString();
+
+                if (name.isEmpty()) {
+                    binding.restNameEditText.setError("Please enter restaurant name");
+                } else if (cuisine.isEmpty()) {
+                    binding.cuisineSelectMenu.setError("Please select cuisine");
+                } else if (contact.isEmpty()) {
+                    binding.restContactEditText.setError("Please enter contact number");
+                } else if (!contact.matches("^01[0-9]{8,9}$")) {
+                    binding.restContactEditText.setError("Please enter a valid contact number");
+                } else {
+                    restaurantViewModel.setRestaurantName(name);
+                    restaurantViewModel.setRestaurantCuisine(cuisine);
+                    restaurantViewModel.setRestaurantContact(contact);
+                    restaurantViewModel.setRestaurantBusinessHours(businessHours);
+                    addRestaurantDetails();
+                }
             }
         });
+    }
+
+    public boolean validateBusinessHours(List<FillInBusinessHoursItem> items) {
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a").withLocale(Locale.US);
+
+    for (int i = 0; i < items.size(); i++) {
+        FillInBusinessHoursItem currentItem = items.get(i);
+
+        // if closed
+        if (currentItem.isClosed()) {
+            continue;
+        }
+
+        LocalTime openingTime = LocalTime.parse(currentItem.getOpeningHour(), timeFormatter);
+        LocalTime closingTime = LocalTime.parse(currentItem.getClosingHour(), timeFormatter);
+
+        if (i < items.size() - 1) {
+            if (openingTime.isAfter(closingTime)) {
+                // Invalid hours
+                Toast.makeText(getContext(), "Invalid hours for " + currentItem.getDay(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+
+        if (currentItem.isSplitHours()) {
+            // check if split times are selected
+            if (currentItem.getSplitOpeningHour().isEmpty() || currentItem.getSplitClosingHour().isEmpty()) {
+                Toast.makeText(getContext(), "Please select split hours for " + currentItem.getDay(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            LocalTime openingSplitTime = LocalTime.parse(currentItem.getSplitOpeningHour(), timeFormatter);
+            LocalTime closingSplitTime = LocalTime.parse(currentItem.getSplitClosingHour(), timeFormatter);
+
+            if (closingTime.isAfter(openingSplitTime)) {
+                // Overlapping detected
+                Toast.makeText(getContext(), "Overlapping times on " + currentItem.getDay() , Toast.LENGTH_SHORT).show();
+                return false;
+            } else if (closingSplitTime.isBefore(openingSplitTime)) {
+                // Invalid split hours
+                Toast.makeText(getContext(), "Invalid split hours for " + currentItem.getDay(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+    // string format for business hours
+    private String formatBusinessHoursOutput(List<FillInBusinessHoursItem> items) {
+        StringBuilder output = new StringBuilder();
+
+        // if its non split hours, else split hours
+        // if day is closed then put closed
+        for (FillInBusinessHoursItem item : items) {
+            if (item.isClosed()) {
+                output.append(item.getDay()).append(" Closed\n");
+                continue;
+            }
+            // normal hours
+            output.append(item.getDay()).append(" ")
+                    .append(item.getOpeningHour()).append(" - ")
+                    .append(item.getClosingHour());
+
+            // split hours
+            if (item.isSplitHours()){
+                output.append(" | ").append(item.getSplitOpeningHour()).append(" - ")
+                        .append(item.getSplitClosingHour());
+            }
+
+            output.append("\n");
+        }
+        return output.toString().trim();
     }
 
 

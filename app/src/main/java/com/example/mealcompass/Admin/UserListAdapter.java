@@ -31,9 +31,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             super(view);
             userName = view.findViewById(R.id.userName);
             userProfileImage = view.findViewById(R.id.userProfileImage);
-
         }
-
     }
 
     public UserListAdapter(List<UserListItem> userListItems, UserRepository userRepository, Context context) {

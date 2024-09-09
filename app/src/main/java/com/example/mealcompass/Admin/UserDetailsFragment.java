@@ -65,7 +65,7 @@ public class UserDetailsFragment extends Fragment {
         }
 
         binding.deleteUserButton.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle("Delete User");
             builder.setMessage("Are you sure you want to delete this user?");
             builder.setPositiveButton("Yes", (dialog, which) -> {

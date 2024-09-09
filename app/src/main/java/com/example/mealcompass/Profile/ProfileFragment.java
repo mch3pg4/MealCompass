@@ -1,8 +1,12 @@
 package com.example.mealcompass.Profile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -79,7 +83,13 @@ public class ProfileFragment extends Fragment {
 
         List<ProfileSettingsItem> profileItems = new ArrayList<>();
         profileItems.add(new ProfileSettingsItem(R.drawable.baseline_account_circle_24, "Edit Profile"));
+
+        // if user role is admin or owner, then don't need to show reselect preferences
+        userRepository.getUserType(userId).addOnSuccessListener(userType -> {
+            if (!userType.equals("admin") && !userType.equals("owner")) {
         profileItems.add(new ProfileSettingsItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
+            }
+        });
 
         ProfileSettingsAdapter profileAdapter = new ProfileSettingsAdapter(profileItems);
         profileSettingsRecyclerView.setAdapter(profileAdapter);
@@ -90,6 +100,7 @@ public class ProfileFragment extends Fragment {
                 // Edit Profile
                 // Navigate to Edit Profile Fragment
                 Toast.makeText(getContext(), "Edit Profile", Toast.LENGTH_SHORT).show();
+
             } else if (position == 1) {
                 // Reselect Preferences
                 // Navigate to Reselect Preferences Fragment
@@ -101,30 +112,34 @@ public class ProfileFragment extends Fragment {
         appSettingsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<AppSettingsItem> appItems = new ArrayList<>();
-        appItems.add(new AppSettingsItem(R.drawable.baseline_comment_24, "Contact Helpdesk"));
+
         appItems.add(new AppSettingsItem(R.drawable.baseline_dark_mode_24, "Dark Mode"));
         appItems.add(new AppSettingsItem(R.drawable.baseline_format_align_justify_24, "Terms & Conditions"));
         appItems.add(new AppSettingsItem(R.drawable.appicon, "About MealCompass"));
+        // if user role is admin, then don't need to show contact helpdesk
+        userRepository.getUserType(userId).addOnSuccessListener(userType -> {
+            if (!userType.equals("admin")) {
+                appItems.add(new AppSettingsItem(R.drawable.baseline_comment_24, "Contact Helpdesk"));
+            }
+        });
 
         AppSettingsAdapter appAdapter = new AppSettingsAdapter(appItems);
 
         //on click listener for app settings recyclerview
         appAdapter.setOnItemClickListener(position -> {
-            if (position == 0) {
+            if (position == 3) {
                 // Contact Helpdesk
                 // Navigate to Contact Helpdesk Fragment
                 NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_helpdeskFragment);
-                Toast.makeText(getContext(), "Contact Helpdesk", Toast.LENGTH_SHORT).show();
-            } else if (position == 1) {
+            } else if (position == 0) {
                 // Dark Mode
                 // Toggle Dark Mode
-                Toast.makeText(getContext(), "Dark Mode", Toast.LENGTH_SHORT).show();
-            } else if (position == 2) {
+                showDarkModeAlertDialog();
+            } else if (position == 1) {
                 // Terms & Conditions
                 // Navigate to Terms & Conditions Fragment
                 NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_termsAndConditionsFragment);
-
-            } else if (position == 3) {
+            } else if (position == 2) {
                 // About MealCompass
                 // Navigate to About MealCompass Fragment
                 NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_aboutFragment);
@@ -133,9 +148,40 @@ public class ProfileFragment extends Fragment {
 
 
         appSettingsRecyclerView.setAdapter(appAdapter);
+    }
 
+    private void showDarkModeAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Dark Mode");
+
+        // options for enabling and disabling dark mode
+        String[] options = {"Enable Dark Mode", "Disable Dark Mode"};
+
+        builder.setSingleChoiceItems(options, -1, (dialog, selected) -> {
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("AppSettings", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            if (selected == 0) {
+                // Enable Dark Mode
+                editor.putBoolean("isDarkModeEnabled", true);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                Toast.makeText(requireContext(), "Dark Mode Enabled", Toast.LENGTH_SHORT).show();
+            } else if (selected == 1) {
+                // Disable Dark Mode
+                editor.putBoolean("isDarkModeEnabled", false);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                Toast.makeText(requireContext(), "Dark Mode Disabled", Toast.LENGTH_SHORT).show();
+            }
+            editor.apply();
+            dialog.dismiss();
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
 
 
     }
+
+
 }

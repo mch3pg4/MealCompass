@@ -120,18 +120,18 @@ public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusin
         });
 
 
-        holder.openingHourButton.setOnClickListener(v -> showTimePicker(9, "Select Opening Hour", fragmentManager, holder.dayOpeningTextView));
+        holder.openingHourButton.setOnClickListener(v -> showTimePicker(9, "Select Opening Hour", fragmentManager, holder.dayOpeningTextView, position, true, false, false, false));
 
-        holder.closingHourButton.setOnClickListener(v -> showTimePicker(18, "Select Closing Hour", fragmentManager, holder.dayClosingTextView));
+        holder.closingHourButton.setOnClickListener(v -> showTimePicker(18, "Select Closing Hour", fragmentManager, holder.dayClosingTextView, position, false, true, false, false));
 
-        holder.splitOpeningHourButton.setOnClickListener(v -> showTimePicker(9, "Select Split Opening Hour", fragmentManager, holder.splitDayOpeningTextView));
+        holder.splitOpeningHourButton.setOnClickListener(v -> showTimePicker(9, "Select Split Opening Hour", fragmentManager, holder.splitDayOpeningTextView, position, false, false, true, false));
 
-        holder.splitClosingHourButton.setOnClickListener(v -> showTimePicker(18, "Select Split Closing Hour", fragmentManager, holder.splitDayClosingTextView));
+        holder.splitClosingHourButton.setOnClickListener(v -> showTimePicker(18, "Select Split Closing Hour", fragmentManager, holder.splitDayClosingTextView, position, false, false, false, true));
 
     }
 
     // function to show time picker and set the selected time to the target TextView
-    private void showTimePicker(int initialHour, String title, FragmentManager fragmentManager, TextView targetTextView) {
+    private void showTimePicker(int initialHour, String title, FragmentManager fragmentManager, TextView targetTextView, int position, boolean isSetOpeningHour, boolean isSetClosingHour, boolean isSetSplitOpeningHour, boolean isSetSplitClosingHour){
         // Open time picker for the given parameters
         MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_12H)
@@ -158,6 +158,18 @@ public class FillInBusinessHoursAdapter extends RecyclerView.Adapter<FillInBusin
 
             // Set the formatted time to the target TextView
             targetTextView.setText(formattedTime);
+
+            // Update the corresponding item in businessHoursItems
+            FillInBusinessHoursItem item = businessHoursItems.get(position);
+            if (isSetOpeningHour) {
+                item.setOpeningHour(formattedTime);
+            } else if (isSetClosingHour) {
+                item.setClosingHour(formattedTime);
+            } else if (isSetSplitOpeningHour) {
+                item.setSplitOpeningHour(formattedTime);
+            } else if (isSetSplitClosingHour) {
+                item.setSplitClosingHour(formattedTime);
+            }
         });
 
         timePicker.show(fragmentManager, "tag");
