@@ -15,7 +15,7 @@ public class RestaurantViewModel extends ViewModel {
     private final MutableLiveData<String> restaurantAddress = new MutableLiveData<>();
     private final MutableLiveData<String> restaurantImageUrl = new MutableLiveData<>();
     private final MutableLiveData<Float> restaurantRating = new MutableLiveData<>();
-    private final MutableLiveData<Integer> restaurantPrice = new MutableLiveData<>();
+    private final MutableLiveData<Integer> restaurantPricing = new MutableLiveData<>();
     private final MutableLiveData<String> restaurantStatus = new MutableLiveData<>();
     private final MutableLiveData<String> restaurantBusinessHours = new MutableLiveData<>();
     private final MutableLiveData<String> restaurantCuisine = new MutableLiveData<>();
@@ -48,8 +48,8 @@ public class RestaurantViewModel extends ViewModel {
         return restaurantRating;
     }
 
-    public LiveData<Integer> getRestaurantPrice() {
-        return restaurantPrice;
+    public LiveData<Integer> getRestaurantPricing() {
+        return restaurantPricing;
     }
 
     public LiveData<String> getRestaurantStatus() {
@@ -88,8 +88,8 @@ public class RestaurantViewModel extends ViewModel {
         this.restaurantRating.setValue(restaurantRating);
     }
 
-    public void setRestaurantPrice(Integer restaurantPrice) {
-        this.restaurantPrice.setValue(restaurantPrice);
+    public void setRestaurantPricing(Integer restaurantPricing) {
+        this.restaurantPricing.setValue(restaurantPricing);
     }
 
     public void setRestaurantStatus(String restaurantStatus) {

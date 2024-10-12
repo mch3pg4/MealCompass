@@ -34,7 +34,7 @@
             android:id="@+id/termsAndConditionsText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lorem_ipsum"
+            android:text="@string/tnc_text"
             android:textSize="16sp"
             android:padding="3dp"
             />

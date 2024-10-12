@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/restaurantName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="@string/restaurant_name"
             android:textSize="18sp"
@@ -40,11 +40,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/restaurantFavourite"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:padding="3dp"/>
 
             <CheckBox
                 android:id="@+id/restaurantFavourite"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:button="@drawable/favourite_icon_button"
@@ -58,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="3dp">
 
 
         <TextView

@@ -94,7 +94,6 @@ public class SelectCuisineFragment extends Fragment {
         cuisineMap.put(binding.thai, "Thai");
         cuisineMap.put(binding.italian, "Italian");
         cuisineMap.put(binding.middleEastern, "Middle Eastern");
-        cuisineMap.put(binding.german, "German");
         cuisineMap.put(binding.nyonya, "Nyonya");
         cuisineMap.put(binding.others, "Others");
 

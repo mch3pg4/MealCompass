@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -35,6 +36,7 @@ public class RestaurantsFragment extends Fragment {
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
     private UserViewModel userViewModel;
+    private RestaurantViewModel restaurantViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,19 +72,41 @@ public class RestaurantsFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
-
+        // restaurants recycler view
         RecyclerView restaurantsRecyclerView = view.findViewById(R.id.restaurantsRecyclerView);
         restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<RestaurantItem> restaurantItems = new ArrayList<>();
-        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", false));
 
-        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", false));
 
-        restaurantItems.add(new RestaurantItem(R.drawable.restaurant_img, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open", false));
+        // initialize viewmodel
+        restaurantViewModel  = new ViewModelProvider(this).get(RestaurantViewModel.class);
 
-        RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
-        restaurantsRecyclerView.setAdapter(restaurantsAdapter);
+        // observe restaurant items
+        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+            if (restaurants != null && !restaurants.isEmpty()) {
+                // populate recyclerview with restaurants
+                List<RestaurantItem> restaurantItems = new ArrayList<>();
+                for (Restaurant restaurant : restaurants) {
+                    restaurantItems.add(new RestaurantItem(
+                            restaurant.getRestaurantImageUrl(),
+                            restaurant.getRestaurantName(),
+                            restaurant.getRestaurantAddress(),
+                            restaurant.getRestaurantCuisine(),
+                            restaurant.getRestaurantRating(),
+                            restaurant.getRestaurantPricing(),
+                            restaurant.getRestaurantBusinessHours(),
+                            false));
+                }
+                RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
+                restaurantsRecyclerView.setAdapter(restaurantsAdapter);
+            } else {
+                // show error message
+                Toast.makeText(getContext(), "No restaurants found", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // get all restaurants
+        restaurantViewModel.fetchAllRestaurants();
 
         // toggle between list and grid view
         binding.restaurantsViewGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
@@ -96,10 +120,6 @@ public class RestaurantsFragment extends Fragment {
         });
 
         // load profile image
-
-
-
-
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(RestaurantsFragment.this)
                         .navigate(R.id.action_restaurantsFragment_to_profileFragment));

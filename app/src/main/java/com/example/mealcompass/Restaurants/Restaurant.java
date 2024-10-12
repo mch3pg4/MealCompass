@@ -5,7 +5,7 @@ public class Restaurant {
     private String restaurantAddress;
     private String restaurantImageUrl;
     private float restaurantRating;
-    private int restaurantPrice;
+    private int restaurantPricing;
     private String restaurantStatus;
     private String restaurantBusinessHours;
     private String restaurantCuisine;
@@ -14,12 +14,12 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(String restaurantName, String restaurantAddress, String restaurantImageUrl, float restaurantRating, int restaurantPrice, String restaurantStatus, String restaurantBusinessHours, String restaurantCuisine, String restaurantContact) {
+    public Restaurant(String restaurantName, String restaurantAddress, String restaurantImageUrl, float restaurantRating, int restaurantPricing, String restaurantStatus, String restaurantBusinessHours, String restaurantCuisine, String restaurantContact) {
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
         this.restaurantImageUrl = restaurantImageUrl;
         this.restaurantRating = restaurantRating;
-        this.restaurantPrice = restaurantPrice;
+        this.restaurantPricing = restaurantPricing;
         this.restaurantStatus = restaurantStatus;
         this.restaurantBusinessHours = restaurantBusinessHours;
         this.restaurantCuisine = restaurantCuisine;
@@ -42,8 +42,8 @@ public class Restaurant {
         return restaurantRating;
     }
 
-    public int getRestaurantPrice() {
-        return restaurantPrice;
+    public int getRestaurantPricing() {
+        return restaurantPricing;
     }
 
     public String getRestaurantStatus() {
@@ -78,8 +78,8 @@ public class Restaurant {
         this.restaurantRating = restaurantRating;
     }
 
-    public void setRestaurantPrice(int restaurantPrice) {
-        this.restaurantPrice = restaurantPrice;
+    public void setRestaurantPricing(int restaurantPricing) {
+        this.restaurantPricing = restaurantPricing;
     }
 
     public void setRestaurantStatus(String restaurantStatus) {

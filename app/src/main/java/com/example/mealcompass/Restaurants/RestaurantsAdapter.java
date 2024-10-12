@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mealcompass.R;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     private final List<RestaurantItem> mRestaurantItems;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView restaurantName, restaurantAddress, restaurantCuisine, restaurantRating, restaurantPrice, restaurantOpenOrClose;
+        public TextView restaurantName, restaurantAddress, restaurantCuisine, restaurantRating, restaurantPricing, restaurantOpenOrClose;
         public ImageView restaurantImage;
         public CheckBox restaurantFavourite;
 
@@ -29,7 +30,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             restaurantAddress = view.findViewById(R.id.restaurantAddress);
             restaurantCuisine = view.findViewById(R.id.restaurantCuisine);
             restaurantRating = view.findViewById(R.id.restaurantRating);
-            restaurantPrice = view.findViewById(R.id.restaurantPrice);
+            restaurantPricing = view.findViewById(R.id.restaurantPrice);
             restaurantOpenOrClose = view.findViewById(R.id.restaurantOpenOrClose);
             restaurantImage = view.findViewById(R.id.restaurantImage);
             restaurantFavourite = view.findViewById(R.id.restaurantFavourite);
@@ -51,12 +52,14 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RestaurantItem restaurantItem = mRestaurantItems.get(position);
         holder.restaurantName.setText(restaurantItem.getRestaurantName());
-        holder.restaurantAddress.setText(restaurantItem.getRestaurantAddress());
-        holder.restaurantCuisine.setText(restaurantItem.getRestaurantCuisine());
-        holder.restaurantRating.setText(restaurantItem.getRestaurantRating());
-        holder.restaurantPrice.setText(restaurantItem.getRestaurantPrice());
+        holder.restaurantAddress.setText(String.format("Address: %s", restaurantItem.getRestaurantAddress()));
+        holder.restaurantCuisine.setText(String.format("Cuisine: %s", restaurantItem.getRestaurantCuisine()));
+        holder.restaurantRating.setText(String.format("Rating: %s/5.0", restaurantItem.getRestaurantRating()));
+        holder.restaurantPricing.setText(String.format("Pricing: %s", restaurantPricing(restaurantItem.getRestaurantPricing())));
         holder.restaurantOpenOrClose.setText(restaurantItem.getRestaurantOpenOrClose());
-        holder.restaurantImage.setImageResource(restaurantItem.getRestaurantImage());
+        Glide.with(holder.restaurantImage.getContext())
+                .load(restaurantItem.getRestaurantImage())
+                .into(holder.restaurantImage);
         // Set initial state of the CheckBox
         holder.restaurantFavourite.setChecked(restaurantItem.isRestaurantFavourite());
 
@@ -66,6 +69,20 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             restaurantItem.setRestaurantFavourite(isChecked);
         });
     }
+
+   public String restaurantPricing(float price) {
+    if (price == 1) {
+        return "$";
+    } else if (price == 2) {
+        return "$$";
+    } else if (price == 3) {
+        return "$$$";
+    } else if (price == 4) {
+        return "$$$$";
+    } else {
+        return "N/A";
+    }
+}
 
     @Override
     public int getItemCount() {
