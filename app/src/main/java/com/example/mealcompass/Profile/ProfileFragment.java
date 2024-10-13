@@ -178,9 +178,6 @@ public class ProfileFragment extends Fragment {
         // Create and show the dialog
         AlertDialog dialog = builder.create();
         dialog.show();
-
-
-
     }
 
 

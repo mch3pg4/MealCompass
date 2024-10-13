@@ -129,4 +129,27 @@ private final FirebaseFirestore db = FirebaseFirestore.getInstance();
                     }
                 });
     }
+
+    // search restaurants
+    public void searchRestaurants(String query, RestaurantListCallback callback) {
+        db.collection("restaurant")
+                .orderBy("restaurantName")
+                .startAt(query.toUpperCase())
+                .endAt(query + "\uf8ff")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurantList = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Restaurant restaurant = document.toObject(Restaurant.class);
+                            if (restaurant != null) {
+                                restaurantList.add(restaurant);
+                            }
+                        }
+                        callback.onSuccess(restaurantList);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
 }

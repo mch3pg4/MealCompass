@@ -127,5 +127,21 @@ public class RestaurantViewModel extends ViewModel {
         });
     }
 
+    public void searchRestaurants(String query) {
+        restaurantRepository.searchRestaurants(query, new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error searching restaurants", e);
+            }
+        });
+    }
+
+
+
 
 }
