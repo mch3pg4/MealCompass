@@ -80,14 +80,20 @@ public class RestaurantsFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // search for restaurants
-                restaurantViewModel.searchRestaurants(query);
-                return false;
+                if (query == null || query.trim().isEmpty()) {
+                    restaurantViewModel.fetchAllRestaurants();
+                } else {
+                    restaurantViewModel.searchRestaurants(query.trim());
+                }
+
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+
         });
 
         // restaurants recycler view
