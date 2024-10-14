@@ -110,6 +110,7 @@ public class RestaurantsFragment extends Fragment {
                 List<RestaurantItem> restaurantItems = new ArrayList<>();
                 for (Restaurant restaurant : restaurants) {
                     restaurantItems.add(new RestaurantItem(
+                            restaurant.getRestaurantId(),
                             restaurant.getRestaurantImageUrl(),
                             restaurant.getRestaurantName(),
                             restaurant.getRestaurantAddress(),
@@ -132,8 +133,6 @@ public class RestaurantsFragment extends Fragment {
 
         // set up filter button
         binding.filterButton.setOnClickListener(v -> showFilterRestaurantsAlertDialog());
-
-
 
         // toggle between list and grid view
         binding.restaurantsViewGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {

@@ -119,7 +119,7 @@ private final FirebaseFirestore db = FirebaseFirestore.getInstance();
                             Restaurant restaurant = document.toObject(Restaurant.class);
                             if (restaurant != null) {
                                 restaurantList.add(restaurant);
-
+                                restaurant.setRestaurantId(document.getId());
                             }
                         }
                         callback.onSuccess(restaurantList);

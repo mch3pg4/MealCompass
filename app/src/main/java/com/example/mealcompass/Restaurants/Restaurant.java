@@ -1,6 +1,7 @@
 package com.example.mealcompass.Restaurants;
 
 public class Restaurant {
+    private  String restaurantId;
     private String restaurantName;
     private String restaurantAddress;
     private String restaurantImageUrl;
@@ -14,7 +15,8 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(String restaurantName, String restaurantAddress, String restaurantImageUrl, float restaurantRating, int restaurantPricing, String restaurantStatus, String restaurantBusinessHours, String restaurantCuisine, String restaurantContact) {
+    public Restaurant(String restaurantId, String restaurantName, String restaurantAddress, String restaurantImageUrl, float restaurantRating, int restaurantPricing, String restaurantStatus, String restaurantBusinessHours, String restaurantCuisine, String restaurantContact) {
+        this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
         this.restaurantImageUrl = restaurantImageUrl;
@@ -24,6 +26,10 @@ public class Restaurant {
         this.restaurantBusinessHours = restaurantBusinessHours;
         this.restaurantCuisine = restaurantCuisine;
         this.restaurantContact = restaurantContact;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
     public String getRestaurantName() {
@@ -60,6 +66,10 @@ public class Restaurant {
 
     public String getRestaurantContact() {
         return restaurantContact;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public void setRestaurantName(String restaurantName) {

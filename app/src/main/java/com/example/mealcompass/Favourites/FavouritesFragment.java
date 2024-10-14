@@ -10,11 +10,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mealcompass.R;
+import com.example.mealcompass.Restaurants.Restaurant;
+import com.example.mealcompass.Restaurants.RestaurantItem;
+import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentFavouritesBinding;
@@ -73,14 +78,34 @@ public class FavouritesFragment extends Fragment {
         RecyclerView favouritesRecyclerView = binding.favouritesRecyclerView;
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<FavouritesItem> favouritesItem = new ArrayList<>();
-        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, false, "The Fat Radish", "17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
-        
-        favouritesItem.add(new FavouritesItem(R.drawable.restaurant_img, false, "Georgetown","17 Orchard St, New York, NY 10002", "American", "4.5", "$$", "Open"));
+        // get user's favourite restaurants
+        // Get user's favorite restaurants
+        userViewModel.getFavouriteRestaurants().observe(getViewLifecycleOwner(), favouriteRestaurants -> {
+            if (favouriteRestaurants == null || favouriteRestaurants.isEmpty()) {
+                Toast.makeText(getContext(), "No favourite restaurants", Toast.LENGTH_SHORT).show();
+            }
 
+            List<FavouritesItem> favouritesItems = new ArrayList<>();
+            assert favouriteRestaurants != null;
+            for (Restaurant restaurant : favouriteRestaurants) {
+                FavouritesItem favouritesItem = new FavouritesItem(
+                        restaurant.getRestaurantId(),
+                        restaurant.getRestaurantImageUrl(),
+                        true,
+                        restaurant.getRestaurantName(),
+                        restaurant.getRestaurantAddress(),
+                        restaurant.getRestaurantCuisine(),
+                        restaurant.getRestaurantRating(),
+                        restaurant.getRestaurantPricing(),
+                        restaurant.getRestaurantBusinessHours());
+                favouritesItems.add(favouritesItem);
+            }
+            FavouritesAdapter favouritesAdapter = new FavouritesAdapter(favouritesItems);
+            favouritesRecyclerView.setAdapter(favouritesAdapter);
 
-        FavouritesAdapter favouritesAdapter = new FavouritesAdapter(favouritesItem);
-        favouritesRecyclerView.setAdapter(favouritesAdapter);
+        });
+
+        userViewModel.getUserFavouriteRestaurants(userId);
 
         // Toggle between list and grid view
         binding.viewAsButtonGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
@@ -99,4 +124,11 @@ public class FavouritesFragment extends Fragment {
                         .navigate(R.id.action_favoruitesFragment_to_profileFragment));
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }
+

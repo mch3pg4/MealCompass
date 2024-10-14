@@ -6,12 +6,14 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserViewModel;
 
 import org.json.JSONObject;
 
@@ -25,6 +27,8 @@ import java.util.Locale;
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
 
     private final List<RestaurantItem> mRestaurantItems;
+    private UserViewModel userViewModel;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView restaurantName, restaurantAddress, restaurantCuisine, restaurantRating, restaurantPricing, restaurantOpenOrClose;
@@ -51,6 +55,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        userViewModel = new UserViewModel();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_card, parent, false);
         return new ViewHolder(view);
     }
@@ -79,8 +84,17 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
         // Handle the CheckBox state change
         holder.restaurantFavourite.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Update your data model if needed
-            restaurantItem.setRestaurantFavourite(isChecked);
+            if (isChecked) {
+                restaurantItem.setRestaurantFavourite(true);
+                Toast.makeText(buttonView.getContext(), "Added " + restaurantItem.getRestaurantId() + " to favourites", Toast.LENGTH_SHORT).show();
+                // add to favourites
+                userViewModel.addFavouriteRestaurant(restaurantItem.getRestaurantId());
+            } else {
+                restaurantItem.setRestaurantFavourite(false);
+                Toast.makeText(buttonView.getContext(), "Removed " + restaurantItem.getRestaurantName() + " from favourites", Toast.LENGTH_SHORT).show();
+                // remove from favourites
+                userViewModel.removeFavouriteRestaurant(restaurantItem.getRestaurantId());
+            }
         });
     }
 

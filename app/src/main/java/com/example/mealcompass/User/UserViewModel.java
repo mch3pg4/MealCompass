@@ -1,12 +1,17 @@
 package com.example.mealcompass.User;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.mealcompass.Restaurants.Restaurant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserViewModel extends ViewModel {
     private final MutableLiveData<String> userId = new MutableLiveData<>();
@@ -18,7 +23,7 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<List<User>> userAllergens = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userCuisines = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userDiets = new MutableLiveData<>();
-    private final MutableLiveData<List<User>> favouriteRestaurants = new MutableLiveData<>();
+    private final MutableLiveData<List<Restaurant>> favouriteRestaurants = new MutableLiveData<List<Restaurant>>();
     private final MutableLiveData<List<User>> ownerRestaurants = new MutableLiveData<>();
 
     private final MutableLiveData<List<User>> userListLiveData = new MutableLiveData<>();
@@ -64,7 +69,7 @@ public class UserViewModel extends ViewModel {
         return userDiets;
     }
 
-    public LiveData<List<User>> getFavouriteRestaurants() {
+    public LiveData<List<Restaurant>> getFavouriteRestaurants() {
         return favouriteRestaurants;
     }
 
@@ -112,7 +117,7 @@ public class UserViewModel extends ViewModel {
         this.userDiets.setValue(userDiets);
     }
 
-    public void setFavouriteRestaurants(List<User> favouriteRestaurants) {
+    public void setFavouriteRestaurants(List<Restaurant> favouriteRestaurants) {
         this.favouriteRestaurants.setValue(favouriteRestaurants);
     }
 
@@ -121,16 +126,14 @@ public class UserViewModel extends ViewModel {
     }
 
 
-    public void addFavouriteRestaurant(User restaurant) {
-        List<User> currentFavourites = favouriteRestaurants.getValue();
-        currentFavourites.add(restaurant);
-        favouriteRestaurants.setValue(currentFavourites);
+    public void addFavouriteRestaurant(String restaurantId) {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        userRepository.addFavouriteRestaurant(userId, restaurantId);
     }
 
-    public void removeFavouriteRestaurant(User restaurant) {
-        List<User> currentFavourites = favouriteRestaurants.getValue();
-        currentFavourites.remove(restaurant);
-        favouriteRestaurants.setValue(currentFavourites);
+    public void removeFavouriteRestaurant(String  restaurantId) {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        userRepository.removeFavouriteRestaurant(userId, restaurantId);
     }
 
     // get all users
@@ -167,9 +170,19 @@ public class UserViewModel extends ViewModel {
         });
     }
 
+    // get user restaurant favourites
+    public void getUserFavouriteRestaurants(String userId) {
+        userRepository.getUserFavourites(userId, new UserRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                favouriteRestaurants.setValue(restaurantList);
+            }
 
-
-
-
-
+            @Override
+            public void onFailure(Exception e) {
+                // handle error
+                Log.e("UserViewModel", "Error fetching user favourites", e);
+            }
+        });
+    }
 }

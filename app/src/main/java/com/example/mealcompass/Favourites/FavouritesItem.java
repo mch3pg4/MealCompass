@@ -1,11 +1,15 @@
 package com.example.mealcompass.Favourites;
 
 public class FavouritesItem {
-    private final int restaurantImage;
-    private final String restaurantName, restaurantAddress, restaurantCuisine, restaurantRating, restaurantPrice, restaurantOpenOrClose;
+    private final String restaurantId;
+    private final String restaurantImage;
+    private final String restaurantName, restaurantAddress, restaurantCuisine,  restaurantOpenOrClose;
+    public final int restaurantPrice;
+    public final float restaurantRating;
     private boolean isRestaurantFavourite;
 
-    public FavouritesItem(int restaurantImage, boolean isRestaurantFavourite, String restaurantName, String restaurantAddress, String restaurantCuisine, String restaurantRating, String restaurantPrice, String restaurantOpenOrClose) {
+    public FavouritesItem(String restaurantId, String restaurantImage, boolean isRestaurantFavourite, String restaurantName, String restaurantAddress, String restaurantCuisine, float restaurantRating, int restaurantPrice, String restaurantOpenOrClose) {
+        this.restaurantId = restaurantId;
         this.isRestaurantFavourite = isRestaurantFavourite;
         this.restaurantImage = restaurantImage;
         this.restaurantName = restaurantName;
@@ -16,6 +20,10 @@ public class FavouritesItem {
         this.restaurantOpenOrClose = restaurantOpenOrClose;
     }
 
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
     public boolean isRestaurantFavourite() {
         return isRestaurantFavourite;
     }
@@ -24,7 +32,7 @@ public class FavouritesItem {
         isRestaurantFavourite = restaurantFavourite;
     }
 
-    public int getRestaurantImage() {
+    public String getRestaurantImage() {
         return restaurantImage;
     }
 
@@ -40,11 +48,11 @@ public class FavouritesItem {
         return restaurantCuisine;
     }
 
-    public String getRestaurantRating() {
+    public float getRestaurantRating() {
         return restaurantRating;
     }
 
-    public String getRestaurantPrice() {
+    public int getRestaurantPrice() {
         return restaurantPrice;
     }
 
