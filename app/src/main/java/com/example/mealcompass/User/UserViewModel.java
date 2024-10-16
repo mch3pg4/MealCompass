@@ -25,7 +25,7 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<List<User>> userDiets = new MutableLiveData<>();
     private final MutableLiveData<List<Restaurant>> favouriteRestaurants = new MutableLiveData<List<Restaurant>>();
     private final MutableLiveData<List<User>> ownerRestaurants = new MutableLiveData<>();
-
+    private final MutableLiveData<List<String>> userFavourites = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userListLiveData = new MutableLiveData<>();
     private final UserRepository userRepository;
 
@@ -67,6 +67,10 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<List<User>> getUserDiets() {
         return userDiets;
+    }
+
+    public LiveData<List<String>> getUserFavourites() {
+        return userFavourites;
     }
 
     public LiveData<List<Restaurant>> getFavouriteRestaurants() {
@@ -125,6 +129,27 @@ public class UserViewModel extends ViewModel {
         this.ownerRestaurants.setValue(ownerRestaurants);
     }
 
+    public void setUserFavourites(List<String> userFavourites) {
+        this.userFavourites.setValue(userFavourites);
+    }
+
+    // check if restaurant is already a favourite, if it is then return false
+    public boolean isInFavourites(String restaurantId, UserRepository.FavoriteRestaurantCallback callback) {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        userRepository.checkFavouriteRestaurant(userId, restaurantId, new UserRepository.FavoriteRestaurantCallback() {
+            @Override
+            public void onSuccess(boolean isFavourite) {
+                callback.onSuccess(isFavourite);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // handle error
+                callback.onFailure(e);
+            }
+        });
+        return false;
+    }
 
     public void addFavouriteRestaurant(String restaurantId) {
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -185,4 +210,7 @@ public class UserViewModel extends ViewModel {
             }
         });
     }
+
+
+
 }

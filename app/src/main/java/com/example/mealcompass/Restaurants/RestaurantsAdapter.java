@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
 
@@ -79,23 +81,49 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         Glide.with(holder.restaurantImage.getContext())
                 .load(restaurantItem.getRestaurantImage())
                 .into(holder.restaurantImage);
-        // Set initial state of the CheckBox
-        holder.restaurantFavourite.setChecked(restaurantItem.isRestaurantFavourite());
 
-        // Handle the CheckBox state change
-        holder.restaurantFavourite.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                restaurantItem.setRestaurantFavourite(true);
-                Toast.makeText(buttonView.getContext(), "Added " + restaurantItem.getRestaurantId() + " to favourites", Toast.LENGTH_SHORT).show();
-                // add to favourites
-                userViewModel.addFavouriteRestaurant(restaurantItem.getRestaurantId());
-            } else {
-                restaurantItem.setRestaurantFavourite(false);
-                Toast.makeText(buttonView.getContext(), "Removed " + restaurantItem.getRestaurantName() + " from favourites", Toast.LENGTH_SHORT).show();
-                // remove from favourites
-                userViewModel.removeFavouriteRestaurant(restaurantItem.getRestaurantId());
+        // Set the CheckBox state
+        userViewModel.isInFavourites(restaurantItem.getRestaurantId(), new UserRepository.FavoriteRestaurantCallback() {
+            @Override
+            public void onSuccess(boolean isFavourite) {
+                holder.restaurantFavourite.setOnCheckedChangeListener(null); // Remove listener before setting state
+                holder.restaurantFavourite.setChecked(isFavourite);
+                holder.restaurantFavourite.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        restaurantItem.setRestaurantFavourite(true);
+                        Toast.makeText(buttonView.getContext(), "Added " + restaurantItem.getRestaurantName() + " to favourites", Toast.LENGTH_SHORT).show();
+                        // add to favourites
+                        userViewModel.addFavouriteRestaurant(restaurantItem.getRestaurantId());
+                    } else {
+                        restaurantItem.setRestaurantFavourite(false);
+                        Toast.makeText(buttonView.getContext(), "Removed " + restaurantItem.getRestaurantName() + " from favourites", Toast.LENGTH_SHORT).show();
+                        // remove from favourites
+                        userViewModel.removeFavouriteRestaurant(restaurantItem.getRestaurantId());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                holder.restaurantFavourite.setChecked(false);
+
             }
         });
+
+//        // Handle the CheckBox state change
+//        holder.restaurantFavourite.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                restaurantItem.setRestaurantFavourite(true);
+//                Toast.makeText(buttonView.getContext(), "Added " + restaurantItem.getRestaurantName() + " to favourites", Toast.LENGTH_SHORT).show();
+//                // add to favourites
+//                userViewModel.addFavouriteRestaurant(restaurantItem.getRestaurantId());
+//            } else {
+//                restaurantItem.setRestaurantFavourite(false);
+//                Toast.makeText(buttonView.getContext(), "Removed " + restaurantItem.getRestaurantName() + " from favourites", Toast.LENGTH_SHORT).show();
+//                // remove from favourites
+//                userViewModel.removeFavouriteRestaurant(restaurantItem.getRestaurantId());
+//            }
+//        });
     }
 
     @Override

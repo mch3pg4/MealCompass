@@ -78,7 +78,6 @@ public class FavouritesFragment extends Fragment {
         RecyclerView favouritesRecyclerView = binding.favouritesRecyclerView;
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // get user's favourite restaurants
         // Get user's favorite restaurants
         userViewModel.getFavouriteRestaurants().observe(getViewLifecycleOwner(), favouriteRestaurants -> {
             if (favouriteRestaurants == null || favouriteRestaurants.isEmpty()) {

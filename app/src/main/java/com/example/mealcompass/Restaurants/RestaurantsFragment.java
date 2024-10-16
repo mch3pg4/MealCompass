@@ -31,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Unit;
+
 
 public class RestaurantsFragment extends Fragment {
 
@@ -66,9 +68,11 @@ public class RestaurantsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        String userId = null;
+        String userId;
         if (user != null) {
             userId = user.getUid();
+        } else {
+            userId = null;
         }
 
         // load user name and profile image
@@ -85,7 +89,6 @@ public class RestaurantsFragment extends Fragment {
                 } else {
                     restaurantViewModel.searchRestaurants(query.trim());
                 }
-
                 return true;
             }
 
@@ -93,7 +96,6 @@ public class RestaurantsFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-
         });
 
         // restaurants recycler view
@@ -104,29 +106,36 @@ public class RestaurantsFragment extends Fragment {
         restaurantViewModel  = new ViewModelProvider(this).get(RestaurantViewModel.class);
 
         // observe restaurant items
-        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurants -> {
-            if (restaurants != null && !restaurants.isEmpty()) {
-                // populate recyclerview with restaurants
-                List<RestaurantItem> restaurantItems = new ArrayList<>();
-                for (Restaurant restaurant : restaurants) {
-                    restaurantItems.add(new RestaurantItem(
-                            restaurant.getRestaurantId(),
-                            restaurant.getRestaurantImageUrl(),
-                            restaurant.getRestaurantName(),
-                            restaurant.getRestaurantAddress(),
-                            restaurant.getRestaurantCuisine(),
-                            restaurant.getRestaurantRating(),
-                            restaurant.getRestaurantPricing(),
-                            restaurant.getRestaurantBusinessHours(),
-                            false));
+         restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+                if (restaurants != null && !restaurants.isEmpty()) {
+                    // Prepare the list to display
+                    List<RestaurantItem> restaurantItems = new ArrayList<>();
+
+                    // Iterate over each restaurant to check if it is a favourite
+                    for (Restaurant restaurant : restaurants) {
+                        // Create a RestaurantItem and add it to the list
+                        restaurantItems.add(new RestaurantItem(
+                                restaurant.getRestaurantId(),
+                                restaurant.getRestaurantImageUrl(),
+                                restaurant.getRestaurantName(),
+                                restaurant.getRestaurantAddress(),
+                                restaurant.getRestaurantCuisine(),
+                                restaurant.getRestaurantRating(),
+                                restaurant.getRestaurantPricing(),
+                                restaurant.getRestaurantBusinessHours(),
+                                false
+                        ));
+                    }
+
+                    // Set up the adapter with the complete list of restaurants
+                    RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
+                    restaurantsRecyclerView.setAdapter(restaurantsAdapter);
+                } else {
+                    // Show a message if no restaurants are found
+                    Toast.makeText(getContext(), "No restaurants found", Toast.LENGTH_SHORT).show();
                 }
-                RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
-                restaurantsRecyclerView.setAdapter(restaurantsAdapter);
-            } else {
-                // show error message
-                Toast.makeText(getContext(), "No restaurants found", Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+
 
         // get all restaurants
         restaurantViewModel.fetchAllRestaurants();
@@ -151,6 +160,9 @@ public class RestaurantsFragment extends Fragment {
                         .navigate(R.id.action_restaurantsFragment_to_profileFragment));
 
     }
+
+
+
     public void showFilterRestaurantsAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Filter Restaurants");
@@ -191,6 +203,7 @@ public class RestaurantsFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 
 
     @Override

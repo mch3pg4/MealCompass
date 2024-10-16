@@ -54,7 +54,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         }
     }
 
-
     public FavouritesAdapter(List<FavouritesItem> favouritesItems) {
         this.mFavouritesItems = favouritesItems;
     }
@@ -93,10 +92,11 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         holder.restaurantFavourite.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
                 // Remove the item from the list
+                userViewModel.removeFavouriteRestaurant(currentItem.getRestaurantId());
                 Toast.makeText(holder.restaurantFavourite.getContext(), "Removed " + currentItem.getRestaurantName() + " from favourites", Toast.LENGTH_SHORT).show();
                 mFavouritesItems.remove(currentItem);
                 notifyItemRemoved(position);
-                userViewModel.removeFavouriteRestaurant(currentItem.getRestaurantId());
+
 
             }
         });
