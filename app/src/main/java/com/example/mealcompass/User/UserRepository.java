@@ -166,16 +166,19 @@ public class UserRepository {
 
     public interface UserListCallback {
         void onSuccess(List<User> userList);
+
         void onFailure(Exception e);
     }
 
     public interface RestaurantListCallback {
         void onSuccess(List<Restaurant> restaurantList);
+
         void onFailure(Exception e);
     }
 
     public interface UserCallback {
         void onSuccess(User user);
+
         void onFailure(Exception e);
     }
 
@@ -211,7 +214,7 @@ public class UserRepository {
 
     // get all users
     public void getAllUsers(UserListCallback callback) {
-         db.collection("users")
+        db.collection("users")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -318,57 +321,113 @@ public class UserRepository {
 
     public void getUserFavourites(String userId, RestaurantListCallback callback) {
         db.collection("users")
-            .document(userId)
-            .get()
-            .addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    // Get the list of favourite restaurant IDs
-                    List<String> favouriteRestaurantIds = (List<String>) documentSnapshot.get("favouriteRestaurants");
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Get the list of favourite restaurant IDs
+                        List<String> favouriteRestaurantIds = (List<String>) documentSnapshot.get("favouriteRestaurants");
 
-                    if (favouriteRestaurantIds == null || favouriteRestaurantIds.isEmpty()) {
-                        // Immediately return an empty list if no favourites
-                        callback.onSuccess(new ArrayList<>());
-                        return;
-                    }
-                    // Prepare to fetch restaurant details
-                    List<Restaurant> favouriteRestaurants = new ArrayList<>();
-                    AtomicInteger counter = new AtomicInteger(0); // To track async calls
+                        if (favouriteRestaurantIds == null || favouriteRestaurantIds.isEmpty()) {
+                            // Immediately return an empty list if no favourites
+                            callback.onSuccess(new ArrayList<>());
+                            return;
+                        }
+                        // Prepare to fetch restaurant details
+                        List<Restaurant> favouriteRestaurants = new ArrayList<>();
+                        AtomicInteger counter = new AtomicInteger(0); // To track async calls
 
-                    // Fetch details of all favourite restaurants
-                    for (String restaurantId : favouriteRestaurantIds) {
-                        db.collection("restaurant")
-                                .document(restaurantId)
-                                .get()
-                                .addOnSuccessListener(restaurantDoc -> {
-                                    if (restaurantDoc.exists()) {
-                                        Restaurant restaurant = restaurantDoc.toObject(Restaurant.class);
-                                        if (restaurant != null) {
-                                            favouriteRestaurants.add(restaurant);
-                                            restaurant.setRestaurantId(restaurantDoc.getId());
+                        // Fetch details of all favourite restaurants
+                        for (String restaurantId : favouriteRestaurantIds) {
+                            db.collection("restaurant")
+                                    .document(restaurantId)
+                                    .get()
+                                    .addOnSuccessListener(restaurantDoc -> {
+                                        if (restaurantDoc.exists()) {
+                                            Restaurant restaurant = restaurantDoc.toObject(Restaurant.class);
+                                            if (restaurant != null) {
+                                                favouriteRestaurants.add(restaurant);
+                                                restaurant.setRestaurantId(restaurantDoc.getId());
+                                            }
+                                        } else {
+                                            Log.d("UserRepository", "Restaurant document does not exist");
                                         }
-                                    } else {
-                                        Log.d("UserRepository", "Restaurant document does not exist");
-                                    }
 
-                                    // Check if all async fetches are completed
-                                    if (counter.incrementAndGet() == favouriteRestaurantIds.size()) {
-                                        callback.onSuccess(favouriteRestaurants);
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    // Handle the failure case once, and avoid multiple calls
-                                    if (counter.incrementAndGet() == favouriteRestaurantIds.size()) {
-                                        callback.onSuccess(favouriteRestaurants);
-                                    }
-                                });
+                                        // Check if all async fetches are completed
+                                        if (counter.incrementAndGet() == favouriteRestaurantIds.size()) {
+                                            callback.onSuccess(favouriteRestaurants);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Handle the failure case once, and avoid multiple calls
+                                        if (counter.incrementAndGet() == favouriteRestaurantIds.size()) {
+                                            callback.onSuccess(favouriteRestaurants);
+                                        }
+                                    });
+                        }
+                    } else {
+                        callback.onFailure(new Exception("User document does not exist"));
                     }
-                } else {
-                    callback.onFailure(new Exception("User document does not exist"));
-                }
-            })
-            .addOnFailureListener(callback::onFailure);
+                })
+                .addOnFailureListener(callback::onFailure);
     }
+
+    // search user favourites
+    public void searchUserFavourites(String userId, String query, RestaurantListCallback callback) {
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Get the list of favourite restaurant IDs
+                        List<String> favouriteRestaurantIds = (List<String>) documentSnapshot.get("favouriteRestaurants");
+
+                        if (favouriteRestaurantIds == null || favouriteRestaurantIds.isEmpty()) {
+                            // Immediately return an empty list if no favourites
+                            callback.onSuccess(new ArrayList<>());
+                            return;
+                        }
+                        // Prepare to fetch restaurant details
+                        List<Restaurant> favouriteRestaurants = new ArrayList<>();
+                        AtomicInteger counter = new AtomicInteger(0); // To track async calls
+
+                        // Fetch details of all favourite restaurants
+                        for (String restaurantId : favouriteRestaurantIds) {
+                            db.collection("restaurant")
+                                    .document(restaurantId)
+                                    .get()
+                                    .addOnSuccessListener(restaurantDoc -> {
+                                        if (restaurantDoc.exists()) {
+                                            Restaurant restaurant = restaurantDoc.toObject(Restaurant.class);
+                                            if (restaurant != null) {
+                                                if (restaurant.getRestaurantName().toLowerCase().contains(query.toLowerCase())) {
+                                                    favouriteRestaurants.add(restaurant);
+                                                    restaurant.setRestaurantId(restaurantDoc.getId());
+                                                }
+                                            }
+                                        } else {
+                                            Log.d("UserRepository", "Restaurant document does not exist");
+                                        }
+
+                                        // Check if all async fetches are completed
+                                        if (counter.incrementAndGet() == favouriteRestaurantIds.size()) {
+                                            callback.onSuccess(favouriteRestaurants);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Handle the failure case once, and avoid multiple calls
+                                        if (counter.incrementAndGet() == favouriteRestaurantIds.size()) {
+                                            callback.onSuccess(favouriteRestaurants);
+                                        }
+                                    });
+                        }
+                    } else {
+                        callback.onFailure(new Exception("User document does not exist"));
+                    }
+                })
+                .addOnFailureListener(callback::onFailure);
     }
+}
 
 
 

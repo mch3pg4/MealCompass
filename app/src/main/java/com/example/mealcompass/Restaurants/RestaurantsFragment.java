@@ -1,11 +1,17 @@
 package com.example.mealcompass.Restaurants;
 
+import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
+import android.util.Log;
 import android.widget.SearchView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,20 +24,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentRestaurantsBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import kotlin.Unit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class RestaurantsFragment extends Fragment {
@@ -42,6 +47,10 @@ public class RestaurantsFragment extends Fragment {
     private UserRepository userRepository;
     private UserViewModel userViewModel;
     private RestaurantViewModel restaurantViewModel;
+    private FusedLocationProviderClient fusedLocationClient;
+
+
+    private int checkedItem = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,9 @@ public class RestaurantsFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         userRepository = new UserRepository(mAuth, db);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+        // get user location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
     }
 
 
@@ -83,18 +95,22 @@ public class RestaurantsFragment extends Fragment {
         binding.restaurantsSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // search for restaurants
-                if (query == null || query.trim().isEmpty()) {
-                    restaurantViewModel.fetchAllRestaurants();
-                } else {
-                    restaurantViewModel.searchRestaurants(query.trim());
-                }
+                performSearch(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                performSearch(newText);
                 return false;
+            }
+
+            private void performSearch(String query) {
+                if (query == null || query.trim().isEmpty()) {
+                    restaurantViewModel.fetchAllRestaurants();
+                } else {
+                    restaurantViewModel.searchRestaurants(query);
+                }
             }
         });
 
@@ -158,47 +174,54 @@ public class RestaurantsFragment extends Fragment {
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(RestaurantsFragment.this)
                         .navigate(R.id.action_restaurantsFragment_to_profileFragment));
-
     }
-
 
 
     public void showFilterRestaurantsAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Filter Restaurants");
-        String[] items = {"Open now", "Highly rated", "High price", "Low price", "Nearest"};
-        boolean[] checkedItems = {false, false, false, false, false};
+        String[] items = {"Open Now", "High Ratings", "Low Ratings","Pricing (High to Low)", "Pricing (Low to High)", "Nearest to Me"};
 
-        builder.setMultiChoiceItems(items, checkedItems, (dialog, which, isChecked) -> {
-            if (which == 0) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "Open Now", Toast.LENGTH_SHORT).show();
+        builder.setSingleChoiceItems(items, checkedItem, (dialog, which) -> checkedItem = which);
+
+        builder.setPositiveButton("Apply", (dialog, which) -> {
+            if (checkedItem == 0) {
+                Toast.makeText(getContext(), "Open Now", Toast.LENGTH_SHORT).show();
+                restaurantViewModel.sortRestaurantsByOpenNow();
+            } else if (checkedItem == 1) {
+                restaurantViewModel.sortRestaurantsByRating("desc");
+            } else if (checkedItem == 2) {
+                restaurantViewModel.sortRestaurantsByRating("asc");
+            } else if (checkedItem == 3) {
+                restaurantViewModel.sortRestaurantsByPricing("desc");
+            } else if (checkedItem == 4) {
+                restaurantViewModel.sortRestaurantsByPricing("asc");
+            } else if (checkedItem == 5) {
+                Toast.makeText(getContext(), "Loading... This might take a while.", Toast.LENGTH_LONG).show();
+                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1001);
                 }
-            } else if (which == 1) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "Highly Rated", Toast.LENGTH_SHORT).show();
-                }
-            } else if (which == 2) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "High Price", Toast.LENGTH_SHORT).show();
-                }
-            } else if (which == 3) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "Low Price", Toast.LENGTH_SHORT).show();
-                }
-            } else if (which == 4) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "Nearest", Toast.LENGTH_SHORT).show();
-                }
-            } else if (which == 5) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "Furthest", Toast.LENGTH_SHORT).show();
-                }
+
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(location -> {
+                            if (location != null) {
+                                double userLat = location.getLatitude();
+                                double userLong = location.getLongitude();
+                                restaurantViewModel.sortRestaurantsByDistance(userLat, userLong, requireContext());
+                            }
+                        })
+                        .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to get location. Make sure location permissions are enabled.", Toast.LENGTH_SHORT).show());
+
+
             }
+            Toast.makeText(getContext(), "Filter applied", Toast.LENGTH_SHORT).show();
         });
 
-        builder.setPositiveButton("Apply", (dialog, which) -> Toast.makeText(getContext(), "Filter Applied", Toast.LENGTH_SHORT).show());
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.setNegativeButton("Reset", (dialog, which) -> {
+            dialog.dismiss();
+            Toast.makeText(getContext(), "Filter reset", Toast.LENGTH_SHORT).show();
+            restaurantViewModel.fetchAllRestaurants();
+        });
 
         AlertDialog dialog = builder.create();
         dialog.show();

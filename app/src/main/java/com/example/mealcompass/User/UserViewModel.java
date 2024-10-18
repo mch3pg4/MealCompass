@@ -211,6 +211,22 @@ public class UserViewModel extends ViewModel {
         });
     }
 
+    // search user restaurant favourites
+    public void searchUserFavouriteRestaurants(String userId, String query) {
+        userRepository.searchUserFavourites(userId, query, new UserRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                favouriteRestaurants.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // handle error
+                Log.e("UserViewModel", "Error searching user favourites", e);
+            }
+        });
+    }
+
 
 
 }

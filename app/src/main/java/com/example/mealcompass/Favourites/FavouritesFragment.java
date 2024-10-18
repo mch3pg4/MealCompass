@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
@@ -75,13 +76,38 @@ public class FavouritesFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
+        // set up search bar
+        String finalUserId = userId;
+        binding.favouritesSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                performSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                performSearch(newText);
+                return true;
+            }
+
+            private void performSearch(String query) {
+                if (query == null || query.trim().isEmpty()) {
+                    userViewModel.getUserFavouriteRestaurants(finalUserId);
+                } else {
+                    userViewModel.searchUserFavouriteRestaurants(finalUserId, query.trim());
+                }
+            }
+
+        });
+
         RecyclerView favouritesRecyclerView = binding.favouritesRecyclerView;
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Get user's favorite restaurants
         userViewModel.getFavouriteRestaurants().observe(getViewLifecycleOwner(), favouriteRestaurants -> {
             if (favouriteRestaurants == null || favouriteRestaurants.isEmpty()) {
-                Toast.makeText(getContext(), "No favourite restaurants", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No favourite restaurant found", Toast.LENGTH_SHORT).show();
             }
 
             List<FavouritesItem> favouritesItems = new ArrayList<>();

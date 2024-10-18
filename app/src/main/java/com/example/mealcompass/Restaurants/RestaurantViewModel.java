@@ -1,5 +1,8 @@
 package com.example.mealcompass.Restaurants;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -137,6 +140,65 @@ public class RestaurantViewModel extends ViewModel {
             @Override
             public void onFailure(Exception e) {
                 Log.e("RestaurantViewModel", "Error searching restaurants", e);
+            }
+        });
+    }
+
+    // sort restaurants by open now
+    public void sortRestaurantsByOpenNow() {
+        restaurantRepository.sortRestaurantsByOpenNow(new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error sorting restaurants", e);
+            }
+        });
+    }
+
+    public void sortRestaurantsByPricing(String order) {
+        restaurantRepository.sortRestaurantsByPricing(order, new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error sorting restaurants", e);
+            }
+        });
+    }
+
+    // sort restaurants by rating
+    public void sortRestaurantsByRating(String order) {
+        restaurantRepository.sortRestaurantsByRating(order, new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error sorting restaurants", e);
+            }
+        });
+    }
+
+    // sort restaurants by distance
+    public void sortRestaurantsByDistance(double userLatitude, double userLongitude, Context context) {
+        restaurantRepository.sortRestaurantsByDistance(userLatitude, userLongitude, context, new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error sorting restaurants", e);
             }
         });
     }

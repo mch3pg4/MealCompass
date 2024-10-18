@@ -11,6 +11,7 @@ public class Restaurant {
     private String restaurantBusinessHours;
     private String restaurantCuisine;
     private String restaurantContact;
+    private double distanceFromUser;
 
     public Restaurant() {
     }
@@ -68,6 +69,10 @@ public class Restaurant {
         return restaurantContact;
     }
 
+    public double getDistanceFromUser() {
+        return distanceFromUser;
+    }
+
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
     }
@@ -106,6 +111,10 @@ public class Restaurant {
 
     public void setRestaurantContact(String restaurantContact) {
         this.restaurantContact = restaurantContact;
+    }
+
+    public void setDistanceFromUser(double distanceFromUser) {
+        this.distanceFromUser = distanceFromUser;
     }
 
 
