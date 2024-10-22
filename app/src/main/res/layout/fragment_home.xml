@@ -71,27 +71,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/homeFilterGroupLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeTitleLayout">
 
-        <TextView
-            android:id="@+id/filterTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:padding="3dp"
-            android:text="@string/filter"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/filterGroup"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeTitleLayout" />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/filterGroup"
@@ -100,51 +80,51 @@
             android:defaultFocusHighlightEnabled="true"
             app:checkedButton="@+id/allButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/filterTitle"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/homeTitleLayout"
+            android:layout_margin="5dp"
             app:singleSelection="true">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/allButton"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="65dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/all" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/distanceButton"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="104dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/distance" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/priceButton"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="82dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/price" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ratingFilterButton"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="89dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ratingFilter"
 
                 />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="140dp"
         android:layout_margin="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeFilterGroupLayout"
+        app:layout_constraintTop_toBottomOf="@id/filterGroup"
         tools:listitem="@layout/recommend_restaurants_item" />
 
     <TextView

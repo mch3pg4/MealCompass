@@ -17,6 +17,7 @@ import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.databinding.FragmentHelpdeskAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -50,6 +51,14 @@ public class HelpdeskAdminFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId;
+        if (user != null) {
+            userId = user.getUid();
+        } else {
+            userId = null;
+        }
+
         RecyclerView helpdeskChatsRecyclerView = binding.helpdeskChatsRecyclerView;
         helpdeskChatsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -70,14 +79,14 @@ public class HelpdeskAdminFragment extends Fragment {
 
                     // Get user name and profile picture
                     userRepository.getUserName(senderId).addOnSuccessListener(name -> {
-                        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.US);
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy h:mm a", Locale.US);
 
                         // Add the item to the list
                         helpdeskChatsItems.add(new HelpdeskChatsItem(
                                 senderId,
                                 senderId, // senderId for profile picture
-                                name, // senderId name
-                                helpdesk.getMessage(), // last message
+                                chatName(helpdesk.getMessage(), userId, name), // senderId name
+                                chatPreview(helpdesk.getMessage(), userId, name), // last message
                                 sdf.format(helpdesk.getSendTime()), // last message time
                                 helpdesk.getChatId()
                         ));
@@ -107,6 +116,30 @@ public class HelpdeskAdminFragment extends Fragment {
         helpdeskViewModel.fetchAllChats();
     }
 
+    public String chatPreview(String message, String userId, String name) {
+        // split the message into two parts, if the user id in upper part is same as senderId, add "You: " to the message
+        String currentMessageUserId = message.split(": ")[0].trim();
+        String chat = message.split(": ")[1].trim();
+
+        // if the user id in upper part is same as senderId, add "You: " to the message
+        if (currentMessageUserId.equals(userId)) {
+            return "You: " + chat;
+        } else {
+            return name + ": " + chat;
+        }
+    }
+
+    public String chatName(String message, String userId, String name) {
+        // if user sent the last message, add (unreplied) to the chat name
+        String currentMessageUserId = message.split(": ")[0].trim();
+
+        // if the user id in upper part is same as senderId, add "You: " to the message
+        if (currentMessageUserId.equals(userId)) {
+            return name ;
+        } else {
+            return name + " (unreplied)";
+        }
+    }
 
     @Override
     public void onDestroyView() {

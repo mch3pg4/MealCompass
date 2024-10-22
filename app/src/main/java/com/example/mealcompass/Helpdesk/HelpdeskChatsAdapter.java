@@ -61,6 +61,7 @@ public class HelpdeskChatsAdapter extends RecyclerView.Adapter<HelpdeskChatsAdap
         holder.chatName.setText(currentItem.getChatName());
         holder.chatTime.setText(currentItem.getChatTime());
         holder.chatMessage.setText(currentItem.getChatMessage());
+
         holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("chatId", currentItem.getChatId());

@@ -76,6 +76,7 @@ public class SelectAllergyFragment extends Fragment {
         allergyItemArrayList.add(new SelectAllergyItem("Nut", R.drawable.nut, false));
         allergyItemArrayList.add(new SelectAllergyItem("Seafood", R.drawable.seafood, false));
         allergyItemArrayList.add(new SelectAllergyItem("Wheat", R.drawable.wheat, false));
+        allergyItemArrayList.add(new SelectAllergyItem("Egg", R.drawable.egg, false));
 
         SelectAllergyAdapter adapter = new SelectAllergyAdapter(requireContext(), allergyItemArrayList);
         binding.allergyList.setAdapter(adapter);

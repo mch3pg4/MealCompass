@@ -36,60 +36,57 @@ public class HelpdeskRepository {
 
     public void getAllChats(HelpdeskChatListCallback callback) {
         db.collection("helpdesk")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<Helpdesk> helpdeskList = new ArrayList<>();
-
-                        // Loop through each chat document (representing different users)
-                        for (DocumentSnapshot chatDocument : task.getResult()) {
-                            String chatId = chatDocument.getId();
-
-                            // Access the senderId field (if needed)
-                            String senderId = chatDocument.getString("senderId");
-
-                            // Access the messages collection inside each chat document and get the latest message
-                            db.collection("helpdesk")
-                                    .document(chatId)
-                                    .collection("messages")
-                                    .orderBy("sendTime", Query.Direction.DESCENDING) // Get latest message by time
-                                    .limit(1) // Fetch only the most recent message
-                                    .get()
-                                    .addOnCompleteListener(messageTask -> {
-                                        if (messageTask.isSuccessful()) {
-                                            for (DocumentSnapshot messageDocument : messageTask.getResult()) {
-                                                Helpdesk helpdesk = messageDocument.toObject(Helpdesk.class);
-                                                if (helpdesk != null) {
-                                                    helpdesk.setChatId(chatId); // Add chatId to the helpdesk object
-                                                    helpdesk.setSenderId(senderId); // Add senderId to the helpdesk object
-                                                    helpdesk.setMessage(messageDocument.getString("message"));
-                                                    // Get the sendTime and convert it
-                                                    Timestamp timestamp = messageDocument.getTimestamp("sendTime");
-                                                    if (timestamp != null) {
-                                                        Date sendTime = timestamp.toDate();
-                                                        helpdesk.setSendTime(sendTime);
-                                                    }
-
-                                                    // Add to the helpdesk list
-                                                    helpdeskList.add(helpdesk);
-                                                }
+            .get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    List<Helpdesk> helpdeskList = new ArrayList<>();
+                    // Loop through each chat document (representing different users)
+                    for (DocumentSnapshot chatDocument : task.getResult()) {
+                        String chatId = chatDocument.getId();
+                        // Access the senderId field (if needed)
+                        String senderId = chatDocument.getString("senderId");
+                        // Access the messages collection inside each chat document and get the latest message
+                        db.collection("helpdesk")
+                            .document(chatId)
+                            .collection("messages")
+                            .orderBy("sendTime", Query.Direction.DESCENDING) // Get latest message by time
+                            .limit(1) // Fetch only the most recent message
+                            .get()
+                            .addOnCompleteListener(messageTask -> {
+                                if (messageTask.isSuccessful()) {
+                                    for (DocumentSnapshot messageDocument : messageTask.getResult()) {
+                                        Helpdesk helpdesk = messageDocument.toObject(Helpdesk.class);
+                                        if (helpdesk != null) {
+                                            helpdesk.setChatId(chatId); // Add chatId to the helpdesk object
+                                            helpdesk.setSenderId(senderId);// Add senderId to the helpdesk object
+                                            // get each message's senderId
+                                            String currentSenderId = messageDocument.getString("senderId");
+                                            helpdesk.setMessage(currentSenderId + ": "+ messageDocument.getString("message"));
+                                            // Get the sendTime and convert it
+                                            Timestamp timestamp = messageDocument.getTimestamp("sendTime");
+                                            if (timestamp != null) {
+                                                Date sendTime = timestamp.toDate();
+                                                helpdesk.setSendTime(sendTime);
                                             }
-
-                                            // Send the results via the callback after fetching the latest message for each chat
-                                            if (!helpdeskList.isEmpty()) {
-                                                callback.onSuccess(helpdeskList);
-                                                Log.d("HelpdeskRepository", "onSuccess called with " + helpdeskList.size() + " items.");
-                                            }
-                                        } else {
-                                            callback.onFailure(messageTask.getException());
-                                            Log.d("HelpdeskRepository", "onFailure called.", messageTask.getException());
+                                            // Add to the helpdesk list
+                                            helpdeskList.add(helpdesk);
                                         }
-                                    });
-                        }
-                    } else {
-                        callback.onFailure(task.getException());
-                    }
-                });
+                                    }
+                                    // Send the results via the callback after fetching the latest message for each chat
+                                    if (!helpdeskList.isEmpty()) {
+                                        callback.onSuccess(helpdeskList);
+                                        Log.d("HelpdeskRepository", "onSuccess called with " + helpdeskList.size() + " items.");
+                                    }
+                                } else {
+                                    callback.onFailure(messageTask.getException());
+                                    Log.d("HelpdeskRepository", "onFailure called.", messageTask.getException());
+                                }
+                            });
+                }
+                } else {
+                    callback.onFailure(task.getException());
+                }
+            });
     }
 
 

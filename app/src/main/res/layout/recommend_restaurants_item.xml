@@ -9,8 +9,8 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/recommendRestaurantsCard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -18,7 +18,7 @@
         <LinearLayout
             android:id="@+id/recommendCardLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -50,7 +50,7 @@
             <ImageView
                 android:id="@+id/restaurantImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/restaurant_image"
                 android:src="@drawable/restaurant_img"
                 android:scaleType="centerCrop"

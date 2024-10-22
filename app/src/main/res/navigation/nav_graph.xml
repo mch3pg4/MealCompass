@@ -232,6 +232,9 @@
         <action
             android:id="@+id/action_adminFragment_to_userDetailsFragment"
             app:destination="@id/userDetailsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_restaurantsFragment"
+            app:destination="@id/restaurantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fillInRestDetailsFragment"

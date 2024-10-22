@@ -40,7 +40,7 @@ public class HelpdeskAdapter extends RecyclerView.Adapter<HelpdeskAdapter.ViewHo
             messageTextView.setText(helpdesk.getMessage());
             // convert time to string
             Date sendTime = helpdesk.getSendTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.US);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.US);
             timeTextView.setText(sdf.format(sendTime));
         }
     }
@@ -84,8 +84,6 @@ public class HelpdeskAdapter extends RecyclerView.Adapter<HelpdeskAdapter.ViewHo
         this.helpdeskList = newMessages;
         notifyItemChanged(newMessages.size()); // or optimize using notifyItemRangeInserted()
         recyclerView.scrollToPosition(newMessages.size() - 1); // scroll to the last message
-
-
     }
 }
 

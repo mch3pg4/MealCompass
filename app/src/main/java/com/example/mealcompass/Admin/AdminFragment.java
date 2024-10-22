@@ -105,9 +105,8 @@ public class AdminFragment extends Fragment {
         RecommendRestaurantsAdapter recommendRestaurantsAdapter = new RecommendRestaurantsAdapter(recommendRestaurantsItems);
         recommendRestaurantsRecyclerView.setAdapter(recommendRestaurantsAdapter);
 
-        binding.showAllRestaurantText.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Show all restaurants", Toast.LENGTH_SHORT).show();
-        });
+        binding.showAllRestaurantText.setOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigate(R.id.action_adminFragment_to_restaurantsFragment));
 
         // users list recycler view
         RecyclerView usersListRecyclerView = binding.restaurantUsersRecyclerView;

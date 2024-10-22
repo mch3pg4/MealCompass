@@ -95,8 +95,6 @@ public class HelpdeskFragment extends Fragment {
             chatId = getArguments().getString("chatId");
             listenForMessages(chatId);
             binding.receiverName.setText(getArguments().getString("chatName"));
-            Toast.makeText(getContext(), "helpdesk list size " + helpdeskList.size(), Toast.LENGTH_SHORT).show();
-
         } else {
             // if user is not admin, then fetch chat id
             fetchChatId(userId);

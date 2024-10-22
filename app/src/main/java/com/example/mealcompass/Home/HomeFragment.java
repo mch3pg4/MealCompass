@@ -149,15 +149,11 @@ public class HomeFragment extends Fragment {
                 popupWindow.dismiss();  // Close the popup
             });
 
+            popupView.findViewById(R.id.cancelRatingButton).setOnClickListener(v1 -> popupWindow.dismiss());
+
             // Close the popup window on button click
             popupView.findViewById(R.id.closeRateRecommendation).setOnClickListener(v1 -> popupWindow.dismiss());
 
-            // Restore the original dimming effect when the popup is dismissed
-            popupWindow.setOnDismissListener(() -> {
-                WindowManager.LayoutParams originalParams = requireActivity().getWindow().getAttributes();
-                originalParams.dimAmount = 0f; // Reset dim amount to default
-                requireActivity().getWindow().setAttributes(originalParams);
-            });
         });
 
 
