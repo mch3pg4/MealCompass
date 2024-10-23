@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_profileFragment_to_helpdeskFragment"
             app:destination="@id/helpdeskFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_createAdminFragment"
+            app:destination="@id/createAdminFragment" />
     </fragment>
     <fragment
         android:id="@+id/discoverFragment"
@@ -407,6 +410,15 @@
             app:destination="@id/showAllUsersFragment" />
         <action
             android:id="@+id/action_userDetailsFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAdminFragment"
+        android:name="com.example.mealcompass.Admin.CreateAdminFragment"
+        android:label="fragment_create_admin"
+        tools:layout="@layout/fragment_create_admin" >
+        <action
+            android:id="@+id/action_createAdminFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
     </fragment>
 </navigation>

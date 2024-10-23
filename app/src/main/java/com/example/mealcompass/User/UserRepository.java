@@ -107,6 +107,24 @@ public class UserRepository {
                 });
     }
 
+    // create admin with name, email, password and user type as admin
+    public Task<Task<AuthResult>> createAdmin(String name, String email, String password) {
+        return mAuth.createUserWithEmailAndPassword(email, password)
+                .continueWithTask(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            User user = new User(name, email, "admin", "", null, null, null, null, null, null);
+                            return db.collection("users")
+                                    .document(firebaseUser.getUid())
+                                    .set(user)
+                                    .continueWith(t -> task);
+                        }
+                    }
+                    throw Objects.requireNonNull(task.getException());
+                });
+    }
+
     public Task<Void> updateUserImageUrl(String userId, String imageUrl) {
         return db.collection("users")
                 .document(userId)

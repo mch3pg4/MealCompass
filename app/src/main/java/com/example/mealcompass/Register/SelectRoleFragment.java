@@ -67,14 +67,13 @@ public class SelectRoleFragment extends Fragment {
         binding.progressIndicator.setProgress(30);
 
         setupRoleCard(binding.userRoleCard, "User role selected");
-        setupRoleCard(binding.adminRoleCard, "Admin role selected");
         setupRoleCard(binding.ownerRoleCard, "Restaurant Owner role selected");
 
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(SelectRoleFragment.this)
                 .navigate(R.id.action_selectRoleFragment2_to_addProfilePicFragment));
 
         binding.nextButton.setOnClickListener(v -> {
-            if (!binding.userRoleCard.isChecked() && !binding.adminRoleCard.isChecked() && !binding.ownerRoleCard.isChecked()) {
+            if (!binding.userRoleCard.isChecked() && !binding.ownerRoleCard.isChecked()) {
                 // Toast message to say no role selected
                 Toast.makeText(getContext(), "Please select a role to proceed", Toast.LENGTH_SHORT).show();
             } else if (binding.userRoleCard.isChecked()) {
@@ -83,12 +82,6 @@ public class SelectRoleFragment extends Fragment {
                 // Navigate to the next fragment
                 NavHostFragment.findNavController(SelectRoleFragment.this)
                         .navigate(R.id.action_selectRoleFragment2_to_selectCuisineFragment2);
-            } else if (binding.adminRoleCard.isChecked()) {
-                // Update the user type in the database
-                updateUserType("admin");
-                // Navigate to the next fragment
-                NavHostFragment.findNavController(SelectRoleFragment.this)
-                        .navigate(R.id.action_selectRoleFragment2_to_adminFragment);
             } else if (binding.ownerRoleCard.isChecked()) {
                 // Update the user type in the database
                 updateUserType("owner");
@@ -132,7 +125,6 @@ public class SelectRoleFragment extends Fragment {
         roleCard.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 if (roleCard != binding.userRoleCard) binding.userRoleCard.setChecked(false);
-                if (roleCard != binding.adminRoleCard) binding.adminRoleCard.setChecked(false);
                 if (roleCard != binding.ownerRoleCard) binding.ownerRoleCard.setChecked(false);
             }
         });

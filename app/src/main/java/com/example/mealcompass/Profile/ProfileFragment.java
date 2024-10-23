@@ -67,9 +67,11 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        String userId = null;
+        String userId;
         if (user != null) {
             userId = user.getUid();
+        } else {
+            userId = null;
         }
 
         // load user name and profile image
@@ -116,9 +118,11 @@ public class ProfileFragment extends Fragment {
         appItems.add(new AppSettingsItem(R.drawable.baseline_dark_mode_24, "Dark Mode"));
         appItems.add(new AppSettingsItem(R.drawable.baseline_format_align_justify_24, "Terms & Conditions"));
         appItems.add(new AppSettingsItem(R.drawable.appicon, "About MealCompass"));
-        // if user role is admin, then don't need to show contact helpdesk
+        // if user role is not admin, then don't need to show contact helpdesk
         userRepository.getUserType(userId).addOnSuccessListener(userType -> {
-            if (!userType.equals("admin")) {
+            if (userType.equals("admin")) {
+                appItems.add(new AppSettingsItem(R.drawable.baseline_person_add_24, "Add Admin"));
+            } else {
                 appItems.add(new AppSettingsItem(R.drawable.baseline_comment_24, "Contact Helpdesk"));
             }
         });
@@ -129,8 +133,16 @@ public class ProfileFragment extends Fragment {
         appAdapter.setOnItemClickListener(position -> {
             if (position == 3) {
                 // Contact Helpdesk
-                // Navigate to Contact Helpdesk Fragment
-                NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_helpdeskFragment);
+                // Navigate to Contact Helpdesk Fragment only if user is not admin
+                userRepository.getUserType(userId).addOnSuccessListener(userType -> {
+                    if (!userType.equals("admin")) {
+                        NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_helpdeskFragment);
+                    } else {
+                        // navigate to add admin fragment
+                        NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_createAdminFragment);
+                    }
+                });
+
             } else if (position == 0) {
                 // Dark Mode
                 // Toggle Dark Mode
