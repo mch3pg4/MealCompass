@@ -18,16 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/favouriteButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/favourite_button"
-        android:src="@drawable/baseline_favorite_border_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="10dp"
-        android:padding="6dp"/>
 
     <ScrollView
         android:id="@+id/restaurantDetailsScrollView"
@@ -50,7 +40,7 @@
         <ImageView
             android:id="@+id/restaurantImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:contentDescription="@string/restaurant_image"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
@@ -112,20 +102,6 @@
 
                     />
 
-                <TextView
-                    android:id="@+id/restaurantShowReviews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/show_reviews"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue"
-                    android:layout_toEndOf="@+id/restaurantRating"
-                    android:layout_marginStart="170dp"
-                    android:layout_marginEnd="6dp"
-                    android:layout_alignParentEnd="true"
-                    />
-
             </RelativeLayout>
 
         <TextView
@@ -159,46 +135,18 @@
                 app:drawableStartCompat="@drawable/baseline_access_time_24"/>
 
 
-            <LinearLayout
-                android:id="@+id/recommendedForYouLinearLayout"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/showRestaurantMenuButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="@string/show_restaurant_menu"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                />
 
-                <TextView
-                    android:id="@+id/recommendedForYouTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/recommended_for_you"
-                    android:textSize="24sp"
-                    android:padding="5dp"
-                    android:layout_marginStart="3dp"
-                    android:fontFamily="@font/poppins_bold"/>
-
-                <TextView
-                    android:id="@+id/fullMenuClickableText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/full_menu"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="6dp"
-                    />
-
-            </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recommendedForYouRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp"
-            tools:listitem="@layout/restaurant_menu_items_grid"
-            >
-
-
-        </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
     </ScrollView>

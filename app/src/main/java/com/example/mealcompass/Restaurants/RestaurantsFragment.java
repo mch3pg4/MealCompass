@@ -139,7 +139,8 @@ public class RestaurantsFragment extends Fragment {
                                 restaurant.getRestaurantRating(),
                                 restaurant.getRestaurantPricing(),
                                 restaurant.getRestaurantBusinessHours(),
-                                false
+                                false,
+                                restaurant.getRestaurantContact()
                         ));
                     }
 

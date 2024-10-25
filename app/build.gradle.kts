@@ -76,5 +76,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.glide)
     implementation(libs.places)
+    implementation(libs.retrofit2)
+    implementation(libs.converter.gson)
 
 }

@@ -1,7 +1,5 @@
 package com.example.mealcompass.Restaurants;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -9,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+
+import com.example.mealcompass.MenuItem.MenuItem;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class RestaurantViewModel extends ViewModel {
     private final MutableLiveData<String> restaurantContact = new MutableLiveData<>();
 
     private final MutableLiveData<List<Restaurant>> restaurantListLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<MenuItem>> menuItemsLiveData = new MutableLiveData<List<com.example.mealcompass.MenuItem.MenuItem>>();
     private final RestaurantRepository restaurantRepository;
 
     public RestaurantViewModel() {
@@ -116,6 +117,10 @@ public class RestaurantViewModel extends ViewModel {
         return restaurantListLiveData;
     }
 
+    public LiveData<List<com.example.mealcompass.MenuItem.MenuItem>> getMenuItemsLiveData() {
+        return menuItemsLiveData;
+    }
+
     public void fetchAllRestaurants() {
         restaurantRepository.getAllRestaurants(new RestaurantRepository.RestaurantListCallback() {
             @Override
@@ -126,6 +131,21 @@ public class RestaurantViewModel extends ViewModel {
             @Override
             public void onFailure(Exception e) {
                 Log.e("RestaurantViewModel", "Error fetching restaurants", e);
+            }
+        });
+    }
+
+    // get restaurant menu by id
+    public void fetchRestaurantMenu(String restaurantId) {
+        restaurantRepository.getRestaurantMenu(restaurantId, new RestaurantRepository.RestaurantMenuCallback() {
+            @Override
+            public void onSuccess(List<com.example.mealcompass.MenuItem.MenuItem> menuItems) {
+                menuItemsLiveData.setValue(menuItems);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error fetching menu", e);
             }
         });
     }

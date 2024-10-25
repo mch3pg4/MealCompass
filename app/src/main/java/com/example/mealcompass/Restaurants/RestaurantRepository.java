@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.util.Log;
 
+import com.example.mealcompass.MenuItem.MenuItem;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class RestaurantRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -121,6 +123,43 @@ public class RestaurantRepository {
     public interface RestaurantListCallback {
         void onSuccess(List<Restaurant> restaurantList);
         void onFailure(Exception e);
+    }
+
+    // restaurant menu callback
+    public interface RestaurantMenuCallback {
+        void onSuccess(List<MenuItem> menuItems);
+        void onFailure(Exception e);
+    }
+
+    // get restaurant menu from restaurant id
+    public void getRestaurantMenu(String restaurantId, RestaurantMenuCallback callback) {
+        db.collection("restaurant")
+                .document(restaurantId)
+                .collection("menuItems")
+                .orderBy("itemCategory", Query.Direction.ASCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<MenuItem> menuItems = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            MenuItem menuItem = document.toObject(MenuItem.class);
+                            if (menuItem != null) {
+                                menuItems.add(menuItem);
+                                menuItem.setMenuItemId(document.getId());
+                                menuItem.setMenuItemCategory(document.getString("itemCategory"));
+                                menuItem.setMenuItemDescription(document.getString("itemDescription"));
+                                menuItem.setMenuItemImage(document.getString("itemImageUrl"));
+                                menuItem.setMenuItemName(document.getString("itemName"));
+                                menuItem.setMenuItemPrice(Objects.requireNonNull(document.getDouble("itemPrice")).intValue());
+                                menuItem.setMenuItemNutritionalValue(Objects.requireNonNull(document.getDouble("itemNutritionalValue")).intValue());
+                                menuItem.setMenuItemAllergens((List<String>) document.get("itemAllergens"));
+                            }
+                        }
+                        callback.onSuccess(menuItems);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
     }
 
     // get all restaurants

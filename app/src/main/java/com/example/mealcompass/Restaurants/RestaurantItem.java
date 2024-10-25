@@ -10,8 +10,9 @@ public class RestaurantItem {
     private final int restaurantPricing;
     private final String restaurantOpenOrClose;
     private boolean isRestaurantFavourite;
+    private String restaurantContact;
 
-    public RestaurantItem(String restaurantId, String restaurantImage, String restaurantName, String restaurantAddress, String restaurantCuisine, float restaurantRating, int restaurantPricing, String restaurantOpenOrClose, boolean isRestaurantFavourite) {
+    public RestaurantItem(String restaurantId, String restaurantImage, String restaurantName, String restaurantAddress, String restaurantCuisine, float restaurantRating, int restaurantPricing, String restaurantOpenOrClose, boolean isRestaurantFavourite, String restaurantContact) {
         this.restaurantId = restaurantId;
         this.restaurantImage = restaurantImage;
         this.restaurantName = restaurantName;
@@ -21,6 +22,8 @@ public class RestaurantItem {
         this.restaurantPricing = restaurantPricing;
         this.restaurantOpenOrClose = restaurantOpenOrClose;
         this.isRestaurantFavourite = isRestaurantFavourite;
+        this.restaurantContact = restaurantContact;
+
     }
 
     public String getRestaurantId() {
@@ -53,6 +56,10 @@ public class RestaurantItem {
 
     public String getRestaurantOpenOrClose() {
         return restaurantOpenOrClose;
+    }
+
+    public String getRestaurantContact() {
+        return restaurantContact;
     }
 
     public boolean isRestaurantFavourite() {

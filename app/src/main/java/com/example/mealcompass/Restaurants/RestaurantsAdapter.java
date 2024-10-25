@@ -1,5 +1,6 @@
 package com.example.mealcompass.Restaurants;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -80,6 +83,22 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         Glide.with(holder.restaurantImage.getContext())
                 .load(restaurantItem.getRestaurantImage())
                 .into(holder.restaurantImage);
+
+        holder.itemView.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("restaurantId", restaurantItem.getRestaurantId());
+            bundle.putString("restaurantName", restaurantItem.getRestaurantName());
+            bundle.putString("restaurantAddress", restaurantItem.getRestaurantAddress());
+            bundle.putString("restaurantCuisine", restaurantItem.getRestaurantCuisine());
+            bundle.putFloat("restaurantRating", restaurantItem.getRestaurantRating());
+            bundle.putInt("restaurantPricing", restaurantItem.getRestaurantPricing());
+            bundle.putString("restaurantOpenOrClose", restaurantItem.getRestaurantOpenOrClose());
+            bundle.putString("restaurantImage", restaurantItem.getRestaurantImage());
+            bundle.putBoolean("isRestaurantFavourite", restaurantItem.isRestaurantFavourite());
+            bundle.putString("restaurantContact", restaurantItem.getRestaurantContact());
+            // Navigate to restaurant details
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_restaurantsFragment_to_restaurantDetailsFragment, bundle);
+        });
 
         // Set the CheckBox state
         userViewModel.isInFavourites(restaurantItem.getRestaurantId(), new UserRepository.FavoriteRestaurantCallback() {

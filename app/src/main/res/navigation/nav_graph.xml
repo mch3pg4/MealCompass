@@ -156,6 +156,9 @@
         <action
             android:id="@+id/action_restaurantDetailsFragment_to_menuItemFragment"
             app:destination="@id/menuItemFragment" />
+        <action
+            android:id="@+id/action_restaurantDetailsFragment_to_fullMenuFragment"
+            app:destination="@id/fullMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectAllergyFragment"
@@ -300,7 +303,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuItemFragment"
-        android:name="com.example.mealcompass.MenuItemFragment"
+        android:name="com.example.mealcompass.MenuItem.MenuItemFragment"
         android:label="fragment_menu_item"
         tools:layout="@layout/fragment_menu_item" >
         <action
@@ -420,5 +423,17 @@
         <action
             android:id="@+id/action_createAdminFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullMenuFragment"
+        android:name="com.example.mealcompass.MenuItem.FullMenuFragment"
+        android:label="fragment_full_menu"
+        tools:layout="@layout/fragment_full_menu" >
+        <action
+            android:id="@+id/action_fullMenuFragment_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
+        <action
+            android:id="@+id/action_fullMenuFragment_to_menuItemFragment"
+            app:destination="@id/menuItemFragment" />
     </fragment>
 </navigation>

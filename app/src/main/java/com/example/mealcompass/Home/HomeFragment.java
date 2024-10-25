@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment {
@@ -77,6 +82,9 @@ public class HomeFragment extends Fragment {
             userId = user.getUid();
         }
 
+        fetchRecommendations();
+
+
         // set up welcome text with user's name
         userRepository.getUserName(userId).addOnSuccessListener(name -> {
             if (name != null) {
@@ -104,14 +112,14 @@ public class HomeFragment extends Fragment {
                 new RecommendRestaurantsItem(R.drawable.restaurant_img, "The Fat Radish", "4.5")
         );
 
-        List<RecommendHistoryItem> recommendHistoryItems = List.of(
-                new RecommendHistoryItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
-                new RecommendHistoryItem(R.drawable.restaurant_img, "Kopitiam", "4.0")
-        );
-
         List<RecommendItemItem> recommendItemItems = List.of(
                 new RecommendItemItem(R.drawable.restaurant_img, "Chicken Burger"),
                 new RecommendItemItem(R.drawable.restaurant_img, "Chicken Salad")
+        );
+
+        List<RecommendHistoryItem> recommendHistoryItems = List.of(
+                new RecommendHistoryItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
+                new RecommendHistoryItem(R.drawable.restaurant_img, "Kopitiam", "4.0")
         );
 
         RecommendRestaurantsAdapter recommendRestaurantsAdapter = new RecommendRestaurantsAdapter(recommendRestaurantsItems);
@@ -176,4 +184,33 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private void fetchRecommendations() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            UserId userIdObj = new UserId(userId);
+
+            RetrofitClient.getRetrofitClient().getRecommendations(userIdObj).enqueue(new Callback<List<RecommendRestaurantsItem>>() {
+                @Override
+                public void onResponse(Call<List<RecommendRestaurantsItem>> call, Response<List<RecommendRestaurantsItem>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<RecommendRestaurantsItem> recommendations = response.body();
+                        for (RecommendRestaurantsItem recommendation : recommendations) {
+                            Log.d("Recommendation", "Restaurant: " + recommendation.getRestaurantName());
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Failed to get recommendations", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<RecommendRestaurantsItem>> call, Throwable t) {
+                    Toast.makeText(getContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+
 }

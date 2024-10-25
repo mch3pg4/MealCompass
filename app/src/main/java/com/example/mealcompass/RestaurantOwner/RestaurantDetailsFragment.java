@@ -1,66 +1,171 @@
 package com.example.mealcompass.RestaurantOwner;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mealcompass.R;
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.databinding.FragmentRestaurantDetailsBinding;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RestaurantDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 public class RestaurantDetailsFragment extends Fragment {
+    private FragmentRestaurantDetailsBinding binding;
+    private UserRepository userRepository;
+    private FirebaseAuth mAuth;
+    private GoogleMap googleMap;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public RestaurantDetailsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RestaurantDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RestaurantDetailsFragment newInstance(String param1, String param2) {
-        RestaurantDetailsFragment fragment = new RestaurantDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        //initialize firebase auth
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository(mAuth, db);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant_details, container, false);
+        binding = FragmentRestaurantDetailsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUid();
+        }
+
+        // retrieve bundle data from previous fragment
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String restaurantId = bundle.getString("restaurantId");
+            String restaurantName = bundle.getString("restaurantName");
+            String restaurantAddress = bundle.getString("restaurantAddress");
+            String restaurantCuisine = bundle.getString("restaurantCuisine");
+            float restaurantRating = bundle.getFloat("restaurantRating");
+            String restaurantImage = bundle.getString("restaurantImage");
+            String restaurantContact = bundle.getString("restaurantContact");
+            String restaurantBusinessHours = bundle.getString("restaurantOpenOrClose");
+
+            // set textviews with bundle data
+            binding.restaurantNameTitle.setText(restaurantName);
+            binding.restaurantAddress.setText(String.format("Address: %s", restaurantAddress));
+            binding.restaurantCuisine.setText(String.format("Cuisine: %s", restaurantCuisine));
+            binding.restaurantRating.setRating(restaurantRating);
+            binding.restaurantContact.setText(String.format("Contact: %s", restaurantContact));
+            // Convert the business hours Map to a formatted string
+            try {
+                // Replace single quotes with double quotes to make it a valid JSON string
+                String jsonString = restaurantBusinessHours.replace("'", "\"");
+
+                // Convert the string to a JSON object
+                JSONObject jsonObject = new JSONObject(jsonString);
+
+                // Build a formatted string from the JSON object
+                StringBuilder formattedHours = new StringBuilder();
+                Iterator<String> keys = jsonObject.keys();
+                while (keys.hasNext()) {
+                    String day = keys.next();
+                    String hours = jsonObject.getString(day);
+                    formattedHours.append(day).append(": ").append(hours).append("\n");
+                }
+
+                // Set the formatted string to the TextView
+                binding.restaurantBusinessHours.setText(String.format("Business Hours:\n%s", formattedHours.toString()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                binding.restaurantBusinessHours.setText("Business Hours: Not Available");
+            }
+
+
+
+
+            // load image with glide
+            Glide.with(requireContext())
+                    .load(restaurantImage)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.restaurantImage);
+
+            // get restaurant address and show on mapview
+            binding.restaurantMapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap map) {
+                    googleMap = map;
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                    MapsInitializer.initialize(requireContext());
+                    addMarker(restaurantAddress);
+                }
+            });
+
+            binding.restaurantMapView.onCreate(savedInstanceState);
+
+
+            binding.showRestaurantMenuButton.setOnClickListener(v -> {
+                Bundle menuBundle = new Bundle();
+                menuBundle.putString("restaurantId", restaurantId);
+                menuBundle.putString("restaurantName", restaurantName);
+                Navigation.findNavController(v).navigate(R.id.action_restaurantDetailsFragment_to_fullMenuFragment, menuBundle);
+            });
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    private void addMarker(String address) {
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(address, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address location = addresses.get(0);
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                googleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
