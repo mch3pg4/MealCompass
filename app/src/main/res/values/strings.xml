@@ -267,5 +267,7 @@
     <string name="register_admin_title">Register for a MealCompass Admin Account</string>
     <string name="recommendations_for_you">Here are some recommendations for you.</string>
     <string name="show_restaurant_menu">Show Restaurant Menu</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="editProfileDescription">Edit Your Profile Information Here.</string>
 
 </resources>

@@ -88,33 +88,34 @@ public class ProfileFragment extends Fragment {
 
         // if user role is admin or owner, then don't need to show reselect preferences
         userRepository.getUserType(userId).addOnSuccessListener(userType -> {
-            if (!userType.equals("admin") && !userType.equals("owner")) {
-        profileItems.add(new ProfileSettingsItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
+            if (userType.equals("user")) {
+            profileItems.add(new ProfileSettingsItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
             }
         });
 
         ProfileSettingsAdapter profileAdapter = new ProfileSettingsAdapter(profileItems);
-        profileSettingsRecyclerView.setAdapter(profileAdapter);
+
 
         // on click listener for profile settings recyclerview
         profileAdapter.setOnItemClickListener(position -> {
             if (position == 0) {
                 // Edit Profile
                 // Navigate to Edit Profile Fragment
-                Toast.makeText(getContext(), "Edit Profile", Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_editProfileFragment);
 
             } else if (position == 1) {
                 // Reselect Preferences
                 // Navigate to Reselect Preferences Fragment
-                Toast.makeText(getContext(), "Reselect Preferences", Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(this).navigate(R.id.action_profileFragment_to_selectCuisineFragment2);
             }
         });
+
+        profileSettingsRecyclerView.setAdapter(profileAdapter);
 
         RecyclerView appSettingsRecyclerView = view.findViewById(R.id.appSettingsRecyclerView);
         appSettingsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         List<AppSettingsItem> appItems = new ArrayList<>();
-
         appItems.add(new AppSettingsItem(R.drawable.baseline_dark_mode_24, "Dark Mode"));
         appItems.add(new AppSettingsItem(R.drawable.baseline_format_align_justify_24, "Terms & Conditions"));
         appItems.add(new AppSettingsItem(R.drawable.appicon, "About MealCompass"));

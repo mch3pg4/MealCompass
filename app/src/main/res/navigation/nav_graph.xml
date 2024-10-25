@@ -45,6 +45,12 @@
         <action
             android:id="@+id/action_profileFragment_to_createAdminFragment"
             app:destination="@id/createAdminFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_selectCuisineFragment2"
+            app:destination="@id/selectCuisineFragment2" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/discoverFragment"
@@ -435,5 +441,13 @@
         <action
             android:id="@+id/action_fullMenuFragment_to_menuItemFragment"
             app:destination="@id/menuItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.mealcompass.Profile.EditProfileFragment"
+        android:label="EditProfileFragment" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

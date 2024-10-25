@@ -125,6 +125,12 @@ public class UserRepository {
                 });
     }
 
+    public Task<Void> updateUserName(String userId, String name) {
+        return db.collection("users")
+                .document(userId)
+                .update("userName", name);
+    }
+
     public Task<Void> updateUserImageUrl(String userId, String imageUrl) {
         return db.collection("users")
                 .document(userId)

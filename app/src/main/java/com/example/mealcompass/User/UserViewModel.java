@@ -133,6 +133,11 @@ public class UserViewModel extends ViewModel {
         this.userFavourites.setValue(userFavourites);
     }
 
+    // update user name
+    public void updateUserName(String userId, String userName) {
+        userRepository.updateUserName(userId, userName);
+    }
+
     // check if restaurant is already a favourite, if it is then return false
     public boolean isInFavourites(String restaurantId, UserRepository.FavoriteRestaurantCallback callback) {
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();

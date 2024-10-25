@@ -107,7 +107,8 @@ public class FavouritesFragment extends Fragment {
         // Get user's favorite restaurants
         userViewModel.getFavouriteRestaurants().observe(getViewLifecycleOwner(), favouriteRestaurants -> {
             if (favouriteRestaurants == null || favouriteRestaurants.isEmpty()) {
-                Toast.makeText(getContext(), "No favourite restaurant found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No favourite restaurants found", Toast.LENGTH_SHORT).show();
+
             }
 
             List<FavouritesItem> favouritesItems = new ArrayList<>();
