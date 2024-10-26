@@ -135,6 +135,37 @@ public class RestaurantViewModel extends ViewModel {
         });
     }
 
+    // get restaurant by name
+    public void fetchRestaurantByName(String restaurantName) {
+        restaurantRepository.getRestaurantByName(restaurantName, new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error fetching restaurant", e);
+            }
+        });
+    }
+
+    // get menu item by name
+    public void fetchMenuItemByName(String restaurantId, String menuItemName) {
+        restaurantRepository.getMenuItemByName(restaurantId, menuItemName, new RestaurantRepository.RestaurantMenuCallback() {
+            @Override
+            public void onSuccess(List<MenuItem> menuItemList) {
+                menuItemsLiveData.setValue(menuItemList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error fetching menu item", e);
+            }
+        });
+    }
+
     // get restaurant menu by id
     public void fetchRestaurantMenu(String restaurantId) {
         restaurantRepository.getRestaurantMenu(restaurantId, new RestaurantRepository.RestaurantMenuCallback() {

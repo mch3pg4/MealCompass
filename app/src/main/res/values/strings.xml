@@ -89,7 +89,7 @@
     <string name="historyOfRestaurants">History of recommended restaurants</string>
     <string name="search_favourites_hint">Search for your favourite restaurant…</string>
     <string name="back">Back</string>
-    <string name="recommended_text">Recommended for you</string>
+    <string name="recommended_text">Menu items for you</string>
     <string name="item_name">Item Name</string>
     <string name="restaurants_string">Restaurants</string>
     <string name="menu_items">Menu Items</string>
@@ -269,5 +269,6 @@
     <string name="show_restaurant_menu">Show Restaurant Menu</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="editProfileDescription">Edit Your Profile Information Here.</string>
+    <string name="get_recommendations">Get new recommendations</string>
 
 </resources>

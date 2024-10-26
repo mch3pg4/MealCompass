@@ -83,17 +83,67 @@
         app:layout_constraintTop_toBottomOf="@id/homeTitleLayout"/>
 
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/homeRecyclerView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recommendRestaurantsLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/recommendationsTitle"
-        tools:listitem="@layout/recommend_restaurants_item" />
+        android:padding="5dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/recommendRestaurantsCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:id="@+id/recommendCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/recommendDetailsLayout"
+                    android:layout_width="250dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <TextView
+                        android:id="@+id/restaurantName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/restaurant_name"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="3dp"/>
+
+                    <TextView
+                        android:id="@+id/restaurantCuisine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cuisine"
+                        android:textSize="16sp"/>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/restaurantImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/restaurant_image"
+                    android:src="@drawable/restaurant_img"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/recommendedText"
@@ -105,7 +155,7 @@
         android:textSize="11sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recommendRestaurantsLayout" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -142,13 +192,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/refreshResultsButton"
+            android:id="@+id/getRecommendationsButton"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:padding="6dp"
-            android:text="@string/refresh_results"
+            android:text="@string/get_recommendations"
             app:icon="@drawable/baseline_refresh_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

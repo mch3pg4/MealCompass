@@ -15,8 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
@@ -24,29 +22,32 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.mealcompass.MenuItem.MenuItem;
 import com.example.mealcompass.R;
+import com.example.mealcompass.Restaurants.Restaurant;
+import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
     private UserViewModel userViewModel;
-
+    private RestaurantViewModel restaurantViewModel;
+    private float rating = 0.0f;
+    private RecyclerView recommendItemRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,8 @@ public class HomeFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         userRepository = new UserRepository(mAuth, db);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
     }
-
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -68,8 +67,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
-
     }
 
     @Override
@@ -84,7 +81,6 @@ public class HomeFragment extends Fragment {
 
         fetchRecommendations();
 
-
         // set up welcome text with user's name
         userRepository.getUserName(userId).addOnSuccessListener(name -> {
             if (name != null) {
@@ -95,8 +91,6 @@ public class HomeFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
-        RecyclerView recommendRestaurantsRecyclerView = view.findViewById(R.id.homeRecyclerView);
-        recommendRestaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         RecyclerView recommendHistoryRecyclerView = view.findViewById(R.id.historyOfRestaurantsRecyclerView);
         recommendHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -104,34 +98,20 @@ public class HomeFragment extends Fragment {
         //horizontal layout
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recommendItemRecyclerView = view.findViewById(R.id.recommendedItemsRecyclerView);
+        recommendItemRecyclerView = view.findViewById(R.id.recommendedItemsRecyclerView);
         recommendItemRecyclerView.setLayoutManager(horizontalLayoutManager);
 
 
-        List<RecommendRestaurantsItem> recommendRestaurantsItems = List.of(
-                new RecommendRestaurantsItem(R.drawable.restaurant_img, "The Fat Radish", "4.5")
-        );
 
-        List<RecommendItemItem> recommendItemItems = List.of(
-                new RecommendItemItem(R.drawable.restaurant_img, "Chicken Burger"),
-                new RecommendItemItem(R.drawable.restaurant_img, "Chicken Salad")
-        );
 
         List<RecommendHistoryItem> recommendHistoryItems = List.of(
                 new RecommendHistoryItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
                 new RecommendHistoryItem(R.drawable.restaurant_img, "Kopitiam", "4.0")
         );
 
-        RecommendRestaurantsAdapter recommendRestaurantsAdapter = new RecommendRestaurantsAdapter(recommendRestaurantsItems);
-        recommendRestaurantsRecyclerView.setAdapter(recommendRestaurantsAdapter);
-
         RecommendHistoryAdapter recommendHistoryAdapter = new RecommendHistoryAdapter(recommendHistoryItems);
         recommendHistoryRecyclerView.setAdapter(recommendHistoryAdapter);
 
-        RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
-        recommendItemRecyclerView.setAdapter(recommendItemAdapter);
-
-//        FrameLayout blurOverlay = view.findViewById(R.id.blurOverlay);
 
         binding.rateRecommendationButton.setOnClickListener(v -> {
             // Inflate the popup layout
@@ -145,14 +125,15 @@ public class HomeFragment extends Fragment {
             popupWindow.setFocusable(true);
             popupWindow.setElevation(150);
 
-
             // Show the popup window at the center
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
             // Handle rating bar logic
             RatingBar ratingBar = popupView.findViewById(R.id.ratingBar);
             popupView.findViewById(R.id.confirmRatingButton).setOnClickListener(v1 -> {
-                float rating = ratingBar.getRating();
+                rating = ratingBar.getRating();
+                // add rating and restaurantId to database
+
                 Toast.makeText(getContext(), "You have rated " + rating + "/5.0 stars", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();  // Close the popup
             });
@@ -161,18 +142,22 @@ public class HomeFragment extends Fragment {
 
             // Close the popup window on button click
             popupView.findViewById(R.id.closeRateRecommendation).setOnClickListener(v1 -> popupWindow.dismiss());
-
         });
 
-
-        binding.refreshResultsButton.setOnClickListener(
-                v -> Toast.makeText(getContext(), "Refreshing results pressed", Toast.LENGTH_SHORT).show());
+        binding.getRecommendationsButton.setOnClickListener( v-> {
+            // if recommendation is not yet rated, ask user to rate before recommending new restaurant
+            if (rating == 0.0f) {
+                Toast.makeText(getContext(), "Please rate the current recommendation ", Toast.LENGTH_SHORT).show();
+            } else {
+//                fetchRecommendations();
+                Toast.makeText(getContext(), "Getting new recommendations", Toast.LENGTH_SHORT).show();
+                rating = 0.0f;
+            }
+        });
 
         binding.searchButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_homeFragment_to_restaurantsFragment));
-
-
 
         binding.profileImageButton.setOnClickListener(
                 v -> NavHostFragment.findNavController(HomeFragment.this)
@@ -191,26 +176,91 @@ public class HomeFragment extends Fragment {
             String userId = user.getUid();
             UserId userIdObj = new UserId(userId);
 
-            RetrofitClient.getRetrofitClient().getRecommendations(userIdObj).enqueue(new Callback<List<RecommendRestaurantsItem>>() {
+            RetrofitClient.getRetrofitClient().getRecommendations(userIdObj).enqueue(new Callback<List<RestaurantRecommendationResponse>>() {
                 @Override
-                public void onResponse(Call<List<RecommendRestaurantsItem>> call, Response<List<RecommendRestaurantsItem>> response) {
+                public void onResponse(Call<List<RestaurantRecommendationResponse>> call, Response<List<RestaurantRecommendationResponse>> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        List<RecommendRestaurantsItem> recommendations = response.body();
-                        for (RecommendRestaurantsItem recommendation : recommendations) {
-                            Log.d("Recommendation", "Restaurant: " + recommendation.getRestaurantName());
-                        }
+                        List<RestaurantRecommendationResponse> recommendations = response.body();
+
+                        restaurantViewModel.fetchRestaurantByName(recommendations.get(0).getRestaurant());
+
+                        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurantList -> {
+                            if (restaurantList != null && !restaurantList.isEmpty()) {
+                                Restaurant restaurant = restaurantList.get(0);
+
+                                binding.restaurantName.setText(restaurant.getRestaurantName());
+                                binding.restaurantCuisine.setText("Cuisine: " + restaurant.getRestaurantCuisine());
+                                Glide.with(requireContext())
+                                        .load(restaurant.getRestaurantImageUrl())
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .into(binding.restaurantImage);
+                                binding.recommendRestaurantsCard.setOnClickListener(v -> {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("restaurantId", restaurant.getRestaurantId());
+                                    bundle.putString("restaurantName", restaurant.getRestaurantName());
+                                    bundle.putString("restaurantImage", restaurant.getRestaurantImageUrl());
+                                    bundle.putFloat("restaurantRating", restaurant.getRestaurantRating());
+                                    bundle.putString("restaurantCuisine", restaurant.getRestaurantCuisine());
+                                    bundle.putString("restaurantAddress", restaurant.getRestaurantAddress());
+                                    bundle.putString("restaurantContact", restaurant.getRestaurantContact());
+                                    bundle.putString("restaurantOpenOrClose", restaurant.getRestaurantBusinessHours());
+                                    NavHostFragment.findNavController(HomeFragment.this)
+                                            .navigate(R.id.action_homeFragment_to_restaurantDetailsFragment, bundle);
+                                });
+
+                                // get menu items
+                                // Iterate over top menu items
+                                List<RecommendItemItem> recommendItemItems = new ArrayList<>();
+                                List<MenuItemRecommendation> topMenuItems = recommendations.get(0).getTopMenuItems();
+
+                                recommendItemItems.clear();
+                                for (MenuItemRecommendation menuItem : topMenuItems) {
+                                    String itemName = menuItem.getItemName();
+                                    Log.d("Menu Item", itemName);
+                                    // Fetch menu items details
+                                    restaurantViewModel.fetchMenuItemByName(restaurant.getRestaurantId(), itemName);
+                                }
+                                restaurantViewModel.getMenuItemsLiveData().observe(getViewLifecycleOwner(), menuItems -> {
+                                    if (menuItems != null && !menuItems.isEmpty()) {
+
+                                        for (MenuItem item : menuItems) {
+                                            recommendItemItems.add(new RecommendItemItem(
+                                                    item.getMenuItemImage(),
+                                                    item.getMenuItemName(),
+                                                    item.getMenuItemPrice(),
+                                                    item.getMenuItemCategory(),
+                                                    item.getMenuItemDescription(),
+                                                    item.getMenuItemAllergens(),
+                                                    item.getMenuItemNutritionalValue()));
+                                        }
+
+                                        // Now that we have all items, set up the adapter
+                                        RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
+                                        recommendItemRecyclerView.setAdapter(recommendItemAdapter);
+                                    } else {
+                                        Log.d("Menu Items", "No menu items found or null.");
+                                    }
+                                });
+
+                                RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
+                                recommendItemRecyclerView.setAdapter(recommendItemAdapter);
+                                recommendItemAdapter.notifyDataSetChanged();
+                                Log.d("Recommendation", restaurant.getRestaurantName());
+                            } else {
+                                Toast.makeText(getContext(), "Failed to get recommendations", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     } else {
                         Toast.makeText(getContext(), "Failed to get recommendations", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<RecommendRestaurantsItem>> call, Throwable t) {
+                public void onFailure(Call<List<RestaurantRecommendationResponse>> call, Throwable t) {
                     Toast.makeText(getContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
-
-
 }

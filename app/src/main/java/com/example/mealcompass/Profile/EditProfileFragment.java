@@ -60,20 +60,20 @@ public class EditProfileFragment extends Fragment {
         }
 
         userViewModel.getUserById(userId);
-        binding.nameTextInputLayout.setPlaceholderText(userViewModel.getUserName().getValue());
+        binding.nameEditText.setText(userViewModel.getUserName().getValue());
 
         binding.editProfileButton.setOnClickListener(
-                // if user changed the name, update the name
-                v -> {
-                    String newName = binding.nameTextInputLayout.getEditText().getText().toString();
-                    if (!newName.equals(userViewModel.getUserName().getValue())) {
-                        userViewModel.updateUserName(userId, newName);
-                        NavHostFragment.findNavController(this).navigate(R.id.action_editProfileFragment_to_profileFragment);
-                    } else if (newName.equals("")) {
-                        binding.nameTextInputLayout.setError("Name cannot be empty");
-                    }
-
+            // if user changed the name, update the name
+            v -> {
+                String newName = binding.nameTextInputLayout.getEditText().getText().toString();
+                if (!newName.equals(userViewModel.getUserName().getValue())) {
+                    userViewModel.updateUserName(userId, newName);
+                    NavHostFragment.findNavController(this).navigate(R.id.action_editProfileFragment_to_profileFragment);
+                } else if (newName.equals("")) {
+                    binding.nameTextInputLayout.setError("Name cannot be empty");
                 }
+
+            }
 
         );
 

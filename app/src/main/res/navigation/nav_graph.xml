@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_homeFragment_to_menuItemFragment"
             app:destination="@id/menuItemFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -247,6 +250,9 @@
         <action
             android:id="@+id/action_adminFragment_to_restaurantsFragment"
             app:destination="@id/restaurantsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_restaurantDetailsFragment"
+            app:destination="@id/restaurantDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fillInRestDetailsFragment"

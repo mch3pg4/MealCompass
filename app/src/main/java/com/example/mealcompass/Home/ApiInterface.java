@@ -12,7 +12,7 @@ public interface ApiInterface {
     Call<UserId> sendUserId(@Body UserId userId);
 
     @POST("/recommend")
-    Call<List<RecommendRestaurantsItem>> getRecommendations(@Body UserId userId);
+    Call<List<RestaurantRecommendationResponse>> getRecommendations(@Body UserId userId);
 
 
 }

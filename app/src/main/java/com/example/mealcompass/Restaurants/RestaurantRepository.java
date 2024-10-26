@@ -131,6 +131,69 @@ public class RestaurantRepository {
         void onFailure(Exception e);
     }
 
+    // get restaurant by name
+    public void getRestaurantByName(String restaurantName, RestaurantListCallback callback) {
+        db.collection("restaurant")
+                .whereEqualTo("restaurantName", restaurantName)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurantList = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Restaurant restaurant = document.toObject(Restaurant.class);
+                            if (restaurant != null) {
+                                restaurantList.add(restaurant);
+                                restaurant.setRestaurantId(document.getId());
+                                restaurant.setRestaurantName(document.getString("restaurantName"));
+                                restaurant.setRestaurantImageUrl(document.getString("restaurantImageUrl"));
+                                restaurant.setRestaurantContact(document.getString("restaurantContact"));
+                                restaurant.setRestaurantBusinessHours(document.getString("restaurantBusinessHours"));
+                                restaurant.setRestaurantCuisine(document.getString("restaurantCuisine"));
+                                restaurant.setRestaurantPricing(Objects.requireNonNull(document.getDouble("restaurantPricing")).intValue());
+                                restaurant.setRestaurantRating(Objects.requireNonNull(document.getDouble("restaurantRating")).floatValue());
+                                restaurant.setRestaurantAddress(document.getString("restaurantAddress"));
+                                restaurant.setRestaurantStatus(document.getString("restaurantStatus"));
+                            }
+                        }
+                        callback.onSuccess(restaurantList);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
+
+    // get menu item from name and restaurantId
+    public void getMenuItemByName(String restaurantId, String menuItemName, RestaurantMenuCallback callback) {
+        db.collection("restaurant")
+                .document(restaurantId)
+                .collection("menuItems")
+                .whereEqualTo("itemName", menuItemName)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<MenuItem> menuItems = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            MenuItem menuItem = document.toObject(MenuItem.class);
+                            if (menuItem != null) {
+                                menuItems.add(menuItem);
+                                menuItem.setMenuItemId(document.getId());
+                                menuItem.setMenuItemCategory(document.getString("itemCategory"));
+                                menuItem.setMenuItemDescription(document.getString("itemDescription"));
+                                menuItem.setMenuItemImage(document.getString("itemImageUrl"));
+                                menuItem.setMenuItemName(document.getString("itemName"));
+                                menuItem.setMenuItemPrice(Objects.requireNonNull(document.getDouble("itemPrice")).intValue());
+                                menuItem.setMenuItemNutritionalValue(Objects.requireNonNull(document.getDouble("itemNutritionalValue")).intValue());
+                                menuItem.setMenuItemAllergens((List<String>) document.get("itemAllergens"));
+                            }
+                        }
+                        callback.onSuccess(menuItems);
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
+    }
+
+
     // get restaurant menu from restaurant id
     public void getRestaurantMenu(String restaurantId, RestaurantMenuCallback callback) {
         db.collection("restaurant")

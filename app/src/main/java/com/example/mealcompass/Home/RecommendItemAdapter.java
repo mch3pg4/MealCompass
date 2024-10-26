@@ -1,5 +1,6 @@
 package com.example.mealcompass.Home;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,10 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mealcompass.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendItemAdapter extends RecyclerView.Adapter<RecommendItemAdapter.RecommendItemViewHolder> {
@@ -43,8 +48,26 @@ public class RecommendItemAdapter extends RecyclerView.Adapter<RecommendItemAdap
     @Override
     public void onBindViewHolder(@NonNull RecommendItemViewHolder holder, int position) {
         RecommendItemItem currentItem = mRecommendItemItems.get(position);
-        holder.itemImage.setImageResource(currentItem.getItemImage());
+        Glide.with(holder.itemImage.getContext())
+                .load(currentItem.getItemImage())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
+                .into(holder.itemImage);
         holder.itemName.setText(currentItem.getItemName());
+        holder.itemView.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("menuItemName", currentItem.getItemName());
+            bundle.putString("menuItemImage", currentItem.getItemImage());
+            bundle.putInt("menuItemPrice", currentItem.getItemPrice());
+            bundle.putString("menuItemCategory", currentItem.getItemCategory());
+            bundle.putString("menuItemDescription", currentItem.getItemDescription());
+            bundle.putStringArrayList("menuItemAllergens", (ArrayList<String>) currentItem.getItemAllergens());
+            bundle.putInt("menuItemNutritionalValue", currentItem.getItemNutritionalValue());
+
+            // Navigate to the MenuItemFragment
+            Navigation.findNavController(v).navigate(R.id.action_homeFragment_to_menuItemFragment, bundle);
+
+        });
     }
 
     @Override

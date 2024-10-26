@@ -1,16 +1,27 @@
 package com.example.mealcompass.Home;
 
 public class RecommendRestaurantsItem {
-    private final int restaurantImage;
-    private final String restaurantName, restaurantRating;
+    private final String restaurantId;
+    private final String restaurantImage;
+    private final String restaurantName, restaurantAddress, restaurantCuisine, restaurantContact, restaurantBusinessHours;
+    private final float restaurantRating;
 
-    public RecommendRestaurantsItem(int restaurantImage, String restaurantName, String restaurantRating) {
+    public RecommendRestaurantsItem(String restaurantId, String restaurantImage, String restaurantName, String restaurantAddress, String restaurantCuisine, String restaurantContact, String restaurantBusinessHours, float restaurantRating) {
+        this.restaurantId = restaurantId;
         this.restaurantImage = restaurantImage;
         this.restaurantName = restaurantName;
+        this.restaurantAddress = restaurantAddress;
+        this.restaurantCuisine = restaurantCuisine;
+        this.restaurantContact = restaurantContact;
+        this.restaurantBusinessHours = restaurantBusinessHours;
         this.restaurantRating = restaurantRating;
     }
 
-    public int getRestaurantImage() {
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public String getRestaurantImage() {
         return restaurantImage;
     }
 
@@ -18,7 +29,23 @@ public class RecommendRestaurantsItem {
         return restaurantName;
     }
 
-    public String getRestaurantRating() {
+    public float getRestaurantRating() {
         return restaurantRating;
+    }
+
+    public String getRestaurantAddress() {
+        return restaurantAddress;
+    }
+
+    public String getRestaurantCuisine() {
+        return restaurantCuisine;
+    }
+
+    public String getRestaurantContact() {
+        return restaurantContact;
+    }
+
+    public String getRestaurantBusinessHours() {
+        return restaurantBusinessHours;
     }
 }
