@@ -271,6 +271,9 @@
         <action
             android:id="@+id/action_fillInRestDetailsFragment_to_fillInRestAddressFragment"
             app:destination="@id/fillInRestAddressFragment" />
+        <action
+            android:id="@+id/action_fillInRestDetailsFragment_to_registerRestaurantFragment3"
+            app:destination="@id/registerRestaurantFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpdeskFragment"
@@ -294,6 +297,9 @@
         <action
             android:id="@+id/action_selectRoleFragment2_to_addProfilePicFragment"
             app:destination="@id/addProfilePicFragment" />
+        <action
+            android:id="@+id/action_selectRoleFragment2_to_registerRestaurantFragment"
+            app:destination="@id/registerRestaurantFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectCuisineFragment2"
@@ -487,5 +493,35 @@
         <action
             android:id="@+id/action_editMenuItemFragment_to_fullMenuFragment"
             app:destination="@id/fullMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerRestaurantFragment"
+        android:name="com.example.mealcompass.Register.RegisterRestaurantFragment"
+        android:label="fragment_register_restaurant"
+        tools:layout="@layout/fragment_register_restaurant" >
+        <action
+            android:id="@+id/action_registerRestaurantFragment_to_restaurantOwnerFragment2"
+            app:destination="@id/restaurantOwnerFragment2" />
+        <action
+            android:id="@+id/action_registerRestaurantFragment_to_fillInRestDetailsFragment"
+            app:destination="@id/fillInRestDetailsFragment" />
+        <action
+            android:id="@+id/action_registerRestaurantFragment_to_claimRestaurantFragment"
+            app:destination="@id/claimRestaurantFragment" />
+        <action
+            android:id="@+id/action_registerRestaurantFragment_to_selectRoleFragment2"
+            app:destination="@id/selectRoleFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/claimRestaurantFragment"
+        android:name="com.example.mealcompass.Register.ClaimRestaurantFragment"
+        android:label="fragment_claim_restaurant"
+        tools:layout="@layout/fragment_claim_restaurant" >
+        <action
+            android:id="@+id/action_claimRestaurantFragment_to_registerRestaurantFragment"
+            app:destination="@id/registerRestaurantFragment" />
+        <action
+            android:id="@+id/action_claimRestaurantFragment_to_restaurantOwnerFragment2"
+            app:destination="@id/restaurantOwnerFragment2" />
     </fragment>
 </navigation>

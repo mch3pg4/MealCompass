@@ -87,7 +87,7 @@ public class SelectRoleFragment extends Fragment {
                 updateUserType("owner");
                 // Navigate to the next fragment
                 NavHostFragment.findNavController(SelectRoleFragment.this)
-                        .navigate(R.id.action_selectRoleFragment2_to_fillInRestDetailsFragment);
+                        .navigate(R.id.action_selectRoleFragment2_to_registerRestaurantFragment);
             }
 
             userRepository.getUserType(userId).addOnSuccessListener(userType -> {

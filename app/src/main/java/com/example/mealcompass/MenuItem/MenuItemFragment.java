@@ -61,9 +61,11 @@ public class MenuItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        String userId = null;
+        String userId;
         if (user != null) {
             userId = user.getUid();
+        } else {
+            userId = null;
         }
 
         // if usertype is not owner, dont show the edit fab
@@ -74,6 +76,15 @@ public class MenuItemFragment extends Fragment {
                     if (userType != null && userType.equals("owner")) {
                         binding.editFab.setVisibility(View.VISIBLE);
                         binding.deleteFab.setVisibility(View.VISIBLE);
+                        // get restaurant id from user id
+                        restaurantViewModel.fetchRestaurantByOwnerId(userId);
+                        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurant -> {
+                            if (restaurant != null) {
+                                restaurantId = restaurant.get(0).getRestaurantId();
+                            } else {
+                                Toast.makeText(requireContext(), "Failed to get restaurant ID", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         binding.editFab.setVisibility(View.GONE);
                         binding.deleteFab.setVisibility(View.GONE);
@@ -81,18 +92,6 @@ public class MenuItemFragment extends Fragment {
                 }
             });
         }
-
-        // get restaurant id from user id
-        restaurantViewModel.fetchRestaurantByOwnerId(userId);
-        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurant -> {
-            if (restaurant != null) {
-                restaurantId = restaurant.get(0).getRestaurantId();
-            } else {
-                Toast.makeText(requireContext(), "Failed to get restaurant ID", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {

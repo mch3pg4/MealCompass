@@ -180,6 +180,8 @@ public class RegisterFragment extends Fragment {
                 userViewModel.setUserPassword(password);
                 userViewModel.setUserName(name);
                 createAccount();
+                // disable button to prevent multiple clicks
+                binding.registerButton.setEnabled(false);
             } else {
                 Toast.makeText(getContext(), "Please correct the errors above", Toast.LENGTH_SHORT).show();
             }

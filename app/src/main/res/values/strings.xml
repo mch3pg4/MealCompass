@@ -276,5 +276,13 @@
     <string name="edit_item_image">Edit Item Image</string>
     <string name="add">Add</string>
     <string name="delete_menu_item">Delete Menu Item</string>
+    <string name="register_restaurant">Register Your Restaurant</string>
+    <string name="register_restaurant_description">There are two ways to register your restaurant.</string>
+    <string name="claim_rest_description">- Claim an existing restaurant.</string>
+    <string name="add_new_rest_desc">- Add a new restaurant.</string>
+    <string name="add_new_restaurant">Add restaurant</string>
+    <string name="claim_restaurant">Claim restaurant</string>
+    <string name="claim_a_restaurant">Claim a Restaurant</string>
+    <string name="claim_restaurant_description">Select a restaurant to claim it as your business.</string>
 
 </resources>

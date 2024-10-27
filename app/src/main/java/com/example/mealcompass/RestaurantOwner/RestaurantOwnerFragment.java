@@ -78,6 +78,8 @@ public class RestaurantOwnerFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
+        binding.profileImageButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_restaurantOwnerFragment2_to_profileFragment));
+
         // set up restaurant details
         restaurantViewModel.fetchRestaurantByOwnerId(userId);
 
