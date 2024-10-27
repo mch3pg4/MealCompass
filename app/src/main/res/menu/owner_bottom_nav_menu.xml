@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/home"
         android:icon="@drawable/baseline_home_24"
-        android:id="@+id/restaurantOwnerFragment"/>
+        android:id="@+id/restaurantOwnerFragment2"/>
     <item android:title="@string/menu"
         android:icon="@drawable/baseline_menu_book_24"
-        android:id="@+id/menuItemFragment"
+        android:id="@+id/fullMenuFragment"
         />
     <item android:title="@string/ratings"
         android:icon="@drawable/baseline_reviews_24"

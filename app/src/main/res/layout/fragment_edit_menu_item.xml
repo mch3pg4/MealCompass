@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MenuItem.EditMenuItemFragment">
+
+
+    <TextView
+        android:id="@+id/editMenuItemsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/edit_menu_item"
+        android:textSize="32sp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/editMenuItemsDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fill_in_rest_details_description"
+        app:layout_constraintTop_toBottomOf="@id/editMenuItemsTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="15sp"
+        android:padding="3dp"/>
+
+    <ScrollView
+        android:id="@+id/editMenuItemsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/editMenuItemsDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/doneButton"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/categorySelectMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/categoryAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:hint="@string/itemCategory"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/itemNameTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/item_name"
+                android:layout_marginTop="20dp"
+                android:layout_margin="5dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/itemNameEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_restaurant_menu_24"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/itemDescTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/item_desc"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/itemDescEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_description_24"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/itemNutrTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/item_nutritional_value"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:suffixText="kcal"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/itemNutrEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_fastfood_24"
+                    android:drawablePadding="10dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/itemPriceTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/itemPrice"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:prefixText="RM"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/itemPriceEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_attach_money_24"
+                    android:drawablePadding="10dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/allergySelectMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                android:hint="@string/allergy_ingredients"
+                app:helperText="Add a comma to separate allergy ingredients"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/allergyEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/baseline_allergy_24"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addItemImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_item_image"
+                android:layout_marginTop="15dp"
+                app:icon="@drawable/baseline_add_24"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                app:cornerRadius="5dp"
+                />
+
+            <TextView
+                android:id="@+id/itemImagePreviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_image_preview"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+
+            <ImageView
+                android:id="@+id/itemImagePreview"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/item_image_preview"
+                android:layout_height="240dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/placeholder"
+                android:scaleType="centerCrop"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/doneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editMenuItemsScrollView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/done"
+        android:padding="6dp"
+        android:layout_marginBottom="10dp"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

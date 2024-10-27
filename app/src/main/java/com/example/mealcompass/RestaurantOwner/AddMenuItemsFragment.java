@@ -111,12 +111,12 @@ public class AddMenuItemsFragment extends Fragment {
                 clearFields();
                 // Navigate to the next fragment
                 NavHostFragment.findNavController(AddMenuItemsFragment.this)
-                        .navigate(R.id.action_addMenuItemsFragment_to_restaurantOwnerFragment);
+                        .navigate(R.id.action_addMenuItemsFragment_to_restaurantOwnerFragment2);
             } //all fields are empty then proceed to next fragment
             else if ((itemName.isEmpty() && itemPrice.isEmpty() && itemCategory.isEmpty() && itemDescription.isEmpty() && itemNutritionValue.isEmpty() && itemAllergens.isEmpty())) {
                 Toast.makeText(getContext(), "All fields are empty, proceeding to next page", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(AddMenuItemsFragment.this)
-                        .navigate(R.id.action_addMenuItemsFragment_to_restaurantOwnerFragment);
+                        .navigate(R.id.action_addMenuItemsFragment_to_restaurantOwnerFragment2);
             }
         });
 

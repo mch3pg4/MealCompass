@@ -47,8 +47,6 @@
             tools:src="@drawable/restaurant_img"
             android:padding="3dp"/>
 
-
-
         <TextView
             android:id="@+id/restaurantAddress"
             android:layout_width="match_parent"
@@ -103,6 +101,18 @@
                     />
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/restaurantPricing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/restaurant_pricing"
+                android:textSize="16sp"
+                android:layout_marginStart="3dp"
+                android:drawablePadding="5dp"
+                app:drawableStartCompat="@drawable/baseline_attach_money_24"/>
+
+
 
         <TextView
             android:id="@+id/restaurantContact"

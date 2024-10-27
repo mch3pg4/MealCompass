@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
                             break;
                         case "owner":
                             NavHostFragment.findNavController(LoginFragment.this)
-                                    .navigate(R.id.action_loginFragment_to_restaurantOwnerFragment);
+                                    .navigate(R.id.action_loginFragment_to_restaurantOwnerFragment2);
                             break;
                         case "admin":
                             NavHostFragment.findNavController(LoginFragment.this)
@@ -173,7 +173,7 @@ public class LoginFragment extends Fragment {
                                             break;
                                         case "owner":
                                             NavHostFragment.findNavController(LoginFragment.this)
-                                                    .navigate(R.id.action_loginFragment_to_restaurantOwnerFragment);
+                                                    .navigate(R.id.action_loginFragment_to_restaurantOwnerFragment2);
                                             break;
                                         case "admin":
                                             NavHostFragment.findNavController(LoginFragment.this)

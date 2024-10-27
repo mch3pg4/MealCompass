@@ -270,5 +270,11 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="editProfileDescription">Edit Your Profile Information Here.</string>
     <string name="get_recommendations">Get new recommendations</string>
+    <string name="edit_menu_item">Edit Menu Item</string>
+    <string name="restaurant_pricing">Restaurant Pricing</string>
+    <string name="business_hours_not_available">Business Hours: Not Available</string>
+    <string name="edit_item_image">Edit Item Image</string>
+    <string name="add">Add</string>
+    <string name="delete_menu_item">Delete Menu Item</string>
 
 </resources>

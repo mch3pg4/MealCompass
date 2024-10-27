@@ -100,10 +100,7 @@ public class HomeFragment extends Fragment {
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recommendItemRecyclerView = view.findViewById(R.id.recommendedItemsRecyclerView);
         recommendItemRecyclerView.setLayoutManager(horizontalLayoutManager);
-
-
-
-
+        
         List<RecommendHistoryItem> recommendHistoryItems = List.of(
                 new RecommendHistoryItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
                 new RecommendHistoryItem(R.drawable.restaurant_img, "Kopitiam", "4.0")

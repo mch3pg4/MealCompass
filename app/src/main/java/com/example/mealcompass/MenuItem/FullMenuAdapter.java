@@ -56,7 +56,7 @@ public class FullMenuAdapter extends RecyclerView.Adapter<FullMenuAdapter.ViewHo
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             MenuItem menuItem = mMenuItems.get(position);
             holder.menuItemName.setText(menuItem.getMenuItemName());
-            holder.menuItemPrice.setText(String.format("RM: %s", menuItem.getMenuItemPrice()));
+            holder.menuItemPrice.setText(String.format("RM %s", menuItem.getMenuItemPrice()));
             holder.menuItemCategory.setText(String.format("Category: %s", menuItem.getMenuItemCategory()));
             Glide.with(holder.menuItemImage.getContext())
                     .load(menuItem.getMenuItemImage() != null && !menuItem.getMenuItemImage().isEmpty() ? menuItem.getMenuItemImage() : R.drawable.placeholder)
@@ -76,6 +76,8 @@ public class FullMenuAdapter extends RecyclerView.Adapter<FullMenuAdapter.ViewHo
 
                 Navigation.findNavController(holder.itemView).navigate(R.id.action_fullMenuFragment_to_menuItemFragment, bundle);
             });
+
+
         }
 
 

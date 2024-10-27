@@ -135,13 +135,27 @@ public class RestaurantViewModel extends ViewModel {
         });
     }
 
+    // get restaurant by owner id
+    public void fetchRestaurantByOwnerId(String ownerId) {
+        restaurantRepository.getRestaurantByOwnerId(ownerId, new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error fetching restaurant", e);
+            }
+        });
+    }
+
     // get restaurant by name
     public void fetchRestaurantByName(String restaurantName) {
         restaurantRepository.getRestaurantByName(restaurantName, new RestaurantRepository.RestaurantListCallback() {
             @Override
             public void onSuccess(List<Restaurant> restaurantList) {
                 restaurantListLiveData.setValue(restaurantList);
-
             }
 
             @Override
@@ -180,6 +194,10 @@ public class RestaurantViewModel extends ViewModel {
             }
         });
     }
+
+
+
+
 
     public void searchRestaurants(String query) {
         restaurantRepository.searchRestaurants(query, new RestaurantRepository.RestaurantListCallback() {

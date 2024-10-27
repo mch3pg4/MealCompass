@@ -46,8 +46,6 @@
         android:textSize="24sp"
         />
 
-
-
     <TextView
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
@@ -95,136 +93,123 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
-            android:id="@+id/fillInRestDetailsLayout"
+            android:id="@+id/restaurantDetailsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/restNameTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <ImageView
+                android:id="@+id/restaurantImage"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:contentDescription="@string/restaurant_image"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                tools:src="@drawable/restaurant_img"
+                android:padding="3dp"/>
+
+            <TextView
+                android:id="@+id/restaurantAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/restaurant_name"
-                android:layout_marginTop="20dp"
-                android:layout_margin="5dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/restNameEditText"
-                    android:layout_width="match_parent"
-                    android:drawableStart="@drawable/baseline_badge_24"
-                    android:drawablePadding="10dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/restAddressTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/restaurant_address"
-                android:layout_marginTop="10dp"
-                android:layout_margin="5dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/restAddressEditText"
-                    android:layout_width="match_parent"
-                    android:drawableStart="@drawable/baseline_location_pin_24"
-                    android:drawablePadding="10dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/restaurant_address"
+                android:textSize="20sp"
+                android:layout_marginStart="3dp"
+                android:drawablePadding="5dp"
+                app:drawableStartCompat="@drawable/baseline_location_pin_24" />
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/restaurantMapView"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_margin="10dp"
+                android:layout_height="180dp"
+                android:id="@+id/restaurantMapView"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="@string/map"
                 />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/restContactTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/restaurant_contact"
-                android:layout_marginTop="10dp"
-                android:layout_margin="5dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/restContactEditText"
-                    android:layout_width="match_parent"
-                    android:drawableStart="@drawable/baseline_call_24"
-                    android:drawablePadding="10dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cuisineSelectMenu"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_margin="5dp"
-                >
-
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:layout_marginBottom="12dp"
-                    android:hint="@string/cuisine"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <RelativeLayout
+                android:id="@+id/restaurantRatingLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
-                    android:id="@+id/restaurantHoursTitle"
+                    android:id="@+id/restaurantRatingTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/restaurant_hours"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restaurant_rating"
                     android:textSize="16sp"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="3dp"
+                    android:drawablePadding="5dp"
+                    app:drawableStartCompat="@drawable/baseline_stars_24"/>
+
+
+
+                <RatingBar
+                    android:id="@+id/restaurantRating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/restaurantRatingTitle"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:stepSize="0.1"
 
                     />
 
-                <CheckBox
-                    android:id="@+id/splitHoursCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/split_hours"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
-                    tools:ignore="RelativeOverlap" />
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/businessHoursRecyclerView"
+            <TextView
+                android:id="@+id/restaurantPricing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                tools:listitem="@layout/business_hours_card" />
+                android:text="@string/restaurant_pricing"
+                android:textSize="16sp"
+                android:layout_marginStart="3dp"
+                android:drawablePadding="5dp"
+                app:drawableStartCompat="@drawable/baseline_attach_money_24"/>
+
+            <TextView
+                android:id="@+id/restaurantContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/restaurant_contact"
+                android:textSize="16sp"
+                android:layout_marginStart="3dp"
+                android:drawablePadding="5dp"
+                app:drawableStartCompat="@drawable/baseline_call_24"/>
+
+            <TextView
+                android:id="@+id/restaurantCuisine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cuisine"
+                android:textSize="16sp"
+                android:layout_marginStart="3dp"
+                android:drawablePadding="5dp"
+                app:drawableStartCompat="@drawable/baseline_restaurant_menu_24"/>
+
+            <TextView
+                android:id="@+id/restaurantBusinessHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/restaurant_hours"
+                android:textSize="16sp"
+                android:layout_marginStart="3dp"
+                android:drawablePadding="5dp"
+                app:drawableStartCompat="@drawable/baseline_access_time_24"/>
 
         </LinearLayout>
+
+
+
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

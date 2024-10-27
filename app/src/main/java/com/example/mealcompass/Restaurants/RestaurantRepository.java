@@ -35,15 +35,15 @@ public class RestaurantRepository {
     //add restaurant
     public Task<DocumentReference> addRestaurant(String name, String businessHours, String cuisine, String contact) {
         Map<String, Object> restaurant = new HashMap<>();
-        restaurant.put("name", name);
-        restaurant.put("address", "");
-        restaurant.put("imageUrl", "");
-        restaurant.put("rating", 0);
-        restaurant.put("price", 0);
-        restaurant.put("status", "Pending");
-        restaurant.put("businessHours", businessHours);
-        restaurant.put("cuisine", cuisine);
-        restaurant.put("contact", contact);
+        restaurant.put("restaurantName", name);
+        restaurant.put("restaurantAddress", "");
+        restaurant.put("restaurantImageUrl", "");
+        restaurant.put("restaurantRating", 0);
+        restaurant.put("restaurantPricing", 0);
+        restaurant.put("restaurantStatus", "Pending");
+        restaurant.put("restaurantBusinessHours", businessHours);
+        restaurant.put("restaurantCuisine", cuisine);
+        restaurant.put("restaurantContact", contact);
 
         return db.collection("restaurant")
                 .add(restaurant)
@@ -73,33 +73,68 @@ public class RestaurantRepository {
     // add menu item
     public Task<DocumentReference> addMenuItem(String restaurantId, String name, String description, String imageUrl, float price, int nutritionalValue, String category, List<String> allergen) {
         Map<String, Object> menuItem = new HashMap<>();
-        menuItem.put("name", name);
-        menuItem.put("description", description);
-        menuItem.put("imageUrl", imageUrl);
-        menuItem.put("price", price);
-        menuItem.put("nutritionalValue", nutritionalValue);
-        menuItem.put("category", category);
-        menuItem.put("allergens", allergen);
+        menuItem.put("itemName", name);
+        menuItem.put("itemDescription", description);
+        menuItem.put("itemImageUrl", imageUrl);
+        menuItem.put("itemPrice", price);
+        menuItem.put("itemNutritionalValue", nutritionalValue);
+        menuItem.put("itemCategory", category);
+        menuItem.put("itemAllergens", allergen);
 
 
         return db.collection("restaurant")
                 .document(restaurantId)
-                .collection("menuItem")
+                .collection("menuItems")
                 .add(menuItem);
+    }
+
+    // update menu item
+    public Task<Void> updateMenuItem(String restaurantId, String menuItemId, String name, String description, String imageUrl, float price, int nutritionalValue, String category, List<String> allergen) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("itemName", name);
+        updates.put("itemDescription", description);
+        updates.put("itemImageUrl", imageUrl);
+        updates.put("itemPrice", price);
+        updates.put("itemNutritionalValue", nutritionalValue);
+        updates.put("itemCategory", category);
+        updates.put("itemAllergens", allergen);
+
+        return db.collection("restaurant")
+                .document(restaurantId)
+                .collection("menuItems")
+                .document(menuItemId)
+                .update(updates)
+                .addOnSuccessListener(aVoid ->
+                        Log.d("RestaurantRepository", "Document updated successfully"))
+                .addOnFailureListener(e ->
+                        Log.d("RestaurantRepository", "Error updating document", e));
+    }
+
+    // delete menu item
+    public Task<Void> deleteMenuItem(String restaurantId, String menuItemId) {
+        return db.collection("restaurant")
+                .document(restaurantId)
+                .collection("menuItems")
+                .document(menuItemId)
+                .delete()
+                .addOnSuccessListener(aVoid ->
+                        Log.d("RestaurantRepository", "Document deleted successfully"))
+                .addOnFailureListener(e ->
+                        Log.d("RestaurantRepository", "Error deleting document", e));
     }
 
     // update restaurant
     public void updateRestaurant(String documentId, String name, String address, String imageUrl, float rating, int price, String status, String businessHours, String cuisine, String contact) {
         Map<String, Object> updates = new HashMap<>();
-        updates.put("name", name);
-        updates.put("address", address);
-        updates.put("imageUrl", imageUrl);
-        updates.put("rating", rating);
-        updates.put("price", price);
-        updates.put("status", status);
-        updates.put("businessHours", businessHours);
-        updates.put("cuisine", cuisine);
-        updates.put("contact", contact);
+        updates.put("restaurantName", name);
+        updates.put("restaurantAddress", address);
+        updates.put("restaurantImageUrl", imageUrl);
+        updates.put("restaurantRating", rating);
+        updates.put("restaurantPrice", price);
+        updates.put("restaurantStatus", status);
+        updates.put("restaurantBusinessHours", businessHours);
+        updates.put("restaurantCuisine", cuisine);
+        updates.put("restaurantContact", contact);
 
         db.collection("restaurant").document(documentId)
                 .update(updates)
@@ -119,6 +154,8 @@ public class RestaurantRepository {
                         Log.d("RestaurantRepository", "Error deleting document", e));
     }
 
+
+
     // restaurant list callback
     public interface RestaurantListCallback {
         void onSuccess(List<Restaurant> restaurantList);
@@ -130,6 +167,59 @@ public class RestaurantRepository {
         void onSuccess(List<MenuItem> menuItems);
         void onFailure(Exception e);
     }
+
+    // get restaurant by owner id
+public void getRestaurantByOwnerId(String ownerId, RestaurantListCallback callback) {
+    db.collection("users")
+            .document(ownerId)
+            .get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        List<String> restaurantIds = (List<String>) document.get("ownerRestaurants");
+                        if (restaurantIds != null && !restaurantIds.isEmpty()) {
+                            List<Restaurant> restaurantList = new ArrayList<>();
+                            for (String restaurantId : restaurantIds) {
+                                db.collection("restaurant")
+                                        .document(restaurantId)
+                                        .get()
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                DocumentSnapshot document1 = task1.getResult();
+                                                Restaurant restaurant = document1.toObject(Restaurant.class);
+                                                if (restaurant != null) {
+                                                    restaurant.setRestaurantId(document1.getId());
+                                                    restaurant.setRestaurantName(document1.getString("restaurantName"));
+                                                    restaurant.setRestaurantImageUrl(document1.getString("restaurantImageUrl"));
+                                                    restaurant.setRestaurantContact(document1.getString("restaurantContact"));
+                                                    restaurant.setRestaurantBusinessHours(document1.getString("restaurantBusinessHours"));
+                                                    restaurant.setRestaurantCuisine(document1.getString("restaurantCuisine"));
+                                                    restaurant.setRestaurantPricing(Objects.requireNonNull(document1.getDouble("restaurantPricing")).intValue());
+                                                    restaurant.setRestaurantRating(Objects.requireNonNull(document1.getDouble("restaurantRating")).floatValue());
+                                                    restaurant.setRestaurantAddress(document1.getString("restaurantAddress"));
+                                                    restaurant.setRestaurantStatus(document1.getString("restaurantStatus"));
+                                                    restaurantList.add(restaurant);
+                                                }
+                                            } else {
+                                                callback.onFailure(task1.getException());
+                                            }
+                                            if (restaurantList.size() == restaurantIds.size()) {
+                                                callback.onSuccess(restaurantList);
+                                            }
+                                        });
+                            }
+                        } else {
+                            callback.onSuccess(new ArrayList<>());
+                        }
+                    } else {
+                        callback.onFailure(new Exception("User document does not exist"));
+                    }
+                } else {
+                    callback.onFailure(task.getException());
+                }
+            });
+}
 
     // get restaurant by name
     public void getRestaurantByName(String restaurantName, RestaurantListCallback callback) {

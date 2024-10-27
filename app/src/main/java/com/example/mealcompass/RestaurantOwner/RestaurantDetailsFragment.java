@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -55,7 +56,7 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentRestaurantDetailsBinding.inflate(inflater, container, false);
@@ -63,7 +64,7 @@ public class RestaurantDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -80,6 +81,7 @@ public class RestaurantDetailsFragment extends Fragment {
             String restaurantAddress = bundle.getString("restaurantAddress");
             String restaurantCuisine = bundle.getString("restaurantCuisine");
             float restaurantRating = bundle.getFloat("restaurantRating");
+            int restaurantPricing = bundle.getInt("restaurantPricing");
             String restaurantImage = bundle.getString("restaurantImage");
             String restaurantContact = bundle.getString("restaurantContact");
             String restaurantBusinessHours = bundle.getString("restaurantOpenOrClose");
@@ -90,6 +92,7 @@ public class RestaurantDetailsFragment extends Fragment {
             binding.restaurantCuisine.setText(String.format("Cuisine: %s", restaurantCuisine));
             binding.restaurantRating.setRating(restaurantRating);
             binding.restaurantContact.setText(String.format("Contact: %s", restaurantContact));
+            binding.restaurantPricing.setText(String.format("Pricing: %s", restaurantPricingCount(restaurantPricing)));
             // Convert the business hours Map to a formatted string
             try {
                 // Replace single quotes with double quotes to make it a valid JSON string
@@ -108,15 +111,12 @@ public class RestaurantDetailsFragment extends Fragment {
                 }
 
                 // Set the formatted string to the TextView
-                binding.restaurantBusinessHours.setText(String.format("Business Hours:\n%s", formattedHours.toString()));
+                binding.restaurantBusinessHours.setText(String.format("Business Hours:\n%s", formattedHours));
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                binding.restaurantBusinessHours.setText("Business Hours: Not Available");
+                binding.restaurantBusinessHours.setText(R.string.business_hours_not_available);
             }
-
-
-
 
             // load image with glide
             Glide.with(requireContext())
@@ -166,6 +166,20 @@ public class RestaurantDetailsFragment extends Fragment {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public String restaurantPricingCount(float price) {
+        if (price == 1) {
+            return "$";
+        } else if (price == 2) {
+            return "$$";
+        } else if (price == 3) {
+            return "$$$";
+        } else if (price == 4) {
+            return "$$$$";
+        } else {
+            return "N/A";
         }
     }
 }

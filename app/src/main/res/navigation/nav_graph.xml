@@ -127,11 +127,11 @@
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_restaurantOwnerFragment"
-            app:destination="@id/restaurantOwnerFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_restaurantOwnerFragment2"
+            app:destination="@id/restaurantOwnerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
@@ -229,6 +229,12 @@
         <action
             android:id="@+id/action_addRestImageFragment_to_addMenuItemsFragment"
             app:destination="@id/addMenuItemsFragment" />
+        <action
+            android:id="@+id/action_addRestImageFragment_to_restaurantOwnerFragment2"
+            app:destination="@id/restaurantOwnerFragment2" />
+        <action
+            android:id="@+id/action_addRestImageFragment_self"
+            app:destination="@id/addRestImageFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminFragment"
@@ -272,18 +278,6 @@
         android:label="fragment_helpdesk"
         tools:layout="@layout/fragment_helpdesk" />
     <fragment
-        android:id="@+id/restaurantOwnerFragment"
-        android:name="com.example.mealcompass.RestaurantOwner.RestaurantOwnerFragment"
-        android:label="fragment_restaurant_owner"
-        tools:layout="@layout/fragment_restaurant_owner" >
-        <action
-            android:id="@+id/action_restaurantOwnerFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
-            android:id="@+id/action_restaurantOwnerFragment_to_ratingsFragment2"
-            app:destination="@id/ratingsFragment2" />
-    </fragment>
-    <fragment
         android:id="@+id/selectRoleFragment2"
         android:name="com.example.mealcompass.Register.SelectRoleFragment"
         android:label="fragment_select_role"
@@ -325,8 +319,11 @@
             android:id="@+id/action_menuItemFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_menuItemFragment_to_restaurantOwnerFragment"
-            app:destination="@id/restaurantOwnerFragment" />
+            android:id="@+id/action_menuItemFragment_to_editMenuItemFragment"
+            app:destination="@id/editMenuItemFragment" />
+        <action
+            android:id="@+id/action_menuItemFragment_to_fullMenuFragment"
+            app:destination="@id/fullMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -353,11 +350,7 @@
         android:id="@+id/ratingsFragment2"
         android:name="com.example.mealcompass.RestaurantOwner.RatingsFragment"
         android:label="fragment_ratings"
-        tools:layout="@layout/fragment_ratings" >
-        <action
-            android:id="@+id/action_ratingsFragment2_to_restaurantOwnerFragment"
-            app:destination="@id/restaurantOwnerFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_ratings" />
     <fragment
         android:id="@+id/fillInRestAddressFragment"
         android:name="com.example.mealcompass.RestaurantOwner.FillInRestAddressFragment"
@@ -376,11 +369,11 @@
         android:label="fragment_add_menu_items"
         tools:layout="@layout/fragment_add_menu_items">
         <action
-            android:id="@+id/action_addMenuItemsFragment_to_restaurantOwnerFragment"
-            app:destination="@id/restaurantOwnerFragment" />
-        <action
             android:id="@+id/action_addMenuItemsFragment_to_addRestImageFragment"
             app:destination="@id/addRestImageFragment" />
+        <action
+            android:id="@+id/action_addMenuItemsFragment_to_restaurantOwnerFragment2"
+            app:destination="@id/restaurantOwnerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/addDiscoverArticleFragment"
@@ -447,6 +440,9 @@
         <action
             android:id="@+id/action_fullMenuFragment_to_menuItemFragment"
             app:destination="@id/menuItemFragment" />
+        <action
+            android:id="@+id/action_fullMenuFragment_to_editMenuItemFragment"
+            app:destination="@id/editMenuItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -455,5 +451,41 @@
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/restaurantOwnerFragment2"
+        android:name="com.example.mealcompass.RestaurantOwner.RestaurantOwnerFragment"
+        android:label="fragment_restaurant_owner"
+        tools:layout="@layout/fragment_restaurant_owner" >
+        <action
+            android:id="@+id/action_restaurantOwnerFragment2_to_ratingsFragment2"
+            app:destination="@id/ratingsFragment2" />
+        <action
+            android:id="@+id/action_restaurantOwnerFragment2_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_restaurantOwnerFragment2_to_editRestaurantFragment"
+            app:destination="@id/editRestaurantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRestaurantFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.EditRestaurantFragment"
+        android:label="fragment_edit_restaurant"
+        tools:layout="@layout/fragment_edit_restaurant" >
+        <action
+            android:id="@+id/action_editRestaurantFragment_to_restaurantOwnerFragment2"
+            app:destination="@id/restaurantOwnerFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/editMenuItemFragment"
+        android:name="com.example.mealcompass.MenuItem.EditMenuItemFragment"
+        android:label="fragment_edit_menu_item"
+        tools:layout="@layout/fragment_edit_menu_item" >
+        <action
+            android:id="@+id/action_editMenuItemFragment_to_menuItemFragment"
+            app:destination="@id/menuItemFragment" />
+        <action
+            android:id="@+id/action_editMenuItemFragment_to_fullMenuFragment"
+            app:destination="@id/fullMenuFragment" />
     </fragment>
 </navigation>
