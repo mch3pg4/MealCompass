@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,7 +60,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             bundle.putString("userName", userListItems.getUserName());
             // if current page is showAllUsersFragment, navigate to userDetailsFragment
             // else if current page is adminFragment, navigate to userDetailsFragment
-            if (context.getClass().getSimpleName().equals("ShowAllUsersFragment") ) {
+            NavController navController = Navigation.findNavController(v);
+            if (navController.getCurrentDestination().getId() == R.id.showAllUsersFragment) {
                 Navigation.findNavController(v).navigate(R.id.action_showAllUsersFragment_to_userDetailsFragment, bundle);
             } else {
                 Navigation.findNavController(v).navigate(R.id.action_adminFragment_to_userDetailsFragment, bundle);

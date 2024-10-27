@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,10 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
-import com.example.mealcompass.User.User;
+import com.example.mealcompass.Restaurants.Restaurant;
+import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
-import com.example.mealcompass.databinding.FragmentShowAllUsersBinding;
+import com.example.mealcompass.databinding.FragmentShowAllRequestsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,11 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ShowAllUsersFragment extends Fragment {
-    private FragmentShowAllUsersBinding binding;
+public class ShowAllRequestsFragment extends Fragment {
+    private FragmentShowAllRequestsBinding binding;
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
     private UserViewModel userViewModel;
+    private RestaurantViewModel restaurantViewModel;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class ShowAllUsersFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         userRepository = new UserRepository(mAuth, db);
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
 
     }
 
@@ -49,7 +52,7 @@ public class ShowAllUsersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentShowAllUsersBinding.inflate(inflater, container, false);
+        binding = FragmentShowAllRequestsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -63,32 +66,36 @@ public class ShowAllUsersFragment extends Fragment {
             userId = user.getUid();
         }
 
-        // users list recycler view
-        RecyclerView usersListRecyclerView = binding.showAllUsersRecyclerView;
-        usersListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // restaurant requests recyclerview
+        RecyclerView restaurantRequestsRecyclerView = binding.showAllRequestsRecyclerView;
+        restaurantRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // initialize viewmodel
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        // get all restaurant requests
+        restaurantViewModel.fetchRestaurantByPendingStatus();
 
-        // get all users
-        userViewModel.getAllUsers();
-
-        // Observe the LiveData for changes
-        userViewModel.getUserListLiveData().observe(getViewLifecycleOwner(), users -> {
-            if (users != null && !users.isEmpty()) {
-                // Populate the RecyclerView with the fetched users
-                List<UserListItem> usersListItems = new ArrayList<>();
-                for (User userList : users) {
-                    usersListItems.add(new UserListItem(
-                            userList.getUserName(),
-                            userList.getUserId()));
+        // observe restaurant requests
+        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), requests -> {
+            if (requests != null && !requests.isEmpty()) {
+                // populate recyclerview
+                List<RestaurantRequestsItem> restaurantRequestsItems = new ArrayList<>();
+                for (Restaurant restaurant : requests) {
+                    restaurantRequestsItems.add(new RestaurantRequestsItem(
+                            restaurant.getRestaurantId(),
+                            restaurant.getRestaurantImageUrl(),
+                            restaurant.getRestaurantName(),
+                            restaurant.getRestaurantCuisine()
+                    ));
                 }
-                UserListAdapter usersListAdapter = new UserListAdapter(usersListItems, userRepository, getContext());
-                usersListRecyclerView.setAdapter(usersListAdapter);
+
+                RestaurantRequestsAdapter adapter = new RestaurantRequestsAdapter(restaurantRequestsItems);
+                restaurantRequestsRecyclerView.setAdapter(adapter);
+
             } else {
-                Toast.makeText(getContext(), "No users found", Toast.LENGTH_SHORT).show();
+                // show empty state
+                Toast.makeText(getContext(), "No restaurant requests found", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -96,4 +103,5 @@ public class ShowAllUsersFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

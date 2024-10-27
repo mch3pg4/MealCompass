@@ -188,6 +188,13 @@ public class UserRepository {
         }).addOnFailureListener(e -> Log.d("UserRepository", "Error fetching document", e));
     }
 
+    // delete user
+    public Task<Void> deleteUser(String userId) {
+        return db.collection("users")
+                .document(userId)
+                .delete();
+    }
+
     public interface UserListCallback {
         void onSuccess(List<User> userList);
 

@@ -284,5 +284,7 @@
     <string name="claim_restaurant">Claim restaurant</string>
     <string name="claim_a_restaurant">Claim a Restaurant</string>
     <string name="claim_restaurant_description">Select a restaurant to claim it as your business.</string>
+    <string name="manage_requests_text">Manage restaurant requests here.</string>
+    <string name="all_rest_requests">All Restaurant Requests</string>
 
 </resources>

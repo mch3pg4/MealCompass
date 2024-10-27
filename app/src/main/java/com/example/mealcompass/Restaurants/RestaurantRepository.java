@@ -154,6 +154,17 @@ public class RestaurantRepository {
                         Log.d("RestaurantRepository", "Error deleting document", e));
     }
 
+    // update restaurant status
+    public Task<Void> updateRestaurantStatus(String restaurantId, String status) {
+        return db.collection("restaurant")
+                .document(restaurantId)
+                .update("restaurantStatus", status)
+                .addOnSuccessListener(aVoid ->
+                        Log.d("RestaurantRepository", "Document updated successfully"))
+                .addOnFailureListener(e ->
+                        Log.d("RestaurantRepository", "Error updating document", e));
+    }
+
 
 
     // restaurant list callback
@@ -333,6 +344,28 @@ public void getRestaurantByOwnerId(String ownerId, RestaurantListCallback callba
                     } else {
                         callback.onFailure(task.getException());
 
+                    }
+                });
+    }
+
+    // get all restaurants by "Pending" status
+    public void getPendingRestaurants(RestaurantListCallback callback) {
+        db.collection("restaurant")
+                .whereEqualTo("restaurantStatus", "Pending")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Restaurant> restaurantList = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Restaurant restaurant = document.toObject(Restaurant.class);
+                            if (restaurant != null) {
+                                restaurantList.add(restaurant);
+                                restaurant.setRestaurantId(document.getId());
+                            }
+                        }
+                        callback.onSuccess(restaurantList);
+                    } else {
+                        callback.onFailure(task.getException());
                     }
                 });
     }

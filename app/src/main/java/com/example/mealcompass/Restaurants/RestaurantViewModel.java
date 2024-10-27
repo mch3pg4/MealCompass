@@ -25,6 +25,7 @@ public class RestaurantViewModel extends ViewModel {
     private final MutableLiveData<String> restaurantContact = new MutableLiveData<>();
 
     private final MutableLiveData<List<Restaurant>> restaurantListLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Restaurant>> restaurantRequestsListLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<MenuItem>> menuItemsLiveData = new MutableLiveData<List<com.example.mealcompass.MenuItem.MenuItem>>();
     private final RestaurantRepository restaurantRepository;
 
@@ -121,6 +122,10 @@ public class RestaurantViewModel extends ViewModel {
         return menuItemsLiveData;
     }
 
+    public LiveData<List<Restaurant>> getRestaurantRequestsListLiveData() {
+        return restaurantRequestsListLiveData;
+    }
+
     public void fetchAllRestaurants() {
         restaurantRepository.getAllRestaurants(new RestaurantRepository.RestaurantListCallback() {
             @Override
@@ -156,6 +161,21 @@ public class RestaurantViewModel extends ViewModel {
             @Override
             public void onSuccess(List<Restaurant> restaurantList) {
                 restaurantListLiveData.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("RestaurantViewModel", "Error fetching restaurant", e);
+            }
+        });
+    }
+
+    // get restaurant by status
+    public void fetchRestaurantByPendingStatus() {
+        restaurantRepository.getPendingRestaurants(new RestaurantRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                restaurantRequestsListLiveData.setValue(restaurantList);
             }
 
             @Override

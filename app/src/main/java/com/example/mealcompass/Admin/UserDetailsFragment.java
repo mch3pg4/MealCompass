@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,18 +70,15 @@ public class UserDetailsFragment extends Fragment {
             builder.setTitle("Delete User");
             builder.setMessage("Are you sure you want to delete this user?");
             builder.setPositiveButton("Yes", (dialog, which) -> {
-//                userRepository.deleteUser(args.getString("userId"), new UserRepository.UserCallback() {
-//                    @Override
-//                    public void onSuccess(User user) {
-//                        getActivity().onBackPressed();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Exception e) {
-//
-//                    }
-//                });
-                Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                userRepository.deleteUser(args.getString("userId"))
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            NavHostFragment.findNavController(this).navigateUp();
+                            Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Failed to delete user", Toast.LENGTH_SHORT).show();
+                        }
+                    });
             });
             builder.setNegativeButton("No", (dialog, which) -> {
                 dialog.dismiss();

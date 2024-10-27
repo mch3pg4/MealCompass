@@ -259,6 +259,9 @@
         <action
             android:id="@+id/action_adminFragment_to_restaurantDetailsFragment"
             app:destination="@id/restaurantDetailsFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_showAllRequestsFragment"
+            app:destination="@id/showAllRequestsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fillInRestDetailsFragment"
@@ -523,5 +526,14 @@
         <action
             android:id="@+id/action_claimRestaurantFragment_to_restaurantOwnerFragment2"
             app:destination="@id/restaurantOwnerFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/showAllRequestsFragment"
+        android:name="com.example.mealcompass.Admin.ShowAllRequestsFragment"
+        android:label="fragment_show_all_requests"
+        tools:layout="@layout/fragment_show_all_requests" >
+        <action
+            android:id="@+id/action_showAllRequestsFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
     </fragment>
 </navigation>

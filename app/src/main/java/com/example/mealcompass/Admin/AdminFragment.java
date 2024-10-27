@@ -18,6 +18,7 @@ import com.example.mealcompass.Home.RecommendRestaurantsAdapter;
 import com.example.mealcompass.Home.RecommendRestaurantsItem;
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.Restaurant;
+import com.example.mealcompass.Restaurants.RestaurantRepository;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
@@ -81,18 +82,30 @@ public class AdminFragment extends Fragment {
         RecyclerView restaurantRequestsRecyclerView = view.findViewById(R.id.restaurantRequestsRecyclerView);
         restaurantRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<RestaurantRequestsItem> restaurantRequestsItems = List.of(
-                new RestaurantRequestsItem(R.drawable.restaurant_img, "The Fat Radish", "American"),
-                new RestaurantRequestsItem(R.drawable.restaurant_img, "The Fat Radish", "American"),
-                new RestaurantRequestsItem(R.drawable.restaurant_img, "The Fat Radish", "American")
-        );
+        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
+        restaurantViewModel.fetchRestaurantByPendingStatus();
 
-        RestaurantRequestsAdapter restaurantRequestsAdapter = new RestaurantRequestsAdapter(restaurantRequestsItems);
-        restaurantRequestsRecyclerView.setAdapter(restaurantRequestsAdapter);
+        restaurantViewModel.getRestaurantRequestsListLiveData().observe(getViewLifecycleOwner(), restaurants -> {
+            if (restaurants != null && !restaurants.isEmpty()) {
+                List<RestaurantRequestsItem> restaurantRequestsItems = new ArrayList<>();
+                for (Restaurant restaurant : restaurants) {
+                    restaurantRequestsItems.add(new RestaurantRequestsItem(
+                            restaurant.getRestaurantId(),
+                            restaurant.getRestaurantImageUrl(),
+                            restaurant.getRestaurantName(),
+                            restaurant.getRestaurantCuisine()));
+                }
+                RestaurantRequestsAdapter restaurantRequestsAdapter = new RestaurantRequestsAdapter(restaurantRequestsItems);
+                restaurantRequestsRecyclerView.setAdapter(restaurantRequestsAdapter);
+            } else {
+                Toast.makeText(getContext(), "No restaurant requests found", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         binding.showAllRequestsText.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Show all requests", Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_adminFragment_to_showAllRequestsFragment);
         });
 
         // restaurants list recycler view
@@ -127,11 +140,6 @@ public class AdminFragment extends Fragment {
                 Toast.makeText(getContext(), "No restaurants found", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-//        RecommendRestaurantsAdapter recommendRestaurantsAdapter = new RecommendRestaurantsAdapter(recommendRestaurantsItems);
-//        recommendRestaurantsRecyclerView.setAdapter(recommendRestaurantsAdapter);
 
         binding.showAllRestaurantText.setOnClickListener(v -> NavHostFragment.findNavController(this)
                 .navigate(R.id.action_adminFragment_to_restaurantsFragment));

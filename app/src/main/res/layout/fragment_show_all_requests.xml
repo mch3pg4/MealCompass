@@ -5,14 +5,14 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.ShowAllUsersFragment">
+    tools:context=".Admin.ShowAllRequestsFragment">
 
     <TextView
-        android:id="@+id/showAllUsersTitle"
+        android:id="@+id/showAllRequestsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/show_all_users"
+        android:text="@string/all_rest_requests"
         android:textSize="32sp"
         android:gravity="center_vertical"
         android:layout_marginStart="3dp"
@@ -22,11 +22,11 @@
 
 
     <TextView
-        android:id="@+id/showAllUsersText"
+        android:id="@+id/showAllRequestsText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/all_users_text"
-        app:layout_constraintTop_toBottomOf="@id/showAllUsersTitle"
+        android:text="@string/manage_requests_text"
+        app:layout_constraintTop_toBottomOf="@id/showAllRequestsTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="3dp"
@@ -37,12 +37,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/showAllUsersRecyclerView"
+        android:id="@+id/showAllRequestsRecyclerView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/showAllUsersText"
-        tools:listitem="@layout/user_list_item"
+        app:layout_constraintTop_toBottomOf="@id/showAllRequestsText"
+        tools:listitem="@layout/restaurant_request_card"
         />
 
 
