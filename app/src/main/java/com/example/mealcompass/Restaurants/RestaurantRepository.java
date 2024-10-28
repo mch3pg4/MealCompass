@@ -33,17 +33,18 @@ public class RestaurantRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //add restaurant
-    public Task<DocumentReference> addRestaurant(String name, String businessHours, String cuisine, String contact) {
+    public Task<DocumentReference> addRestaurant(String name, String businessHours, String cuisine, String contact, int pricing, float rating, String isHalal) {
         Map<String, Object> restaurant = new HashMap<>();
         restaurant.put("restaurantName", name);
         restaurant.put("restaurantAddress", "");
         restaurant.put("restaurantImageUrl", "");
-        restaurant.put("restaurantRating", 0);
-        restaurant.put("restaurantPricing", 0);
+        restaurant.put("restaurantRating", rating);
+        restaurant.put("restaurantPricing", pricing);
         restaurant.put("restaurantStatus", "Pending");
         restaurant.put("restaurantBusinessHours", businessHours);
         restaurant.put("restaurantCuisine", cuisine);
         restaurant.put("restaurantContact", contact);
+        restaurant.put("isHalal", isHalal);
 
         return db.collection("restaurant")
                 .add(restaurant)
@@ -124,7 +125,7 @@ public class RestaurantRepository {
     }
 
     // update restaurant
-    public void updateRestaurant(String documentId, String name, String address, String imageUrl, float rating, int price, String status, String businessHours, String cuisine, String contact) {
+    public Task<Void> updateRestaurant(String documentId, String name, String address, String imageUrl, float rating, int price, String status, String businessHours, String cuisine, String contact, String isHalal) {
         Map<String, Object> updates = new HashMap<>();
         updates.put("restaurantName", name);
         updates.put("restaurantAddress", address);
@@ -135,8 +136,9 @@ public class RestaurantRepository {
         updates.put("restaurantBusinessHours", businessHours);
         updates.put("restaurantCuisine", cuisine);
         updates.put("restaurantContact", contact);
+        updates.put("isHalal", isHalal);
 
-        db.collection("restaurant").document(documentId)
+        return db.collection("restaurant").document(documentId)
                 .update(updates)
                 .addOnSuccessListener(aVoid ->
                         Log.d("RestaurantRepository", "Document updated successfully"))

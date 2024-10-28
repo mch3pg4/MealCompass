@@ -12,6 +12,7 @@ public class Restaurant {
     private String restaurantCuisine;
     private String restaurantContact;
     private double distanceFromUser;
+    private String isHalal;
 
     public Restaurant() {
     }
@@ -57,6 +58,10 @@ public class Restaurant {
         return restaurantStatus;
     }
 
+    public String getIsHalal() {
+        return isHalal;
+    }
+
     public String getRestaurantBusinessHours() {
         return restaurantBusinessHours;
     }
@@ -91,6 +96,10 @@ public class Restaurant {
 
     public void setRestaurantRating(float restaurantRating) {
         this.restaurantRating = restaurantRating;
+    }
+
+    public void setIsHalal(String isHalal) {
+        this.isHalal = isHalal;
     }
 
     public void setRestaurantPricing(int restaurantPricing) {

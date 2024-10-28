@@ -7,10 +7,6 @@
         android:icon="@drawable/baseline_menu_book_24"
         android:id="@+id/fullMenuFragment"
         />
-    <item android:title="@string/ratings"
-        android:icon="@drawable/baseline_reviews_24"
-        android:id="@+id/ratingsFragment2"
-        />
     <item android:title="@string/helpdesk"
         android:icon="@drawable/baseline_help_outline_24"
         android:id="@+id/helpdeskFragment"/>

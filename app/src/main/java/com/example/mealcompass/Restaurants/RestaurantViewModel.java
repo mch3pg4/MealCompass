@@ -23,10 +23,10 @@ public class RestaurantViewModel extends ViewModel {
     private final MutableLiveData<String> restaurantBusinessHours = new MutableLiveData<>();
     private final MutableLiveData<String> restaurantCuisine = new MutableLiveData<>();
     private final MutableLiveData<String> restaurantContact = new MutableLiveData<>();
-
+    private final MutableLiveData<String> isHalal = new MutableLiveData<>();
     private final MutableLiveData<List<Restaurant>> restaurantListLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Restaurant>> restaurantRequestsListLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<MenuItem>> menuItemsLiveData = new MutableLiveData<List<com.example.mealcompass.MenuItem.MenuItem>>();
+    private final MutableLiveData<List<MenuItem>> menuItemsLiveData = new MutableLiveData<>();
     private final RestaurantRepository restaurantRepository;
 
     public RestaurantViewModel() {
@@ -73,6 +73,10 @@ public class RestaurantViewModel extends ViewModel {
         return restaurantContact;
     }
 
+    public LiveData<String> getIsHalal() {
+        return isHalal;
+    }
+
     public void setRestaurantId(String restaurantId) {
         this.restaurantId.setValue(restaurantId);
     }
@@ -107,6 +111,10 @@ public class RestaurantViewModel extends ViewModel {
 
     public void setRestaurantCuisine(String restaurantCuisine) {
         this.restaurantCuisine.setValue(restaurantCuisine);
+    }
+
+    public void setIsHalal(String isHalal) {
+        this.isHalal.setValue(isHalal);
     }
 
     public void setRestaurantContact(String restaurantContact) {
@@ -291,7 +299,6 @@ public class RestaurantViewModel extends ViewModel {
             }
         });
     }
-
 
 
 

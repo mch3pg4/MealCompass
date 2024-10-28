@@ -286,5 +286,11 @@
     <string name="claim_restaurant_description">Select a restaurant to claim it as your business.</string>
     <string name="manage_requests_text">Manage restaurant requests here.</string>
     <string name="all_rest_requests">All Restaurant Requests</string>
+    <string name="empty_view_text">Nothing here yet!</string>
+    <string name="restaurant_pricing_helper_text">Indicate the food pricing range your restaurant serves. (1–4) </string>
+    <string name="isHalal">"Is Your Restaurant Halal? "</string>
+    <string name="restaurant_rating_text">Restaurant Rating</string>
+    <string name="restaurant_rating_helper_text">Indicate the rating of your restaurant. (0–5)</string>
+    <string name="update_rest_img">Update Restaurant Image</string>
 
 </resources>

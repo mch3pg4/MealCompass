@@ -69,8 +69,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/restContactTextInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -94,6 +92,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/restAddressTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/restaurant_address"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/restAddressEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_location_pin_24"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cuisineSelectMenu"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
@@ -103,14 +123,102 @@
                 >
 
                 <AutoCompleteTextView
+                    android:id="@+id/cuisineAutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
                     android:layout_marginBottom="12dp"
                     android:hint="@string/cuisine"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/restPricingTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/restaurant_pricing"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:helperText="@string/restaurant_pricing_helper_text"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/restPricingEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_attach_money_24"
+                    android:drawablePadding="10dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/restRatingTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/restaurant_rating_text"
+                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
+                app:helperText="@string/restaurant_rating_helper_text"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/restRatingEditText"
+                    android:layout_width="match_parent"
+                    android:drawableStart="@drawable/baseline_stars_24"
+                    android:drawablePadding="10dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/halalSwitch"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="@string/isHalal"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/updateRestImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/update_rest_img"
+                android:layout_marginTop="15dp"
+                app:icon="@drawable/baseline_add_24"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                app:cornerRadius="5dp"
+                />
+
+            <TextView
+                android:id="@+id/itemImagePreviewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rest_img_preview"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+
+            <ImageView
+                android:id="@+id/itemImagePreview"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/item_image_preview"
+                android:layout_height="240dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/placeholder"
+                android:scaleType="centerCrop"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -160,8 +268,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/done"
             android:padding="6dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             />
 
 

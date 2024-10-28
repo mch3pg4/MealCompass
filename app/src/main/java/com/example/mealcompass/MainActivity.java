@@ -105,9 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.helpdeskFragment);
                 } else if (id == R.id.fullMenuFragment) {
                     navController.navigate(R.id.fullMenuFragment);
-                } else if (id == R.id.ratingsFragment2) {
-                    navController.navigate(R.id.ratingsFragment2);
-                } else if (id == R.id.restaurantOwnerFragment2) {
+                }  else if (id == R.id.restaurantOwnerFragment2) {
                     navController.navigate(R.id.restaurantOwnerFragment2);
                 } else if (id == R.id.adminFragment) {
                     navController.navigate(R.id.adminFragment);

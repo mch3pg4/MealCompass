@@ -50,6 +50,8 @@ public class FillInRestDetailsFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    String isHalal = "No";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +127,14 @@ public class FillInRestDetailsFragment extends Fragment {
             }
         });
 
+        binding.halalSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                isHalal = "Yes";
+            } else {
+                isHalal = "No";
+            }
+        });
+
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(FillInRestDetailsFragment.this)
                 .navigate(R.id.action_fillInRestDetailsFragment_to_selectRoleFragment2));
 
@@ -137,6 +147,9 @@ public class FillInRestDetailsFragment extends Fragment {
                 String cuisine = Objects.requireNonNull(binding.cuisineSelectMenu.getEditText()).getText().toString();
                 String businessHours = formatBusinessHoursOutput(businessHoursItems); // format business hours (string output)
                 String contact = Objects.requireNonNull(binding.restContactEditText.getText()).toString();
+                String pricing = Objects.requireNonNull(binding.restPricingEditText.getText()).toString();
+                String rating = Objects.requireNonNull(binding.restRatingEditText.getText()).toString();
+
 
                 if (name.isEmpty()) {
                     binding.restNameEditText.setError("Please enter restaurant name");
@@ -146,11 +159,18 @@ public class FillInRestDetailsFragment extends Fragment {
                     binding.restContactEditText.setError("Please enter contact number");
                 } else if (!contact.matches("^01[0-9]{8,9}$")) {
                     binding.restContactEditText.setError("Please enter a valid contact number");
-                } else {
+                } else if (pricing.isEmpty() || Integer.parseInt(pricing) < 1 || Integer.parseInt(pricing) > 5) {
+                    binding.restPricingEditText.setError("Please enter a valid pricing range");
+                } else if (rating.isEmpty() || Float.parseFloat(rating) < 0 || Float.parseFloat(rating) > 5) {
+                    binding.restRatingEditText.setError("Please enter a valid rating");
+                }
+                else {
                     restaurantViewModel.setRestaurantName(name);
                     restaurantViewModel.setRestaurantCuisine(cuisine);
                     restaurantViewModel.setRestaurantContact(contact);
                     restaurantViewModel.setRestaurantBusinessHours(businessHours);
+                    restaurantViewModel.setRestaurantPricing(Integer.parseInt(pricing));
+                    restaurantViewModel.setRestaurantRating(Float.parseFloat(rating));
                     addRestaurantDetails();
                 }
             }
@@ -206,28 +226,39 @@ public class FillInRestDetailsFragment extends Fragment {
     // string format for business hours
     private String formatBusinessHoursOutput(List<FillInBusinessHoursItem> items) {
         StringBuilder output = new StringBuilder();
+        output.append("{");
 
-        // if its non split hours, else split hours
-        // if day is closed then put closed
+        boolean isFirst = true;
         for (FillInBusinessHoursItem item : items) {
+            if (!isFirst) {
+                output.append(", ");
+            }
+            isFirst = false;
+
+            // Add day with proper formatting
+            output.append("'").append(item.getDay()).append("': '");
+
             if (item.isClosed()) {
-                output.append(item.getDay()).append(" Closed\n");
-                continue;
-            }
-            // normal hours
-            output.append(item.getDay()).append(" ")
-                    .append(item.getOpeningHour()).append(" - ")
-                    .append(item.getClosingHour());
+                output.append("Closed");
+            } else {
+                // Format normal hours
+                output.append((item.getOpeningHour()))
+                        .append(" to ")
+                        .append((item.getClosingHour()));
 
-            // split hours
-            if (item.isSplitHours()){
-                output.append(" | ").append(item.getSplitOpeningHour()).append(" - ")
-                        .append(item.getSplitClosingHour());
+                // Add split hours if applicable
+                if (item.isSplitHours()) {
+                    output.append(", ")
+                            .append((item.getSplitOpeningHour()))
+                            .append(" to ")
+                            .append((item.getSplitClosingHour()));
+                }
             }
-
-            output.append("\n");
+            output.append("'");
         }
-        return output.toString().trim();
+
+        output.append("}");
+        return output.toString();
     }
 
 
@@ -236,8 +267,11 @@ public class FillInRestDetailsFragment extends Fragment {
         String cuisine = restaurantViewModel.getRestaurantCuisine().getValue();
         String businessHours = restaurantViewModel.getRestaurantBusinessHours().getValue();
         String contact = restaurantViewModel.getRestaurantContact().getValue();
+        int pricing = restaurantViewModel.getRestaurantPricing().getValue();
+        float rating = restaurantViewModel.getRestaurantRating().getValue();
 
-        restaurantRepository.addRestaurant(name, businessHours, cuisine, contact)
+
+        restaurantRepository.addRestaurant(name, businessHours, cuisine, contact, pricing, rating, isHalal)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         //get restaurant id and store in view model

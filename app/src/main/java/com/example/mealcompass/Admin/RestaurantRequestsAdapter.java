@@ -80,9 +80,7 @@ public class RestaurantRequestsAdapter extends RecyclerView.Adapter<RestaurantRe
                                     }
                                 });
                     })
-                    .setNegativeButton("No", (dialog, which) -> {
-                        dialog.dismiss();
-                    })
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                     .create();
             alertDialog.show();
 
