@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
     private RestaurantViewModel restaurantViewModel;
     private float rating = 0.0f;
     private RecyclerView recommendItemRecyclerView;
+    private String restaurantId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,15 +101,32 @@ public class HomeFragment extends Fragment {
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recommendItemRecyclerView = view.findViewById(R.id.recommendedItemsRecyclerView);
         recommendItemRecyclerView.setLayoutManager(horizontalLayoutManager);
-        
-        List<RecommendHistoryItem> recommendHistoryItems = List.of(
-                new RecommendHistoryItem(R.drawable.restaurant_img, "The Fat Radish", "4.5"),
-                new RecommendHistoryItem(R.drawable.restaurant_img, "Kopitiam", "4.0")
-        );
 
-        RecommendHistoryAdapter recommendHistoryAdapter = new RecommendHistoryAdapter(recommendHistoryItems);
-        recommendHistoryRecyclerView.setAdapter(recommendHistoryAdapter);
+        // initialize viewmodel
+        userViewModel.getRecommendationHistory();
+        userViewModel.getFavouriteRestaurants().observe(getViewLifecycleOwner(), favouriteRestaurants -> {
+            if (favouriteRestaurants != null && !favouriteRestaurants.isEmpty()) {
+                List<RecommendHistoryItem> recommendHistoryItems = new ArrayList<>();
+                for (Restaurant restaurant : favouriteRestaurants) {
+                    recommendHistoryItems.add(new RecommendHistoryItem(
+                            restaurant.getRestaurantId(),
+                            restaurant.getRestaurantImageUrl(),
+                            restaurant.getRestaurantName(),
+                            restaurant.getRestaurantAddress(),
+                            restaurant.getRestaurantCuisine(),
+                            restaurant.getRestaurantContact(),
+                            restaurant.getRestaurantBusinessHours(),
+                            restaurant.getRestaurantPricing(),
+                            restaurant.getRestaurantRating()
+                    ));
+                }
 
+                RecommendHistoryAdapter recommendHistoryAdapter = new RecommendHistoryAdapter(recommendHistoryItems);
+                recommendHistoryRecyclerView.setAdapter(recommendHistoryAdapter);
+            } else {
+                Toast.makeText(getContext(), "No recommendations found", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         binding.rateRecommendationButton.setOnClickListener(v -> {
             // Inflate the popup layout
@@ -146,6 +164,9 @@ public class HomeFragment extends Fragment {
             if (rating == 0.0f) {
                 Toast.makeText(getContext(), "Please rate the current recommendation ", Toast.LENGTH_SHORT).show();
             } else {
+                // add recommendation history to database
+                userViewModel.addRecommendationHistory(restaurantId, rating);
+                // get new recommendations
 //                fetchRecommendations();
                 Toast.makeText(getContext(), "Getting new recommendations", Toast.LENGTH_SHORT).show();
                 rating = 0.0f;
@@ -184,7 +205,7 @@ public class HomeFragment extends Fragment {
                         restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurantList -> {
                             if (restaurantList != null && !restaurantList.isEmpty()) {
                                 Restaurant restaurant = restaurantList.get(0);
-
+                                restaurantId = restaurant.getRestaurantId();
                                 binding.restaurantName.setText(restaurant.getRestaurantName());
                                 binding.restaurantCuisine.setText("Cuisine: " + restaurant.getRestaurantCuisine());
                                 Glide.with(requireContext())

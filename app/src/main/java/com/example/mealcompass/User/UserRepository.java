@@ -18,7 +18,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -349,6 +351,97 @@ public class UserRepository {
             }
         }).addOnFailureListener(e -> Log.d("UserRepository", "Error fetching document", e));
     }
+
+    // add recommendation history and rating to user
+    public void addRecommendationHistory(String userId, String restaurantId, float rating) {
+        db.collection("users")
+                .document(userId)
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Retrieve the existing map (or create a new one if it doesn't exist)
+                        Map<String, Double> recommendationHistory =
+                                (Map<String, Double>) documentSnapshot.get("recommendedHistory");
+
+                        if (recommendationHistory == null) {
+                            recommendationHistory = new HashMap<>();
+                        }
+
+                        // Add or update the restaurant ID with the new rating
+                        recommendationHistory.put(restaurantId, (double) rating);
+
+                        // Update the user's document with the new map
+                        db.collection("users")
+                                .document(userId)
+                                .update("recommendedHistory", recommendationHistory)
+                                .addOnSuccessListener(aVoid ->
+                                        Log.d("UserRepository", "Recommendation history added/updated successfully!"))
+                                .addOnFailureListener(e ->
+                                        Log.d("UserRepository", "Error updating document", e));
+                    } else {
+                        // Handle the case where the user document does not exist
+                        Log.d("UserRepository", "User document does not exist.");
+                    }
+                }).addOnFailureListener(e -> Log.d("UserRepository", "Error fetching document", e));
+    }
+
+    // get user recommendation history
+    public void getUserRecommendationHistory(String userId, RestaurantListCallback callback) {
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Get the map of restaurant IDs and ratings
+                        Map<String, Double> recommendationHistory =
+                                (Map<String, Double>) documentSnapshot.get("recommendedHistory");
+
+                        if (recommendationHistory == null || recommendationHistory.isEmpty()) {
+                            // Immediately return an empty list if no recommendations
+                            callback.onSuccess(new ArrayList<>());
+                            return;
+                        }
+                        // Prepare to fetch restaurant details
+                        List<Restaurant> recommendedRestaurants = new ArrayList<>();
+                        AtomicInteger counter = new AtomicInteger(0); // To track async calls
+
+                        // Fetch details of all recommended restaurants
+                        for (String restaurantId : recommendationHistory.keySet()) {
+                            db.collection("restaurant")
+                                    .document(restaurantId)
+                                    .get()
+                                    .addOnSuccessListener(restaurantDoc -> {
+                                        if (restaurantDoc.exists()) {
+                                            Restaurant restaurant = restaurantDoc.toObject(Restaurant.class);
+                                            if (restaurant != null) {
+                                                restaurant.setRestaurantName(restaurantDoc.getString("restaurantName"));
+                                                restaurant.setRestaurantId(restaurantDoc.getId());
+                                                restaurant.setRestaurantRating(recommendationHistory.get(restaurantDoc.getId()).floatValue());
+                                                recommendedRestaurants.add(restaurant);
+
+                                            }
+                                        } else {
+                                            Log.d("UserRepository", "Restaurant document does not exist");
+                                        }
+
+                                        // Check if all async fetches are completed
+                                        if (counter.incrementAndGet() == recommendationHistory.size()) {
+                                            callback.onSuccess(recommendedRestaurants);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Handle the failure case once, and avoid multiple calls
+                                        if (counter.incrementAndGet() == recommendationHistory.size()) {
+                                            callback.onSuccess(recommendedRestaurants);
+                                        }
+                                    });
+                        }
+                    } else {
+                        callback.onFailure(new Exception("User document does not exist"));
+                    }
+                })
+                .addOnFailureListener(callback::onFailure);
+    }
+
 
     public void getUserFavourites(String userId, RestaurantListCallback callback) {
         db.collection("users")

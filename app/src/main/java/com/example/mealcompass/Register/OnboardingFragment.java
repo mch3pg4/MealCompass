@@ -26,6 +26,7 @@ public class OnboardingFragment extends Fragment {
     private FirebaseFirestore db;
     private UserViewModel userViewModel;
     private UserRepository userRepository;
+    private String userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,8 @@ public class OnboardingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null) {
-            String userId = user.getUid();
+        if (user != null) {
+            userId = user.getUid();
 
 
             userRepository.getUserType(userId).addOnSuccessListener(userType -> {
@@ -66,10 +67,9 @@ public class OnboardingFragment extends Fragment {
             });
         }
 
+        binding.proceedButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_onboardingFragment_to_homeFragment));
 
-            binding.proceedButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_onboardingFragment_to_homeFragment));
-
-            }
+        }
 
     @Override
     public void onDestroyView () {

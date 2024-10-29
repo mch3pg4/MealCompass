@@ -53,6 +53,7 @@ public class LoginFragment extends Fragment {
         if(currentUser != null){
             String userId = currentUser.getUid();
 
+
             userRepository.getUserType(userId).addOnSuccessListener(userType -> {
                 if (userType != null) {
                     switch (userType) {

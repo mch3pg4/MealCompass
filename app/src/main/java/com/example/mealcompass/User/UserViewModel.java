@@ -23,7 +23,7 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<List<User>> userAllergens = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userCuisines = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userDiets = new MutableLiveData<>();
-    private final MutableLiveData<List<Restaurant>> favouriteRestaurants = new MutableLiveData<List<Restaurant>>();
+    private final MutableLiveData<List<Restaurant>> favouriteRestaurants = new MutableLiveData<>();
     private final MutableLiveData<List<User>> ownerRestaurants = new MutableLiveData<>();
     private final MutableLiveData<List<String>> userFavourites = new MutableLiveData<>();
     private final MutableLiveData<List<User>> userListLiveData = new MutableLiveData<>();
@@ -164,6 +164,27 @@ public class UserViewModel extends ViewModel {
     public void removeFavouriteRestaurant(String  restaurantId) {
         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         userRepository.removeFavouriteRestaurant(userId, restaurantId);
+    }
+
+    public void addRecommendationHistory(String restaurantId, float rating) {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        userRepository.addRecommendationHistory(userId, restaurantId, rating);
+    }
+
+    public void getRecommendationHistory() {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        userRepository.getUserRecommendationHistory(userId, new UserRepository.RestaurantListCallback() {
+            @Override
+            public void onSuccess(List<Restaurant> restaurantList) {
+                favouriteRestaurants.setValue(restaurantList);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // handle error
+                Log.e("UserViewModel", "Error fetching user favourites", e);
+            }
+        });
     }
 
     // get all users
