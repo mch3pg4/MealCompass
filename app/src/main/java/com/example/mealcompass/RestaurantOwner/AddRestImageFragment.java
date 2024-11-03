@@ -20,10 +20,7 @@ import android.widget.Toast;
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.RestaurantRepository;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
-import com.example.mealcompass.User.UserRepository;
-import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentAddRestImageBinding;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

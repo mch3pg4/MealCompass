@@ -69,10 +69,7 @@ public class RegisterRestaurantFragment extends Fragment {
         setupRoleCard(binding.claimRestCard, "Selected claim restaurant");
         setupRoleCard(binding.addRestCard, "Selected add restaurant");
 
-        binding.prevButton.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this).navigate(R.id.action_registerRestaurantFragment_to_selectRoleFragment2);
-
-        });
+        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_registerRestaurantFragment_to_selectRoleFragment2));
 
         binding.nextButton.setOnClickListener(v -> {
             if (!binding.claimRestCard.isChecked() && !binding.addRestCard.isChecked()) {

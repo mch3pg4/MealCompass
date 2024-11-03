@@ -4,21 +4,18 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.mealcompass.Discover.Discover;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class HelpdeskRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private MutableLiveData<List<Helpdesk>> helpdeskLiveData;
+    private final MutableLiveData<List<Helpdesk>> helpdeskLiveData;
 
     public HelpdeskRepository() {
         helpdeskLiveData = new MutableLiveData<>();

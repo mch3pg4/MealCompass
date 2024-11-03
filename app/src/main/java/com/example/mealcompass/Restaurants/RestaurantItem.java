@@ -10,7 +10,7 @@ public class RestaurantItem {
     private final int restaurantPricing;
     private final String restaurantOpenOrClose;
     private boolean isRestaurantFavourite;
-    private String restaurantContact;
+    private final String restaurantContact;
 
     public RestaurantItem(String restaurantId, String restaurantImage, String restaurantName, String restaurantAddress, String restaurantCuisine, float restaurantRating, int restaurantPricing, String restaurantOpenOrClose, boolean isRestaurantFavourite, String restaurantContact) {
         this.restaurantId = restaurantId;

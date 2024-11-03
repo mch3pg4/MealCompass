@@ -3,7 +3,6 @@ package com.example.mealcompass.Restaurants;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.util.Log;
 
 import com.example.mealcompass.MenuItem.MenuItem;
@@ -20,7 +19,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,11 +50,6 @@ public class RestaurantRepository {
                         Log.d("RestaurantRepository", "DocumentSnapshot added with ID: " + documentReference.getId()))
                 .addOnFailureListener(e ->
                         Log.d("RestaurantRepository", "Error adding document", e));
-    }
-
-    // get restaurant by id
-    public Task<DocumentSnapshot> getRestaurantById(String documentId) {
-        return db.collection("restaurant").document(documentId).get();
     }
 
     // update restaurant address
@@ -143,16 +136,6 @@ public class RestaurantRepository {
                         Log.d("RestaurantRepository", "Document updated successfully"))
                 .addOnFailureListener(e ->
                         Log.d("RestaurantRepository", "Error updating document", e));
-    }
-
-    //delete restaurant
-    public void deleteRestaurant(String documentId) {
-        db.collection("restaurant").document(documentId)
-                .delete()
-                .addOnSuccessListener(aVoid ->
-                        Log.d("RestaurantRepository", "Document deleted successfully"))
-                .addOnFailureListener(e ->
-                        Log.d("RestaurantRepository", "Error deleting document", e));
     }
 
     // update restaurant status
@@ -541,7 +524,7 @@ public void getRestaurantByOwnerId(String ownerId, RestaurantListCallback callba
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("RestaurantRepository", "isRestaurantOpen: " + e.getMessage());
         }
         return false;
 
@@ -561,7 +544,7 @@ public void getRestaurantByOwnerId(String ownerId, RestaurantListCallback callba
                 return !current.before(start) && !current.after(end);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("RestaurantRepository", "isTimeInRange: " + e.getMessage());
             return false;
         }
     }

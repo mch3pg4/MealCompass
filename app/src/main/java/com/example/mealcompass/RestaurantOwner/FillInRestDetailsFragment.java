@@ -2,15 +2,6 @@ package com.example.mealcompass.RestaurantOwner;
 
 
 import android.os.Bundle;
-
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +9,21 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.RestaurantRepository;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
-import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentFillInRestDetailsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

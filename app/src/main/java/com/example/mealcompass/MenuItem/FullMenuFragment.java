@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -19,8 +18,6 @@ import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.databinding.FragmentFullMenuBinding;
-import com.example.mealcompass.databinding.FragmentRestaurantDetailsBinding;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;

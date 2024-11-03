@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import android.widget.Toast;
 
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.Restaurant;
-import com.example.mealcompass.Restaurants.RestaurantItem;
-import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentFavouritesBinding;

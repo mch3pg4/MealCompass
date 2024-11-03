@@ -6,14 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -30,10 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 
 public class RestaurantOwnerFragment extends Fragment {
@@ -115,7 +108,7 @@ public class RestaurantOwnerFragment extends Fragment {
                     }
 
                     // Set the formatted string to the TextView
-                    binding.restaurantBusinessHours.setText(String.format("Business Hours:\n%s", formattedHours.toString()));
+                    binding.restaurantBusinessHours.setText(String.format("Business Hours:\n%s", formattedHours));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

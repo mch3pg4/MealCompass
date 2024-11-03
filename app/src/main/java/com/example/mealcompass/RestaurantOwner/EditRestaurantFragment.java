@@ -28,7 +28,6 @@ import com.example.mealcompass.Restaurants.RestaurantRepository;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
-import com.example.mealcompass.databinding.FragmentEditProfileBinding;
 import com.example.mealcompass.databinding.FragmentEditRestaurantBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

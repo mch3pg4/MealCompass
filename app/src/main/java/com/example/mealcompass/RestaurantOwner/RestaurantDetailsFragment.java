@@ -21,7 +21,6 @@ import com.example.mealcompass.databinding.FragmentRestaurantDetailsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -36,7 +35,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class RestaurantDetailsFragment extends Fragment {
     private FragmentRestaurantDetailsBinding binding;
@@ -71,7 +69,7 @@ public class RestaurantDetailsFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = null;
         if (user != null) {
-            userId = user.getUid();
+            user.getUid();
         }
 
         // retrieve bundle data from previous fragment

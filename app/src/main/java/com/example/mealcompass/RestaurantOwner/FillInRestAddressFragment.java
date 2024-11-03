@@ -1,7 +1,6 @@
 package com.example.mealcompass.RestaurantOwner;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,7 +196,7 @@ public class FillInRestAddressFragment extends Fragment {
                 Toast.makeText(requireContext(), "No address found for this location", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("FillInRestAddressFragment", "Error getting address from LatLng", e);
             Toast.makeText(requireContext(), "Unable to get address for this location", Toast.LENGTH_SHORT).show();
         }
     }

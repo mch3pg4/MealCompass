@@ -1,7 +1,6 @@
 package com.example.mealcompass.Admin;
 
 import android.app.AlertDialog;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,9 +101,7 @@ public class RestaurantRequestsAdapter extends RecyclerView.Adapter<RestaurantRe
                                 }
                             });
                     })
-                    .setNegativeButton("No", (dialog, which) -> {
-                        dialog.dismiss();
-                    })
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                     .create();
             alertDialog.show();
         });

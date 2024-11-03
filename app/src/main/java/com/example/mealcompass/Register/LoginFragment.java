@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Patterns;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import com.example.mealcompass.MainActivity;
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
-import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentLoginBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

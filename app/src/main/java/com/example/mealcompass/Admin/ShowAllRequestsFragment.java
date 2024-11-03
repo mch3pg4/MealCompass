@@ -1,6 +1,10 @@
 package com.example.mealcompass.Admin;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -8,12 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.Restaurant;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.UserRepository;
@@ -63,9 +61,8 @@ public class ShowAllRequestsFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId;
         if (user != null) {
-            userId = user.getUid();
+            user.getUid();
         } else {
-            userId = null;
         }
 
         // restaurant requests recyclerview

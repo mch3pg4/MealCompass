@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.databinding.FragmentHelpdeskAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;

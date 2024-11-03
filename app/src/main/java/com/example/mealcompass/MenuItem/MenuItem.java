@@ -1,7 +1,5 @@
 package com.example.mealcompass.MenuItem;
 
-import android.view.Menu;
-
 import java.util.List;
 
 public class MenuItem {

@@ -18,7 +18,6 @@ import com.example.mealcompass.Home.RecommendRestaurantsAdapter;
 import com.example.mealcompass.Home.RecommendRestaurantsItem;
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.Restaurant;
-import com.example.mealcompass.Restaurants.RestaurantRepository;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
@@ -73,10 +72,8 @@ public class AdminFragment extends Fragment {
         // load user name and profile image
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
-        binding.profileImageButton.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_adminFragment_to_profileFragment);
-        });
+        binding.profileImageButton.setOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigate(R.id.action_adminFragment_to_profileFragment));
 
         // restaurant requests recycler view
         RecyclerView restaurantRequestsRecyclerView = view.findViewById(R.id.restaurantRequestsRecyclerView);
@@ -103,10 +100,8 @@ public class AdminFragment extends Fragment {
         });
 
 
-        binding.showAllRequestsText.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_adminFragment_to_showAllRequestsFragment);
-        });
+        binding.showAllRequestsText.setOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigate(R.id.action_adminFragment_to_showAllRequestsFragment));
 
         // restaurants list recycler view
         RecyclerView recommendRestaurantsRecyclerView = view.findViewById(R.id.restaurantListRecyclerView);
@@ -171,10 +166,8 @@ public class AdminFragment extends Fragment {
             }
         });
 
-        binding.showAllUsersText.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_adminFragment_to_showAllUsersFragment);
-        });
+        binding.showAllUsersText.setOnClickListener(v -> NavHostFragment.findNavController(this)
+                .navigate(R.id.action_adminFragment_to_showAllUsersFragment));
 
     }
 }

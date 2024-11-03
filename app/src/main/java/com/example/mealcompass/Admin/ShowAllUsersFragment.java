@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.mealcompass.R;
 import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
@@ -60,7 +58,7 @@ public class ShowAllUsersFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = null;
         if (user != null) {
-            userId = user.getUid();
+            user.getUid();
         }
 
         // users list recycler view

@@ -107,9 +107,7 @@ public class ClaimRestaurantFragment extends Fragment {
         });
 
         restaurantViewModel.fetchAllRestaurants();
-        binding.prevButton.setOnClickListener(v -> {
-            NavHostFragment.findNavController(this).navigate(R.id.action_claimRestaurantFragment_to_registerRestaurantFragment);
-        });
+        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_claimRestaurantFragment_to_registerRestaurantFragment));
 
         binding.nextButton.setOnClickListener(v -> {
             // show alert dialog to confirm claim restaurant and add to user's restaurant list in firestore

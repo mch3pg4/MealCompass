@@ -19,13 +19,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mealcompass.R;
-import com.example.mealcompass.Register.RegisterFragment;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentCreateAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -50,7 +48,7 @@ public class CreateAdminFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentCreateAdminBinding.inflate(inflater, container, false);
@@ -58,7 +56,7 @@ public class CreateAdminFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Make "Terms and Conditions" clickable and underlined
