@@ -180,9 +180,7 @@ public class RestaurantsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Filter Restaurants");
         String[] items = {"Open Now", "High Ratings", "Low Ratings","Pricing (High to Low)", "Pricing (Low to High)", "Nearest to Me"};
-
         builder.setSingleChoiceItems(items, checkedItem, (dialog, which) -> checkedItem = which);
-
         builder.setPositiveButton("Apply", (dialog, which) -> {
             if (checkedItem == 0) {
                 Toast.makeText(getContext(), "Open Now", Toast.LENGTH_SHORT).show();
@@ -200,7 +198,6 @@ public class RestaurantsFragment extends Fragment {
                 if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1001);
                 }
-
                 fusedLocationClient.getLastLocation()
                         .addOnSuccessListener(location -> {
                             if (location != null) {
@@ -210,8 +207,6 @@ public class RestaurantsFragment extends Fragment {
                             }
                         })
                         .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to get location. Make sure location permissions are enabled.", Toast.LENGTH_SHORT).show());
-
-
             }
             Toast.makeText(getContext(), "Filter applied", Toast.LENGTH_SHORT).show();
         });

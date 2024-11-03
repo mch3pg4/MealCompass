@@ -109,7 +109,7 @@
     <string name="welcomeDescription">Log Into Your MealCompass Account.</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="passwordRequirements">Password has to be at least 6 characters long.</string>
+    <string name="passwordRequirements">Password has to have at least 6 characters, an uppercase character and a special character.</string>
     <string name="forgot_password">Forgot Password? Click here.</string>
     <string name="signup_text">Haven\'t created an account yet? Sign Up.</string>
     <string name="forgot_password_title">Forgot Password</string>

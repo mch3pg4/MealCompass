@@ -110,8 +110,8 @@ public class RegisterFragment extends Fragment {
         binding.passwordEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
-                if (password.length() < 6) {
-                    binding.passwordEditText.setError("Password must be at least 6 characters");
+                if (password.length() < 6 || !password.matches(".*[A-Z].*") || !password.matches(".*[!@#$%^&*()].*")) {
+                    binding.passwordEditText.setError("Password must be at least 6 characters, contain an uppercase letter, and a special character");
                 }
             }
         });
@@ -126,7 +126,6 @@ public class RegisterFragment extends Fragment {
                 }
             }
         });
-
 
         // if register button is disabled and tried to pressed, show toast message
         binding.registerButton.setOnClickListener(v -> {
@@ -152,8 +151,8 @@ public class RegisterFragment extends Fragment {
 
             // Validate password
             String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString().trim();
-            if (password.length() < 6) {
-                binding.passwordEditText.setError("Password must be at least 6 characters");
+            if (password.length() < 6 || !password.matches(".*[A-Z].*") || !password.matches(".*[!@#$%^&*()].*")) {
+                binding.passwordEditText.setError("Password must be at least 6 characters, contain an uppercase letter, and a special character");
                 isValid = false;
             } else {
                 binding.passwordEditText.setError(null);

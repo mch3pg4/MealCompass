@@ -162,7 +162,6 @@ public class AddDiscoverArticleFragment extends Fragment {
     private void updateDiscoverArticle(String articleId, String title, String content, Uri discoverImageUri, String author, String time) {
         if (discoverImageUri != null) {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("discover_images/" + title + ".jpg");
-
             storageReference.putFile(discoverImageUri)
                     .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
                         String downloadUrl = uri.toString();
@@ -177,9 +176,7 @@ public class AddDiscoverArticleFragment extends Fragment {
                                     }
                                 });
                     }))
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show());
         } else {
             // Owner must upload a restaurant image
             Toast.makeText(getContext(), "Please upload an image for your article", Toast.LENGTH_SHORT).show();
@@ -191,24 +188,20 @@ public class AddDiscoverArticleFragment extends Fragment {
     private void uploadDiscoverArticle(Uri discoverImageUri, String title, String content, String time, String author) {
         if (discoverImageUri != null) {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("discover_images/" + title + ".jpg");
-
             storageReference.putFile(discoverImageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String downloadUrl = uri.toString();
-                            discoverRepository.addDiscover(title, content, downloadUrl, author, time)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(requireContext(), "Article posted successfully", Toast.LENGTH_SHORT).show();
-                                            NavHostFragment.findNavController(AddDiscoverArticleFragment.this)
-                                                    .navigate(R.id.action_addDiscoverArticleFragment_to_discoverFragment);
-                                        } else {
-                                            Toast.makeText(requireContext(), "Failed to post article", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        });
-                    });
-
+                    .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String downloadUrl = uri.toString();
+                        discoverRepository.addDiscover(title, content, downloadUrl, author, time)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(requireContext(), "Article posted successfully", Toast.LENGTH_SHORT).show();
+                                        NavHostFragment.findNavController(AddDiscoverArticleFragment.this)
+                                                .navigate(R.id.action_addDiscoverArticleFragment_to_discoverFragment);
+                                    } else {
+                                        Toast.makeText(requireContext(), "Failed to post article", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }));
         } else {
             // owner must upload a restaurant image
             Toast.makeText(getContext(), "Please upload an image for your article", Toast.LENGTH_SHORT).show();

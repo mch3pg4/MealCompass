@@ -147,11 +147,9 @@ public class EditRestaurantFragment extends Fragment {
         });
 
         // Set image picker listener
-        binding.updateRestImageButton.setOnClickListener(v -> {
-            pickMedia.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                    .build());
-        });
+        binding.updateRestImageButton.setOnClickListener(v -> pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build()));
 
         // Handle "Done" button click
         binding.doneButton.setOnClickListener(v -> {
@@ -445,29 +443,24 @@ public class EditRestaurantFragment extends Fragment {
         // Get business hours
         String businessHours = formatBusinessHoursOutput(businessHoursItems);
 
-
         // if current imageview is not empty, then update image to storage and get url
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("restaurant_images/" + restaurantId + ".jpg");
         if (restaurantImageUri != null) {
             storageReference.putFile(restaurantImageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String restaurantImageUrl = uri.toString();
-                            restaurantRepository.updateRestaurant(restaurantId, restaurantName, restaurantAddress, restaurantImageUrl, restaurantRating, restaurantPricing, restaurantStatus, businessHours, restaurantCuisine, restaurantContact, isHalal ? "Yes" : "No")
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(requireContext(), "Restaurant updated successfully", Toast.LENGTH_SHORT).show();
-                                            NavHostFragment.findNavController(EditRestaurantFragment.this)
-                                                    .navigate(R.id.action_editRestaurantFragment_to_restaurantOwnerFragment2);
-                                        } else {
-                                            Toast.makeText(requireContext(), "Failed to update restaurant", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        });
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    });
+                    .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String restaurantImageUrl = uri.toString();
+                        restaurantRepository.updateRestaurant(restaurantId, restaurantName, restaurantAddress, restaurantImageUrl, restaurantRating, restaurantPricing, restaurantStatus, businessHours, restaurantCuisine, restaurantContact, isHalal ? "Yes" : "No")
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(requireContext(), "Restaurant updated successfully", Toast.LENGTH_SHORT).show();
+                                        NavHostFragment.findNavController(EditRestaurantFragment.this)
+                                                .navigate(R.id.action_editRestaurantFragment_to_restaurantOwnerFragment2);
+                                    } else {
+                                        Toast.makeText(requireContext(), "Failed to update restaurant", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }))
+                    .addOnFailureListener(e -> Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show());
 
         } else {
             Toast.makeText(getContext(), "Please upload an image for your restaurant", Toast.LENGTH_SHORT).show();

@@ -517,7 +517,7 @@
     </fragment>
     <fragment
         android:id="@+id/claimRestaurantFragment"
-        android:name="com.example.mealcompass.Register.ClaimRestaurantFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.ClaimRestaurantFragment"
         android:label="fragment_claim_restaurant"
         tools:layout="@layout/fragment_claim_restaurant" >
         <action

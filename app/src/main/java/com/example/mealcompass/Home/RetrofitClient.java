@@ -5,7 +5,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-
     private static Retrofit retrofit = null;
 
     public static ApiInterface getRetrofitClient(){
@@ -17,5 +16,4 @@ public class RetrofitClient {
         }
         return retrofit.create(ApiInterface.class);
     }
-
 }

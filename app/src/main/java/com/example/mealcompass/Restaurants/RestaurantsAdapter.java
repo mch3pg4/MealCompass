@@ -1,6 +1,7 @@
 package com.example.mealcompass.Restaurants;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,7 +170,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("RestaurantsAdapter", "isRestaurantOpen: " + e.getMessage());
         }
         return false;
 

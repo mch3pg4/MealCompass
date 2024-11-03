@@ -154,7 +154,7 @@ public class FillInRestDetailsFragment extends Fragment {
                 if (name.isEmpty()) {
                     binding.restNameEditText.setError("Please enter restaurant name");
                 } else if (cuisine.isEmpty()) {
-                    binding.cuisineSelectMenu.setError("Please select cuisine");
+                    binding.cuisineAutoCompleteTextView.setError("Please select cuisine");
                 } else if (contact.isEmpty()) {
                     binding.restContactEditText.setError("Please enter contact number");
                 } else if (!contact.matches("^01[0-9]{8,9}$")) {

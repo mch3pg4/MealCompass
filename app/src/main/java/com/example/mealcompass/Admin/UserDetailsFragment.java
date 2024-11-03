@@ -55,7 +55,6 @@ public class UserDetailsFragment extends Fragment {
                 public void onSuccess(User user) {
                     binding.userEmail.setText(String.format("User Email: %s", user.getUserEmail()));
                     binding.userRole.setText(String.format("User Role: %s", user.getUserType()));
-
                 }
 
                 @Override
@@ -69,20 +68,17 @@ public class UserDetailsFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle("Delete User");
             builder.setMessage("Are you sure you want to delete this user?");
-            builder.setPositiveButton("Yes", (dialog, which) -> {
-                userRepository.deleteUser(args.getString("userId"))
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            NavHostFragment.findNavController(this).navigateUp();
-                            Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Failed to delete user", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            });
-            builder.setNegativeButton("No", (dialog, which) -> {
-                dialog.dismiss();
-            });
+            builder.setPositiveButton("Yes", (dialog, which) -> userRepository.deleteUser(args.getString("userId"))
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        NavHostFragment.findNavController(this).navigateUp();
+                        Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Failed to delete user", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+            builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+            builder.show();
         });
 
     }

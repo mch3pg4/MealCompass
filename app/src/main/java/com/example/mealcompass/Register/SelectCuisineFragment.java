@@ -111,8 +111,6 @@ public class SelectCuisineFragment extends Fragment {
                 Toast.makeText(getContext(), "Please select at least one cuisine", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     // Method to handle cuisine selection/deselection
@@ -125,7 +123,6 @@ public class SelectCuisineFragment extends Fragment {
             imageView.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.SRC_IN);  // Apply the tint when selected
         }
     }
-
 
     private void updateUserCuisines(List<String> cuisines) {
         String userId = userViewModel.getUserId().getValue();
@@ -148,5 +145,4 @@ public class SelectCuisineFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }

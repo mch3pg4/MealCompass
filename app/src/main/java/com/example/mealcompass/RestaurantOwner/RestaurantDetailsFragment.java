@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,14 +89,15 @@ public class RestaurantDetailsFragment extends Fragment {
 
             // set textviews with bundle data
             binding.restaurantNameTitle.setText(restaurantName);
-            binding.restaurantAddress.setText(String.format("Address: %s", restaurantAddress));
+            binding.restaurantAddress.setText(String.format(restaurantAddress));
             binding.restaurantCuisine.setText(String.format("Cuisine: %s", restaurantCuisine));
             binding.restaurantRating.setRating(restaurantRating);
-            binding.restaurantContact.setText(String.format("Contact: %s", restaurantContact));
+            binding.restaurantContact.setText(String.format(restaurantContact));
             binding.restaurantPricing.setText(String.format("Pricing: %s", restaurantPricingCount(restaurantPricing)));
             // Convert the business hours Map to a formatted string
             try {
-                // Replace single quotes with double quotes to make it a valid JSON string
+                // Replace single quotes with double quotes to become JSON string
+                assert restaurantBusinessHours != null;
                 String jsonString = restaurantBusinessHours.replace("'", "\"");
 
                 // Convert the string to a JSON object
@@ -109,12 +111,11 @@ public class RestaurantDetailsFragment extends Fragment {
                     String hours = jsonObject.getString(day);
                     formattedHours.append(day).append(": ").append(hours).append("\n");
                 }
-
                 // Set the formatted string to the TextView
                 binding.restaurantBusinessHours.setText(String.format("Business Hours:\n%s", formattedHours));
 
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e("RestaurantDetailsFragment", "onViewCreated: " + e.getMessage());
                 binding.restaurantBusinessHours.setText(R.string.business_hours_not_available);
             }
 
@@ -125,18 +126,14 @@ public class RestaurantDetailsFragment extends Fragment {
                     .into(binding.restaurantImage);
 
             // get restaurant address and show on mapview
-            binding.restaurantMapView.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap map) {
-                    googleMap = map;
-                    googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                    MapsInitializer.initialize(requireContext());
-                    addMarker(restaurantAddress);
-                }
+            binding.restaurantMapView.getMapAsync(map -> {
+                googleMap = map;
+                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                MapsInitializer.initialize(requireContext());
+                addMarker(restaurantAddress);
             });
 
             binding.restaurantMapView.onCreate(savedInstanceState);
-
 
             binding.showRestaurantMenuButton.setOnClickListener(v -> {
                 Bundle menuBundle = new Bundle();
@@ -165,7 +162,7 @@ public class RestaurantDetailsFragment extends Fragment {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("RestaurantDetailsFragment", "addMarker: " + e.getMessage());
         }
     }
 

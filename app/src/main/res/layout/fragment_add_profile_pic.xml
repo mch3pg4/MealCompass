@@ -99,6 +99,7 @@
             app:icon="@drawable/baseline_arrow_back_24"
             android:padding="6dp"
             android:layout_marginStart="30dp"
+            android:enabled="false"
             />
 
         <com.google.android.material.button.MaterialButton

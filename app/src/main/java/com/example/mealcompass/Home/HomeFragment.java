@@ -92,7 +92,6 @@ public class HomeFragment extends Fragment {
         // set up profile image
         userRepository.loadUserProfileImage(userId, binding.profileImageButton, requireContext());
 
-
         RecyclerView recommendHistoryRecyclerView = view.findViewById(R.id.historyOfRestaurantsRecyclerView);
         recommendHistoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -120,21 +119,21 @@ public class HomeFragment extends Fragment {
                             restaurant.getRestaurantRating()
                     ));
                 }
-
                 RecommendHistoryAdapter recommendHistoryAdapter = new RecommendHistoryAdapter(recommendHistoryItems);
                 recommendHistoryRecyclerView.setAdapter(recommendHistoryAdapter);
             } else {
-                Toast.makeText(getContext(), "No recommendations found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No recommendations history found", Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.rateRecommendationButton.setOnClickListener(v -> {
             // Inflate the popup layout
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.rate_recommendation_popup, null);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View popupView = inflater.inflate(R.layout.rate_recommendation_popup, binding.getRoot(), false);
 
             // Create the popup window
-            final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT, true);
 
             // Set focusable and elevation for the popup window
             popupWindow.setFocusable(true);
@@ -147,15 +146,11 @@ public class HomeFragment extends Fragment {
             RatingBar ratingBar = popupView.findViewById(R.id.ratingBar);
             popupView.findViewById(R.id.confirmRatingButton).setOnClickListener(v1 -> {
                 rating = ratingBar.getRating();
-                // add rating and restaurantId to database
-
                 Toast.makeText(getContext(), "You have rated " + rating + "/5.0 stars", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();  // Close the popup
             });
-
-            popupView.findViewById(R.id.cancelRatingButton).setOnClickListener(v1 -> popupWindow.dismiss());
-
             // Close the popup window on button click
+            popupView.findViewById(R.id.cancelRatingButton).setOnClickListener(v1 -> popupWindow.dismiss());
             popupView.findViewById(R.id.closeRateRecommendation).setOnClickListener(v1 -> popupWindow.dismiss());
         });
 
@@ -167,7 +162,7 @@ public class HomeFragment extends Fragment {
                 // add recommendation history to database
                 userViewModel.addRecommendationHistory(restaurantId, rating);
                 // get new recommendations
-//                fetchRecommendations();
+                fetchRecommendations();
                 Toast.makeText(getContext(), "Getting new recommendations", Toast.LENGTH_SHORT).show();
                 rating = 0.0f;
             }
@@ -196,7 +191,7 @@ public class HomeFragment extends Fragment {
 
             RetrofitClient.getRetrofitClient().getRecommendations(userIdObj).enqueue(new Callback<List<RestaurantRecommendationResponse>>() {
                 @Override
-                public void onResponse(Call<List<RestaurantRecommendationResponse>> call, Response<List<RestaurantRecommendationResponse>> response) {
+                public void onResponse(@NonNull Call<List<RestaurantRecommendationResponse>> call, @NonNull Response<List<RestaurantRecommendationResponse>> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         List<RestaurantRecommendationResponse> recommendations = response.body();
 
@@ -207,7 +202,7 @@ public class HomeFragment extends Fragment {
                                 Restaurant restaurant = restaurantList.get(0);
                                 restaurantId = restaurant.getRestaurantId();
                                 binding.restaurantName.setText(restaurant.getRestaurantName());
-                                binding.restaurantCuisine.setText("Cuisine: " + restaurant.getRestaurantCuisine());
+                                binding.restaurantCuisine.setText(String.format("Cuisine: %s", restaurant.getRestaurantCuisine()));
                                 Glide.with(requireContext())
                                         .load(restaurant.getRestaurantImageUrl())
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -231,7 +226,6 @@ public class HomeFragment extends Fragment {
                                 List<RecommendItemItem> recommendItemItems = new ArrayList<>();
                                 List<MenuItemRecommendation> topMenuItems = recommendations.get(0).getTopMenuItems();
 
-                                recommendItemItems.clear();
                                 for (MenuItemRecommendation menuItem : topMenuItems) {
                                     String itemName = menuItem.getItemName();
                                     Log.d("Menu Item", itemName);
@@ -262,7 +256,7 @@ public class HomeFragment extends Fragment {
 
                                 RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
                                 recommendItemRecyclerView.setAdapter(recommendItemAdapter);
-                                recommendItemAdapter.notifyDataSetChanged();
+                                recommendItemAdapter.notifyItemRangeChanged(0, recommendItemItems.size());
                                 Log.d("Recommendation", restaurant.getRestaurantName());
                             } else {
                                 Toast.makeText(getContext(), "Failed to get recommendations", Toast.LENGTH_SHORT).show();
@@ -275,7 +269,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<List<RestaurantRecommendationResponse>> call, Throwable t) {
+                public void onFailure(@NonNull Call<List<RestaurantRecommendationResponse>> call, @NonNull Throwable t) {
                     Toast.makeText(getContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show();
                 }
             });

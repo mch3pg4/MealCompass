@@ -1,4 +1,4 @@
-package com.example.mealcompass.Register;
+package com.example.mealcompass.RestaurantOwner;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealcompass.R;
-import com.example.mealcompass.Restaurants.Restaurant;
 import com.example.mealcompass.Restaurants.RestaurantItem;
 import com.example.mealcompass.User.UserViewModel;
 

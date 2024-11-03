@@ -40,10 +40,10 @@ public class HelpdeskRepository {
             .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     List<Helpdesk> helpdeskList = new ArrayList<>();
-                    // Loop through each chat document (representing different users)
+                    // Loop through each chat document of different users
                     for (DocumentSnapshot chatDocument : task.getResult()) {
                         String chatId = chatDocument.getId();
-                        // Access the senderId field (if needed)
+                        // Access the senderId field
                         String senderId = chatDocument.getString("senderId");
                         // Access the messages collection inside each chat document and get the latest message
                         db.collection("helpdesk")
@@ -140,12 +140,8 @@ public class HelpdeskRepository {
                 .collection("messages")
                 .add(message)
                 .addOnSuccessListener(
-                        documentReference -> {
-                            // Log.d("HelpdeskRepository", "DocumentSnapshot added with ID: " + documentReference.getId());
-                        })
-                .addOnFailureListener(e -> {
-                    // Log.d("HelpdeskRepository", "Error adding document", e);
-                });
+                        documentReference -> Log.d("HelpdeskRepository", "DocumentSnapshot added with ID: " + documentReference.getId()))
+                .addOnFailureListener(e -> Log.d("HelpdeskRepository", "Error adding document", e));
 
     }
 

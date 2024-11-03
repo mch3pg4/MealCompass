@@ -55,7 +55,6 @@ public class FillInRestAddressFragment extends Fragment {
 
     private String restaurantId;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +75,6 @@ public class FillInRestAddressFragment extends Fragment {
 
         restaurantRepository = new RestaurantRepository();
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
-
-//        restaurantViewModel.getRestaurantId().observe(getViewLifecycleOwner(), restaurant -> {
-//            if (restaurant != null) {
-//                Toast.makeText(getContext(), "Restaurant ID: " + restaurant, Toast.LENGTH_SHORT).show();
-//                restaurantId = restaurant;
-//            } else {
-//                Toast.makeText(getContext(), "Error getting restaurant ID", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
 
         // Initialize the FusedLocationProviderClient
@@ -160,7 +150,14 @@ public class FillInRestAddressFragment extends Fragment {
         });
 
         binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_fillInRestAddressFragment_to_fillInRestDetailsFragment));
-        binding.nextButton.setOnClickListener(v -> addRestaurantAddress());
+        binding.nextButton.setOnClickListener(v -> {
+            if (binding.restAddressEditText.getText().toString().isEmpty()) {
+                binding.restAddressEditText.setError("Address cannot be empty");
+            } else {
+                addRestaurantAddress();
+            }
+        }
+        );
     }
 
     // function to add address into database and proceed to next fragment

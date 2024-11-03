@@ -58,7 +58,6 @@ public class ForgotPasswordFragment extends Fragment {
     }
 
     public void sendResetPasswordEmail(String email) {
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {

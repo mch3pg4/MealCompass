@@ -62,13 +62,13 @@ public class RestaurantRepository {
     // update restaurant address
     public Task<Void> updateRestaurantAddress(String documentId, String address) {
         return db.collection("restaurant").document(documentId)
-                .update("address", address);
+                .update("restaurantAddress", address);
     }
 
     // update restaurant image
     public Task<Void> updateRestaurantImage(String documentId, String imageUrl) {
         return db.collection("restaurant").document(documentId)
-                .update("imageUrl", imageUrl);
+                .update("restaurantImageUrl", imageUrl);
     }
 
     // add menu item
@@ -81,7 +81,6 @@ public class RestaurantRepository {
         menuItem.put("itemNutritionalValue", nutritionalValue);
         menuItem.put("itemCategory", category);
         menuItem.put("itemAllergens", allergen);
-
 
         return db.collection("restaurant")
                 .document(restaurantId)
@@ -131,7 +130,7 @@ public class RestaurantRepository {
         updates.put("restaurantAddress", address);
         updates.put("restaurantImageUrl", imageUrl);
         updates.put("restaurantRating", rating);
-        updates.put("restaurantPrice", price);
+        updates.put("restaurantPricing", price);
         updates.put("restaurantStatus", status);
         updates.put("restaurantBusinessHours", businessHours);
         updates.put("restaurantCuisine", cuisine);
@@ -475,10 +474,10 @@ public void getRestaurantByOwnerId(String ownerId, RestaurantListCallback callba
                             Restaurant restaurant = document.toObject(Restaurant.class);
                             if (restaurant != null) {
                                 String restaurantAddress = restaurant.getRestaurantAddress();
-
                                 try {
                                     Geocoder geocoder = new Geocoder(context);
                                     List<Address> addresses = geocoder.getFromLocationName(restaurantAddress, 1);
+                                    assert addresses != null;
                                     if (addresses.isEmpty()) {
                                         continue;
                                     }
@@ -495,9 +494,8 @@ public void getRestaurantByOwnerId(String ownerId, RestaurantListCallback callba
                                     restaurantList.add(restaurant);
                                     restaurant.setRestaurantId(document.getId());
                                 }
-
                                 } catch (IOException e) {
-                                    e.printStackTrace();
+                                   Log.e("RestaurantRepository", "sortRestaurantsByDistance: " + e.getMessage());
                                 }
                             }
                         }

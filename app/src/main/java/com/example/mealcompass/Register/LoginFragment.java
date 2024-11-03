@@ -3,6 +3,7 @@ package com.example.mealcompass.Register;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -27,8 +28,6 @@ import java.util.Objects;
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-    private UserViewModel userViewModel;
     private UserRepository userRepository;
 
     @Override
@@ -37,11 +36,10 @@ public class LoginFragment extends Fragment {
 
         //initialize firebase auth
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // get the current user type to determine which bottom navigation view to show
         userRepository = new UserRepository(mAuth, db);
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
     }
 
@@ -52,7 +50,6 @@ public class LoginFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             String userId = currentUser.getUid();
-
 
             userRepository.getUserType(userId).addOnSuccessListener(userType -> {
                 if (userType != null) {
@@ -70,7 +67,6 @@ public class LoginFragment extends Fragment {
                                     .navigate(R.id.action_loginFragment_to_adminFragment);
                             break;
                     }
-
                 }
             });
         }
@@ -108,8 +104,8 @@ public class LoginFragment extends Fragment {
                 String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString();
                 if (password.isEmpty()) {
                     binding.passwordEditText.setError("Password is required");
-                } else if (password.length() < 6) {
-                    binding.passwordEditText.setError("Password must be at least 6 characters");
+                } else if (password.length() < 6 || !password.matches(".*[A-Z].*") || !password.matches(".*[!@#$%^&*()].*")) {
+                    binding.passwordEditText.setError("Password must be at least 6 characters, contain an uppercase letter, and a special character");
                 } else {
                     binding.passwordEditText.setError(null);
                 }
@@ -129,8 +125,8 @@ public class LoginFragment extends Fragment {
             } else if (password.isEmpty()) {
                 binding.passwordEditText.setError("Password is required");
                 binding.passwordEditText.requestFocus();
-            } else if (password.length() < 6) {
-                binding.passwordEditText.setError("Password must be at least 6 characters long");
+            } else if (password.length() < 6 ) {
+                binding.passwordEditText.setError("Password must be at least 6 characters");
                 binding.passwordEditText.requestFocus();
             } else {
                 // If all validations pass, sign in the user
@@ -138,8 +134,6 @@ public class LoginFragment extends Fragment {
 
             }
         });
-
-
 
         binding.signupText.setOnClickListener(v -> NavHostFragment.findNavController(LoginFragment.this)
                 .navigate(R.id.action_loginFragment_to_registerFragment));
@@ -155,12 +149,11 @@ public class LoginFragment extends Fragment {
                         // make the login button unclickable and greyed out
                         binding.loginButton.setClickable(false);
                         binding.loginButton.setText(R.string.logging_in);
-                        binding.loginButton.setBackgroundColor(getResources().getColor(R.color.gray));
+                        binding.loginButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
                         // Sign in success, update UI with the signed-in user's information
                         FirebaseUser user = mAuth.getCurrentUser();
                         if(user != null){
                             String userId = user.getUid();
-
                             userRepository.getUserType(userId).addOnSuccessListener(userType -> {
                                 if (userType != null) {
                                     MainActivity mainActivity = (MainActivity) getActivity();
@@ -181,14 +174,12 @@ public class LoginFragment extends Fragment {
                                                     .navigate(R.id.action_loginFragment_to_adminFragment);
                                             break;
                                     }
-
                                 }
                             });
                         }
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(getContext(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

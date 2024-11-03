@@ -61,9 +61,11 @@ public class ShowAllRequestsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        String userId = null;
+        String userId;
         if (user != null) {
             userId = user.getUid();
+        } else {
+            userId = null;
         }
 
         // restaurant requests recyclerview
@@ -74,7 +76,7 @@ public class ShowAllRequestsFragment extends Fragment {
         restaurantViewModel.fetchRestaurantByPendingStatus();
 
         // observe restaurant requests
-        restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), requests -> {
+        restaurantViewModel.getRestaurantRequestsListLiveData().observe(getViewLifecycleOwner(), requests -> {
             if (requests != null && !requests.isEmpty()) {
                 // populate recyclerview
                 List<RestaurantRequestsItem> restaurantRequestsItems = new ArrayList<>();

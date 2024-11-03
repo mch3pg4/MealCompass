@@ -48,8 +48,6 @@ public class EditMenuItemFragment extends Fragment {
     private RestaurantRepository restaurantRepository;
     private String restaurantId;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,12 +187,10 @@ public class EditMenuItemFragment extends Fragment {
                     // Upload the new menu item image to storage
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("menu_items/" + restaurantId + "/" + itemName + ".jpg");
                     storageReference.putFile(menuItemUri)
-                            .addOnSuccessListener(taskSnapshot -> {
-                                storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                    String imageUrl = uri.toString();
-                                    updateMenuItem(menuItemId, itemName, itemDescription, imageUrl, itemPrice, itemCategory, itemNutritionValue, allergen);
-                                });
-                            }).addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to upload menu item image to Firebase Storage", Toast.LENGTH_SHORT).show());
+                            .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                String imageUrl = uri.toString();
+                                updateMenuItem(menuItemId, itemName, itemDescription, imageUrl, itemPrice, itemCategory, itemNutritionValue, allergen);
+                            })).addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to upload menu item image to Firebase Storage", Toast.LENGTH_SHORT).show());
                 } else {
                     // Use the existing image URL
                     updateMenuItem(menuItemId, itemName, itemDescription, existingImageUrl, itemPrice, itemCategory, itemNutritionValue, allergen);

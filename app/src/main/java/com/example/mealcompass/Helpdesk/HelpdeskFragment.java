@@ -128,7 +128,6 @@ public class HelpdeskFragment extends Fragment {
                 Toast.makeText(getContext(), "Cannot send message, missing chat ID", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             String messageText = Objects.requireNonNull(binding.messageEditText.getText()).toString();
             Calendar calendar = Calendar.getInstance();
             Date sendTime = calendar.getTime();
@@ -160,8 +159,6 @@ public class HelpdeskFragment extends Fragment {
         helpdeskRepository.getHelpdeskLiveData().observe(getViewLifecycleOwner(), messages -> {
             // update the UI with the messages
             helpdeskAdapter.updateMessages(messages, binding.chatRecyclerview);
-
         });
-
     }
 }

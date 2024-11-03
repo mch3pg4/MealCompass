@@ -1,6 +1,7 @@
 package com.example.mealcompass.User;
 
 import java.util.List;
+import java.util.Map;
 
 public class User {
     private String userId;
@@ -12,7 +13,7 @@ public class User {
     private List <String> userCuisines;
     private List <String> userDiets;
     private List<String> favouriteRestaurants;
-    private List<String> recommendedHistory;
+    private Map<String, Float> recommendedHistory;
     private List<String> ownerRestaurants;
 
     public User() {
@@ -26,7 +27,7 @@ public class User {
         this.ownerRestaurants = ownerRestaurants;
     }
 
-    public User(String userName, String userEmail, String userType, String userImageUrl, List<String> userAllergens, List<String> userCuisines, List<String> userDiets, List<String> favouriteRestaurants, List<String> recommendedHistory, List<String> ownerRestaurants) {
+    public User(String userName, String userEmail, String userType, String userImageUrl, List<String> userAllergens, List<String> userCuisines, List<String> userDiets, List<String> favouriteRestaurants, Map<String, Float> recommendedHistory, List<String> ownerRestaurants) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userType = userType;
@@ -35,7 +36,7 @@ public class User {
         this.userCuisines = userCuisines;
         this.userDiets = userDiets;
         this.favouriteRestaurants = favouriteRestaurants;
-        this.recommendedHistory = recommendedHistory;
+        this.recommendedHistory =  recommendedHistory;
         this.ownerRestaurants = ownerRestaurants;
     }
 
@@ -75,7 +76,7 @@ public class User {
         return favouriteRestaurants;
     }
 
-    public List<String> getRecommendedHistory() {
+    public Map<String, Float> getRecommendedHistory() {
         return recommendedHistory;
     }
 
@@ -119,7 +120,7 @@ public class User {
         this.favouriteRestaurants = favouriteRestaurants;
     }
 
-    public void setRecommendedHistory(List<String> recommendedHistory) {
+    public void setRecommendedHistory(Map<String,Float> recommendedHistory) {
         this.recommendedHistory = recommendedHistory;
     }
 

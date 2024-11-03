@@ -14,5 +14,4 @@ public interface ApiInterface {
     @POST("/recommend")
     Call<List<RestaurantRecommendationResponse>> getRecommendations(@Body UserId userId);
 
-
 }

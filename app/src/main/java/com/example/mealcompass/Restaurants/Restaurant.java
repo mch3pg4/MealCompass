@@ -1,7 +1,7 @@
 package com.example.mealcompass.Restaurants;
 
 public class Restaurant {
-    private  String restaurantId;
+    private String restaurantId;
     private String restaurantName;
     private String restaurantAddress;
     private String restaurantImageUrl;

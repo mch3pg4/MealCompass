@@ -103,7 +103,6 @@ public class SelectDietFragment extends Fragment {
     }
 
     private void updateUserDiet(List<String> diets) {
-
         String userId = userViewModel.getUserId().getValue();
         if (userId != null) {
             userRepository.updateUserDiets(userId, diets)

@@ -1,4 +1,4 @@
-package com.example.mealcompass.Register;
+package com.example.mealcompass.RestaurantOwner;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -22,7 +22,6 @@ import com.example.mealcompass.Restaurants.RestaurantViewModel;
 import com.example.mealcompass.User.UserRepository;
 import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentClaimRestaurantBinding;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -130,9 +129,7 @@ public class ClaimRestaurantFragment extends Fragment {
                     Toast.makeText(requireContext(), "Restaurant claimed", Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(this).navigate(R.id.action_claimRestaurantFragment_to_restaurantOwnerFragment2);
                 })
-                .setNegativeButton("No", (dialog, which) -> {
-                    dialog.dismiss();
-                })
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .create();
         alertDialog.show();
     }

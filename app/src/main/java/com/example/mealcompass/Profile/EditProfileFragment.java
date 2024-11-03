@@ -2,6 +2,7 @@ package com.example.mealcompass.Profile;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,13 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class EditProfileFragment extends Fragment {
 
     private FragmentEditProfileBinding binding;
-
     private FirebaseAuth mAuth;
-    private UserRepository userRepository;
     private UserViewModel userViewModel;
+    private UserRepository userRepository;
 
 
     @Override
@@ -40,7 +42,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentEditProfileBinding.inflate(inflater, container, false);
@@ -48,7 +50,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -60,24 +62,19 @@ public class EditProfileFragment extends Fragment {
         }
 
         userViewModel.getUserById(userId);
-        binding.nameEditText.setText(userViewModel.getUserName().getValue());
+        userRepository.getUserName(userId).addOnSuccessListener(name -> binding.nameEditText.setText(name));
 
         binding.editProfileButton.setOnClickListener(
             // if user changed the name, update the name
             v -> {
-                String newName = binding.nameTextInputLayout.getEditText().getText().toString();
+                String newName = Objects.requireNonNull(binding.nameEditText.getText()).toString().trim();
                 if (!newName.equals(userViewModel.getUserName().getValue())) {
                     userViewModel.updateUserName(userId, newName);
                     NavHostFragment.findNavController(this).navigate(R.id.action_editProfileFragment_to_profileFragment);
-                } else if (newName.equals("")) {
-                    binding.nameTextInputLayout.setError("Name cannot be empty");
+                } else if (newName.isEmpty()) {
+                    binding.nameEditText.setError("Name cannot be empty");
                 }
-
             }
-
         );
-
-
-
     }
 }

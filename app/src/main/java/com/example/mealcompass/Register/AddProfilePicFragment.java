@@ -77,8 +77,6 @@ public class AddProfilePicFragment extends Fragment {
 
         userViewModel.setUserId(userId);
 
-        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(AddProfilePicFragment.this)
-                .navigate(R.id.action_addProfilePicFragment_to_registerFragment));
 
         binding.nextButton.setOnClickListener(v -> {
             if (profilePicUri != null) {
