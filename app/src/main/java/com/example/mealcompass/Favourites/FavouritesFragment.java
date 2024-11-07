@@ -1,6 +1,10 @@
 package com.example.mealcompass.Favourites;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -9,12 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.Restaurant;
@@ -101,11 +99,35 @@ public class FavouritesFragment extends Fragment {
         RecyclerView favouritesRecyclerView = binding.favouritesRecyclerView;
         favouritesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // scroll to top button
+        // if the user scrolls down, the button will appear
+        favouritesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // Check if recyclerview is at the top
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // if at the top then hide fab
+                    binding.scrollToTopFab.setVisibility(View.GONE);
+                } else if (dy > 0) {
+                    // if user scroll down, show fab
+                    binding.scrollToTopFab.setVisibility(View.VISIBLE);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        // scroll to top when fab is clicked
+        binding.scrollToTopFab.setOnClickListener(v -> favouritesRecyclerView.smoothScrollToPosition(0));
+
         // Get user's favorite restaurants
         userViewModel.getFavouriteRestaurants().observe(getViewLifecycleOwner(), favouriteRestaurants -> {
             if (favouriteRestaurants == null || favouriteRestaurants.isEmpty()) {
-                Toast.makeText(getContext(), "No favourite restaurants found", Toast.LENGTH_SHORT).show();
-
+                // replace with a textview
+                binding.favouritesEmptyText.setVisibility(View.VISIBLE);
             }
 
             List<FavouritesItem> favouritesItems = new ArrayList<>();

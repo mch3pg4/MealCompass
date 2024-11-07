@@ -292,5 +292,11 @@
     <string name="restaurant_rating_text">Restaurant Rating</string>
     <string name="restaurant_rating_helper_text">Indicate the rating of your restaurant. (0–5)</string>
     <string name="update_rest_img">Update Restaurant Image</string>
+    <string name="favourites_empty">No favourite restaurants yet. Go add them now!</string>
+    <string name="restaurants_empty">No restaurants found.</string>
+    <string name="history_empty">No history of recommended restaurants yet.</string>
+    <string name="no_menu_items">No menu items yet.</string>
+    <string name="no_articles">No articles yet. Stay tuned.</string>
+    <string name="scroll_to_top">Scroll to Top</string>
 
 </resources>

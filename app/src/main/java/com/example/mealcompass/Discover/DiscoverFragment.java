@@ -1,6 +1,10 @@
 package com.example.mealcompass.Discover;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -8,11 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mealcompass.R;
 import com.example.mealcompass.User.UserRepository;
@@ -89,6 +88,30 @@ public class DiscoverFragment extends Fragment {
         RecyclerView discoverRecyclerView = binding.discoverRecyclerView;
         discoverRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // scroll to top button
+        // if the user scrolls down, the button will appear
+        discoverRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // Check if recyclerview is at the top
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // if at the top then hide fab
+                    binding.scrollToTopFab.setVisibility(View.GONE);
+                } else if (dy > 0) {
+                    // if user scroll down, show fab
+                    binding.scrollToTopFab.setVisibility(View.VISIBLE);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        // scroll to top when fab is clicked
+        binding.scrollToTopFab.setOnClickListener(v -> discoverRecyclerView.smoothScrollToPosition(0));
+
         // initialize viewmodel
         DiscoverViewModel discoverViewModel = new ViewModelProvider(this).get(DiscoverViewModel.class);
 
@@ -109,7 +132,7 @@ public class DiscoverFragment extends Fragment {
                 DiscoverAdapter discoverAdapter = new DiscoverAdapter(discoverItems, isAdmin);
                 discoverRecyclerView.setAdapter(discoverAdapter);
             } else {
-                Toast.makeText(getContext(), "No articles found", Toast.LENGTH_SHORT).show();
+                binding.noArticlesTextView.setVisibility(View.VISIBLE);
             }
         });
 

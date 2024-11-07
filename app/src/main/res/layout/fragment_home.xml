@@ -16,7 +16,11 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="center_vertical"
         android:text="@string/welcome_string"
-        android:textSize="32sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="29sp"
+        android:autoSizeTextType="uniform"
         app:layout_constraintEnd_toStartOf="@id/profileImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -116,7 +120,9 @@
                         android:id="@+id/restaurantName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/restaurant_name"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="3dp"/>
@@ -125,7 +131,6 @@
                         android:id="@+id/restaurantCuisine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cuisine"
                         android:textSize="16sp"/>
 
 
@@ -136,7 +141,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/restaurant_image"
-                    android:src="@drawable/restaurant_img"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true" />
 
@@ -169,6 +173,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recommendedText"
         tools:listitem="@layout/recommend_item"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/homeButtonGroupLayout"
+        app:layout_constraintTop_toBottomOf="@id/recommendedText"
+        android:visibility="gone" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeButtonGroupLayout"
@@ -229,4 +245,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/historyOfRestaurantsTitle"
         tools:listitem="@layout/history_card" />
+
+    <TextView
+        android:id="@+id/historyEmptyText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/history_empty"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/historyOfRestaurantsTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

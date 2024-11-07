@@ -1,17 +1,16 @@
 package com.example.mealcompass.Admin;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mealcompass.User.User;
 import com.example.mealcompass.User.UserRepository;
@@ -64,6 +63,30 @@ public class ShowAllUsersFragment extends Fragment {
         // users list recycler view
         RecyclerView usersListRecyclerView = binding.showAllUsersRecyclerView;
         usersListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // scroll to top button
+        // if the user scrolls down, the button will appear
+        usersListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // Check if recyclerview is at the top
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // if at the top then hide fab
+                    binding.scrollToTopFab.setVisibility(View.GONE);
+                } else if (dy > 0) {
+                    // if user scroll down, show fab
+                    binding.scrollToTopFab.setVisibility(View.VISIBLE);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        // scroll to top when fab is clicked
+        binding.scrollToTopFab.setOnClickListener(v -> usersListRecyclerView.smoothScrollToPosition(0));
 
         // initialize viewmodel
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);

@@ -1,6 +1,10 @@
 package com.example.mealcompass.MenuItem;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -8,11 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mealcompass.R;
 import com.example.mealcompass.Restaurants.RestaurantViewModel;
@@ -83,9 +82,33 @@ public class FullMenuFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_fullMenuFragment_to_editMenuItemFragment);
         });
 
-        // Set up RecyclerView early
+        // Set up RecyclerView
         RecyclerView menuItemsRecyclerView = binding.menuItemsRecyclerView;
         menuItemsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // scroll to top button
+        // if the user scrolls down, the button will appear
+        menuItemsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // Check if recyclerview is at the top
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // if at the top then hide fab
+                    binding.scrollToTopFab.setVisibility(View.GONE);
+                } else if (dy > 0) {
+                    // if user scroll down, show fab
+                    binding.scrollToTopFab.setVisibility(View.VISIBLE);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        // scroll to top when fab is clicked
+        binding.scrollToTopFab.setOnClickListener(v -> menuItemsRecyclerView.smoothScrollToPosition(0));
 
         // Handle restaurant data
         String finalUserId = userId;
@@ -112,7 +135,6 @@ public class FullMenuFragment extends Fragment {
     private void setupRestaurantData() {
         // Set restaurant name
         binding.restaurantNameMenuTitle.setText(restaurantName);
-
         // observe menu items
         restaurantViewModel.getMenuItemsLiveData().observe(getViewLifecycleOwner(), fullMenu -> {
             if (fullMenu != null) {
@@ -135,7 +157,8 @@ public class FullMenuFragment extends Fragment {
                 FullMenuAdapter menuItemAdapter = new FullMenuAdapter(menuItems);
                 binding.menuItemsRecyclerView.setAdapter(menuItemAdapter);
             } else {
-                Toast.makeText(requireContext(), "No menu items found", Toast.LENGTH_SHORT).show();
+                // show a textview if no menu items are found
+                binding.noMenuItemsTextView.setVisibility(View.VISIBLE);
             }
         });
 

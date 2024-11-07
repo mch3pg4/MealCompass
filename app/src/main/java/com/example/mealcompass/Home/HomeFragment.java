@@ -1,14 +1,6 @@
 package com.example.mealcompass.Home;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
                 RecommendHistoryAdapter recommendHistoryAdapter = new RecommendHistoryAdapter(recommendHistoryItems);
                 recommendHistoryRecyclerView.setAdapter(recommendHistoryAdapter);
             } else {
-                Toast.makeText(getContext(), "No recommendations history found", Toast.LENGTH_SHORT).show();
+                binding.historyEmptyText.setVisibility(View.VISIBLE);
             }
         });
 
@@ -188,12 +188,24 @@ public class HomeFragment extends Fragment {
             String userId = user.getUid();
             UserId userIdObj = new UserId(userId);
 
+            // Show the progress bar when the request starts
+            binding.progressBar.setVisibility(View.VISIBLE);
+
             RetrofitClient.getRetrofitClient().getRecommendations(userIdObj).enqueue(new Callback<List<RestaurantRecommendationResponse>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<RestaurantRecommendationResponse>> call, @NonNull Response<List<RestaurantRecommendationResponse>> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        List<RestaurantRecommendationResponse> recommendations = response.body();
+                        binding.progressBar.setVisibility(View.GONE); // Hide progress bar on success
 
+                        // Clear previous recommendations
+                        binding.restaurantName.setText("");
+                        binding.restaurantCuisine.setText("");
+                        Glide.with(requireContext())
+                                .load(R.drawable.placeholder)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(binding.restaurantImage);
+
+                        List<RestaurantRecommendationResponse> recommendations = response.body();
                         restaurantViewModel.fetchRestaurantByName(recommendations.get(0).getRestaurant());
 
                         restaurantViewModel.getRestaurantListLiveData().observe(getViewLifecycleOwner(), restaurantList -> {
@@ -206,6 +218,7 @@ public class HomeFragment extends Fragment {
                                         .load(restaurant.getRestaurantImageUrl())
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                                         .into(binding.restaurantImage);
+
                                 binding.recommendRestaurantsCard.setOnClickListener(v -> {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("restaurantId", restaurant.getRestaurantId());
@@ -220,20 +233,18 @@ public class HomeFragment extends Fragment {
                                             .navigate(R.id.action_homeFragment_to_restaurantDetailsFragment, bundle);
                                 });
 
-                                // get menu items
-                                // Iterate over top menu items
+                                // Get menu items
                                 List<RecommendItemItem> recommendItemItems = new ArrayList<>();
                                 List<MenuItemRecommendation> topMenuItems = recommendations.get(0).getTopMenuItems();
 
                                 for (MenuItemRecommendation menuItem : topMenuItems) {
                                     String itemName = menuItem.getItemName();
                                     Log.d("Menu Item", itemName);
-                                    // Fetch menu items details
                                     restaurantViewModel.fetchMenuItemByName(restaurant.getRestaurantId(), itemName);
                                 }
+
                                 restaurantViewModel.getMenuItemsLiveData().observe(getViewLifecycleOwner(), menuItems -> {
                                     if (menuItems != null && !menuItems.isEmpty()) {
-
                                         for (MenuItem item : menuItems) {
                                             recommendItemItems.add(new RecommendItemItem(
                                                     item.getMenuItemImage(),
@@ -244,8 +255,6 @@ public class HomeFragment extends Fragment {
                                                     item.getMenuItemAllergens(),
                                                     item.getMenuItemNutritionalValue()));
                                         }
-
-                                        // Now that we have all items, set up the adapter
                                         RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
                                         recommendItemRecyclerView.setAdapter(recommendItemAdapter);
                                     } else {
@@ -253,25 +262,25 @@ public class HomeFragment extends Fragment {
                                     }
                                 });
 
-                                RecommendItemAdapter recommendItemAdapter = new RecommendItemAdapter(recommendItemItems);
-                                recommendItemRecyclerView.setAdapter(recommendItemAdapter);
-                                recommendItemAdapter.notifyItemRangeChanged(0, recommendItemItems.size());
-                                Log.d("Recommendation", restaurant.getRestaurantName());
                             } else {
+                                binding.progressBar.setVisibility(View.GONE); // Hide progress bar on failure
                                 Toast.makeText(getContext(), "Failed to get recommendations", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     } else {
+                        binding.progressBar.setVisibility(View.GONE); // Hide progress bar on failure
                         Toast.makeText(getContext(), "Failed to get recommendations", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<List<RestaurantRecommendationResponse>> call, @NonNull Throwable t) {
+                    binding.progressBar.setVisibility(View.GONE); // Hide progress bar on failure
                     Toast.makeText(getContext(), "Failed to connect to server", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
 }

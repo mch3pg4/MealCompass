@@ -141,9 +141,12 @@ public class RestaurantsFragment extends Fragment {
                     // Set up the adapter with the complete list of restaurants
                     RestaurantsAdapter restaurantsAdapter = new RestaurantsAdapter(restaurantItems);
                     restaurantsRecyclerView.setAdapter(restaurantsAdapter);
+                    binding.restaurantsEmptyText.setVisibility(View.GONE);
+                    binding.restaurantsRecyclerView.setVisibility(View.VISIBLE);
                 } else {
-                    // Show a message if no restaurants are found
-                    Toast.makeText(getContext(), "No restaurants found", Toast.LENGTH_SHORT).show();
+                    // Show a textview if no restaurants are found
+                    binding.restaurantsEmptyText.setVisibility(View.VISIBLE);
+                    binding.restaurantsRecyclerView.setVisibility(View.GONE);
                 }
             });
 
@@ -164,6 +167,31 @@ public class RestaurantsFragment extends Fragment {
                 }
             }
         });
+
+        // scroll to top button
+        // if the user scrolls down, the button will appear
+        restaurantsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // Check if recyclerview is at the top
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // if at the top then hide fab
+                    binding.scrollToTopFab.setVisibility(View.GONE);
+                } else if (dy > 0) {
+                    // if user scroll down, show fab
+                    binding.scrollToTopFab.setVisibility(View.VISIBLE);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        // scroll to top when fab is clicked
+        binding.scrollToTopFab.setOnClickListener(v -> restaurantsRecyclerView.smoothScrollToPosition(0));
+
 
         // load profile image
         binding.profileImageButton.setOnClickListener(

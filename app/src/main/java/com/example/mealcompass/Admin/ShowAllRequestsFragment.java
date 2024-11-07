@@ -69,6 +69,30 @@ public class ShowAllRequestsFragment extends Fragment {
         RecyclerView restaurantRequestsRecyclerView = binding.showAllRequestsRecyclerView;
         restaurantRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // scroll to top button
+        // if the user scrolls down, the button will appear
+        restaurantRequestsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // Check if recyclerview is at the top
+                if (!recyclerView.canScrollVertically(-1)) {
+                    // if at the top then hide fab
+                    binding.scrollToTopFab.setVisibility(View.GONE);
+                } else if (dy > 0) {
+                    // if user scroll down, show fab
+                    binding.scrollToTopFab.setVisibility(View.VISIBLE);
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        // scroll to top when fab is clicked
+        binding.scrollToTopFab.setOnClickListener(v -> restaurantRequestsRecyclerView.smoothScrollToPosition(0));
+
         // get all restaurant requests
         restaurantViewModel.fetchRestaurantByPendingStatus();
 

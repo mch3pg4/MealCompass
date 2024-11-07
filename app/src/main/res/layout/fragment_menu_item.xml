@@ -105,6 +105,7 @@
         app:layout_constraintBottom_toTopOf="@id/edit_fab"
         android:contentDescription="@string/delete_menu_item"
         app:srcCompat="@drawable/baseline_delete_24"
+        android:visibility="gone"
         android:tooltipText="@string/delete_menu_item"/>
 
 
@@ -118,6 +119,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription="@string/edit_menu_item"
         app:srcCompat="@drawable/baseline_edit_24"
+        android:visibility="gone"
         android:tooltipText="@string/edit_menu_item"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
