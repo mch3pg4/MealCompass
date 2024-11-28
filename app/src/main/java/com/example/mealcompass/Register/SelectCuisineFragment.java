@@ -118,7 +118,7 @@ public class SelectCuisineFragment extends Fragment {
             imageView.clearColorFilter();  // Remove the tint when unselected
         } else {
             selectedCuisines.add(cuisine);
-            imageView.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.SRC_IN);  // Apply the tint when selected
+            imageView.setColorFilter(Color.argb(200, 255, 255, 255), PorterDuff.Mode.SRC_ATOP); // Semi-transparent color
         }
     }
 

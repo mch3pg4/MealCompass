@@ -210,6 +210,7 @@ public class RegisterFragment extends Fragment {
                                 .navigate(R.id.action_registerFragment_to_addProfilePicFragment);
                     } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         Toast.makeText(getContext(), "Email is already registered", Toast.LENGTH_SHORT).show();
+                        binding.registerButton.setEnabled(true);
                     }
                     else {
                         // If sign in fails, display a message to the user.
