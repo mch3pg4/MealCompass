@@ -272,11 +272,11 @@
             android:id="@+id/action_fillInRestDetailsFragment_to_selectRoleFragment2"
             app:destination="@id/selectRoleFragment2" />
         <action
-            android:id="@+id/action_fillInRestDetailsFragment_to_fillInRestAddressFragment"
-            app:destination="@id/fillInRestAddressFragment" />
-        <action
             android:id="@+id/action_fillInRestDetailsFragment_to_registerRestaurantFragment3"
             app:destination="@id/registerRestaurantFragment" />
+        <action
+            android:id="@+id/action_fillInRestDetailsFragment_to_fillInBusinessHoursFragment"
+            app:destination="@id/fillInBusinessHoursFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpdeskFragment"
@@ -369,8 +369,8 @@
             android:id="@+id/action_fillInRestAddressFragment_to_addRestImageFragment"
             app:destination="@id/addRestImageFragment" />
         <action
-            android:id="@+id/action_fillInRestAddressFragment_to_fillInRestDetailsFragment"
-            app:destination="@id/fillInRestDetailsFragment" />
+            android:id="@+id/action_fillInRestAddressFragment_to_fillInBusinessHoursFragment"
+            app:destination="@id/fillInBusinessHoursFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMenuItemsFragment"
@@ -535,5 +535,17 @@
         <action
             android:id="@+id/action_showAllRequestsFragment_to_adminFragment"
             app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fillInBusinessHoursFragment"
+        android:name="com.example.mealcompass.RestaurantOwner.FillInBusinessHoursFragment"
+        android:label="fragment_fill_in_business_hours"
+        tools:layout="@layout/fragment_fill_in_business_hours" >
+        <action
+            android:id="@+id/action_fillInBusinessHoursFragment_to_fillInRestAddressFragment"
+            app:destination="@id/fillInRestAddressFragment" />
+        <action
+            android:id="@+id/action_fillInBusinessHoursFragment_to_fillInRestDetailsFragment"
+            app:destination="@id/fillInRestDetailsFragment" />
     </fragment>
 </navigation>

@@ -31,7 +31,7 @@ public class RestaurantRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //add restaurant
-    public Task<DocumentReference> addRestaurant(String name, String businessHours, String cuisine, String contact, int pricing, float rating, String isHalal) {
+    public Task<DocumentReference> addRestaurant(String name, String cuisine, String contact, int pricing, float rating, String isHalal) {
         Map<String, Object> restaurant = new HashMap<>();
         restaurant.put("restaurantName", name);
         restaurant.put("restaurantAddress", "");
@@ -39,7 +39,7 @@ public class RestaurantRepository {
         restaurant.put("restaurantRating", rating);
         restaurant.put("restaurantPricing", pricing);
         restaurant.put("restaurantStatus", "Pending");
-        restaurant.put("restaurantBusinessHours", businessHours);
+        restaurant.put("restaurantBusinessHours", "");
         restaurant.put("restaurantCuisine", cuisine);
         restaurant.put("restaurantContact", contact);
         restaurant.put("isHalal", isHalal);
@@ -50,6 +50,12 @@ public class RestaurantRepository {
                         Log.d("RestaurantRepository", "DocumentSnapshot added with ID: " + documentReference.getId()))
                 .addOnFailureListener(e ->
                         Log.d("RestaurantRepository", "Error adding document", e));
+    }
+
+    // update business hours
+    public Task<Void> updateBusinessHours(String documentId, String businessHours) {
+        return db.collection("restaurant").document(documentId)
+                .update("restaurantBusinessHours", businessHours);
     }
 
     // update restaurant address

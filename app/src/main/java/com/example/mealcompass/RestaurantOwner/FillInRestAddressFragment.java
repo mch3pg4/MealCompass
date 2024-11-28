@@ -5,6 +5,11 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -13,12 +18,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mealcompass.BuildConfig;
 import com.example.mealcompass.R;
@@ -149,7 +148,7 @@ public class FillInRestAddressFragment extends Fragment {
             getPlaceFromPlaceId(placeId);
         });
 
-        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_fillInRestAddressFragment_to_fillInRestDetailsFragment));
+        binding.prevButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_fillInRestAddressFragment_to_fillInBusinessHoursFragment));
         binding.nextButton.setOnClickListener(v -> {
             if (binding.restAddressEditText.getText().toString().isEmpty()) {
                 binding.restAddressEditText.setError("Address cannot be empty");
@@ -168,18 +167,20 @@ public class FillInRestAddressFragment extends Fragment {
             // pass restaurant id to next fragment
             Bundle bundle = new Bundle();
             bundle.putString("restaurantId", restaurantId);
-        if (restaurantId != null) {
-            restaurantRepository.updateRestaurantAddress(restaurantId, address)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Restaurant address added successfully", Toast.LENGTH_SHORT).show();
-                            NavHostFragment.findNavController(FillInRestAddressFragment.this)
-                                    .navigate(R.id.action_fillInRestAddressFragment_to_addRestImageFragment, bundle);
-                        }
-                    });
+            if (restaurantId != null) {
+                restaurantRepository.updateRestaurantAddress(restaurantId, address)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Restaurant address added successfully", Toast.LENGTH_SHORT).show();
+                                NavHostFragment.findNavController(FillInRestAddressFragment.this)
+                                        .navigate(R.id.action_fillInRestAddressFragment_to_addRestImageFragment, bundle);
+                            }
+                        });
+            } else {
+                Toast.makeText(getContext(), "Error adding restaurant address", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getContext(), "Error adding restaurant address", Toast.LENGTH_SHORT).show();
-        }
+            Toast.makeText(getContext(), "No restaurant id found", Toast.LENGTH_SHORT).show();
         }
     }
 

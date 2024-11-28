@@ -2,16 +2,13 @@ package com.example.mealcompass;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.example.mealcompass.User.UserRepository;
-import com.example.mealcompass.User.UserViewModel;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -20,13 +17,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mealcompass.User.UserRepository;
+import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.util.Objects;
 
@@ -119,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
                     binding.bottomNavigationView.setVisibility(View.VISIBLE);
                 } else if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.welcomeFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.forgotPasswordFragment || destination.getId() == R.id.addProfilePicFragment
                         || destination.getId() == R.id.selectRoleFragment2 || destination.getId() == R.id.selectCuisineFragment2 || destination.getId() == R.id.selectDietFragment || destination.getId() == R.id.selectAllergyFragment || destination.getId() == R.id.fillInRestAddressFragment
-                        || destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.fillInRestDetailsFragment || destination.getId() == R.id.addRestImageFragment || destination.getId() == R.id.addMenuItemsFragment || destination.getId() == R.id.registerRestaurantFragment || destination.getId() == R.id.claimRestaurantFragment) {
+                        || destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.fillInRestDetailsFragment || destination.getId() == R.id.addRestImageFragment || destination.getId() == R.id.addMenuItemsFragment
+                        || destination.getId() == R.id.registerRestaurantFragment || destination.getId() == R.id.claimRestaurantFragment || destination.getId() == R.id.fillInBusinessHoursFragment) {
                     Objects.requireNonNull(getSupportActionBar()).hide();
                     binding.bottomNavigationView.setVisibility(View.GONE);
                 } else {
