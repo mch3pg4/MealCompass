@@ -138,10 +138,7 @@ public class DiscoverFragment extends Fragment {
 
         // Fetch all discover articles
         discoverViewModel.fetchAllDiscover();
-
         });
-
-
 
         binding.addFab.setOnClickListener(v -> {
             NavHostFragment.findNavController(DiscoverFragment.this)

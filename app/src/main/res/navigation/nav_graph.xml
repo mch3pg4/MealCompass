@@ -11,7 +11,9 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"
+            />
         <action
             android:id="@+id/action_homeFragment_to_restaurantsFragment"
             app:destination="@id/restaurantsFragment" />
@@ -62,10 +64,14 @@
         tools:layout="@layout/fragment_discover" >
         <action
             android:id="@+id/action_discoverFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
         <action
             android:id="@+id/action_discoverFragment_to_discoverArticleFragment"
-            app:destination="@id/discoverArticleFragment" />
+            app:destination="@id/discoverArticleFragment"
+            app:enterAnim="@anim/slide_out"
+            app:popExitAnim="@anim/fade_out"
+            />
         <action
             android:id="@+id/action_discoverFragment_to_addDiscoverArticleFragment"
             app:destination="@id/addDiscoverArticleFragment" />
@@ -77,7 +83,8 @@
         tools:layout="@layout/fragment_restaurants" >
         <action
             android:id="@+id/action_restaurantsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
         <action
             android:id="@+id/action_restaurantsFragment_to_restaurantDetailsFragment"
             app:destination="@id/restaurantDetailsFragment" />
@@ -89,7 +96,8 @@
         tools:layout="@layout/fragment_favourites" >
         <action
             android:id="@+id/action_favoruitesFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
     </fragment>
     <fragment
         android:id="@+id/discoverArticleFragment"
@@ -98,7 +106,8 @@
         tools:layout="@layout/fragment_discover_article" >
         <action
             android:id="@+id/action_discoverArticleFragment_to_addDiscoverArticleFragment"
-            app:destination="@id/addDiscoverArticleFragment" />
+            app:destination="@id/addDiscoverArticleFragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -203,7 +212,8 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_termsAndConditionsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
@@ -243,7 +253,8 @@
         tools:layout="@layout/fragment_admin" >
         <action
             android:id="@+id/action_adminFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
         <action
             android:id="@+id/action_adminFragment_to_helpdeskAdminFragment"
             app:destination="@id/helpdeskAdminFragment" />
@@ -341,7 +352,8 @@
         tools:layout="@layout/fragment_about" >
         <action
             android:id="@+id/action_aboutFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
     </fragment>
     <fragment
         android:id="@+id/addProfilePicFragment"
@@ -459,7 +471,8 @@
         android:label="EditProfileFragment" >
         <action
             android:id="@+id/action_editProfileFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
     </fragment>
     <fragment
         android:id="@+id/restaurantOwnerFragment2"
@@ -471,7 +484,8 @@
             app:destination="@id/ratingsFragment2" />
         <action
             android:id="@+id/action_restaurantOwnerFragment2_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/fade_in"/>
         <action
             android:id="@+id/action_restaurantOwnerFragment2_to_editRestaurantFragment"
             app:destination="@id/editRestaurantFragment" />
