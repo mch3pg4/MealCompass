@@ -1,17 +1,16 @@
 package com.example.mealcompass.Register;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mealcompass.MainActivity;
 import com.example.mealcompass.R;
@@ -173,7 +172,12 @@ public class LoginFragment extends Fragment {
                                             break;
                                     }
                                 }
-                            });
+                            }).addOnFailureListener(e -> {
+                                        Toast.makeText(getContext(), "User is either not found or has been deleted from the system.", Toast.LENGTH_SHORT).show();
+                                        binding.loginButton.setClickable(true);
+                                        binding.loginButton.setText(R.string.login);
+                                        binding.loginButton.setBackgroundColor(ContextCompat.getColor(requireContext(), com.google.android.material.R.color.m3_sys_color_light_primary));
+                                    });
                         }
                     } else {
                         // If sign in fails, display a message to the user.
