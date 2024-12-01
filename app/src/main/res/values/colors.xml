@@ -13,5 +13,6 @@
     <color name="light_purple">#D789EB</color>
     <color name="light_color">#F8F8F8</color>
     <color name="light_gray">#AFB1BF</color>
+    <color name="primaryPurple">#6750A4</color>
 
 </resources>

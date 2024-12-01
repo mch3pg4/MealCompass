@@ -176,7 +176,7 @@ public class LoginFragment extends Fragment {
                                         Toast.makeText(getContext(), "User is either not found or has been deleted from the system.", Toast.LENGTH_SHORT).show();
                                         binding.loginButton.setClickable(true);
                                         binding.loginButton.setText(R.string.login);
-                                        binding.loginButton.setBackgroundColor(ContextCompat.getColor(requireContext(), com.google.android.material.R.color.m3_sys_color_light_primary));
+                                        binding.loginButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.primaryPurple));
                                     });
                         }
                     } else {

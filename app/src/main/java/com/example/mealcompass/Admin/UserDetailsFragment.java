@@ -17,11 +17,14 @@ import com.example.mealcompass.User.UserViewModel;
 import com.example.mealcompass.databinding.FragmentUserDetailsBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class UserDetailsFragment extends Fragment {
     private FragmentUserDetailsBinding binding;
     private UserRepository userRepository;
     private UserViewModel userViewModel;
+    private String userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class UserDetailsFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            String userId = args.getString("userId");
+            userId = args.getString("userId");
             String userName = args.getString("userName");
             // Load data
             binding.profileText.setText(userName);
@@ -67,8 +70,9 @@ public class UserDetailsFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle("Delete User");
             builder.setMessage("Are you sure you want to delete this user?");
-            builder.setPositiveButton("Yes", (dialog, which) -> userRepository.deleteUser(args.getString("userId"))
+            builder.setPositiveButton("Yes", (dialog, which) -> userRepository.deleteUser(userId)
                 .addOnCompleteListener(task -> {
+                    deleteFileFromStorage("users/" + userId + ".jpg");
                     if (task.isSuccessful()) {
                         NavHostFragment.findNavController(this).navigateUp();
                         Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
@@ -80,5 +84,24 @@ public class UserDetailsFragment extends Fragment {
             builder.show();
         });
 
+    }
+
+    public void deleteFileFromStorage(String filePath) {
+        // Get a reference to the Firebase Storage instance
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        // Reference the file in Firebase Storage
+        StorageReference fileRef = storage.getReference().child(filePath);
+
+        // Delete the file
+        fileRef.delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // File deleted successfully
+                Toast.makeText(getContext(), "User image file deleted successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle the error
+                Toast.makeText(getContext(), "Failed to delete user image file", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
