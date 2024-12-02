@@ -31,6 +31,7 @@
             android:textSize="44sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/profileSettingsText"
             app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
         <TextView

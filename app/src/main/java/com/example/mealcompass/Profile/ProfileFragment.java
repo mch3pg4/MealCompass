@@ -79,11 +79,12 @@ public class ProfileFragment extends Fragment {
 
         List<ProfileSettingsItem> profileItems = new ArrayList<>();
         profileItems.add(new ProfileSettingsItem(R.drawable.baseline_account_circle_24, "Edit Profile"));
+        profileItems.add(new ProfileSettingsItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
 
         // if user role is admin or owner, then don't need to show reselect preferences
         userRepository.getUserType(userId).addOnSuccessListener(userType -> {
-            if (userType.equals("user")) {
-            profileItems.add(new ProfileSettingsItem(R.drawable.baseline_tune_24, "Reselect Preferences"));
+            if (!userType.equals("user")) {
+            profileItems.remove(1);
             }
         });
 

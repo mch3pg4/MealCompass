@@ -35,7 +35,7 @@ public class RecommendItemAdapter extends RecyclerView.Adapter<RecommendItemAdap
     }
 
     public RecommendItemAdapter(List<RecommendItemItem> recommendItemItems) {
-        this.mRecommendItemItems = recommendItemItems;
+        this.mRecommendItemItems = recommendItemItems != null ? recommendItemItems : new ArrayList<>();
     }
 
     @NonNull
